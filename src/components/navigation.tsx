@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Brand } from "./brand";
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "#hero", label: "Home" }, { href: "#work", label: "Work" },
+  { href: "#about", label: "About" }, { href: "#expertise", label: "Expertise" },
+  { href: "#journey", label: "Journey" }, { href: "#playground", label: "Playground" },
+  { href: "#beyond", label: "Beyond" }, { href: "#contact", label: "Contact" },
 ];
 
 export function Navigation() {
@@ -16,6 +18,7 @@ export function Navigation() {
   const home = pathname === "/";
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const anchorTarget = useRef<string | null>(null);
   const toggle = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -36,24 +39,35 @@ export function Navigation() {
   }, [open]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
-    }, { rootMargin: "-10% 0px -65% 0px" });
-    for (const id of ["hero", "work", "about", "contact"]) {
-      const section = document.getElementById(id);
-      if (section) observer.observe(section);
-    }
-    return () => observer.disconnect();
-  }, [pathname]);
+    const update = () => {
+      if (open || anchorTarget.current) return;
+      const sections = links.map(link => document.getElementById(link.href.slice(1))).filter((section): section is HTMLElement => Boolean(section));
+      const offset = document.querySelector(".site-header")?.getBoundingClientRect().height ?? 140;
+      const passed = sections.filter(section => section.getBoundingClientRect().top <= offset + 80);
+      setActive(passed.at(-1)?.id ?? sections[0]?.id ?? null);
+    };
+    let frame = 0;
+    const scroll = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update); };
+    const unlock = () => { anchorTarget.current = null; scroll(); };
+    const key = (event: KeyboardEvent) => { if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) unlock(); };
+    const outsideClick = (event: MouseEvent) => { if (event.target instanceof Element && !event.target.closest(".site-header")) unlock(); };
+    window.addEventListener("click", outsideClick);
+    window.addEventListener("wheel", unlock, { passive: true });
+    window.addEventListener("touchmove", unlock, { passive: true });
+    window.addEventListener("keydown", key);
+    window.addEventListener("popstate", unlock);
+    scroll(); window.addEventListener("scroll", scroll, { passive: true }); window.addEventListener("resize", scroll);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", scroll); window.removeEventListener("resize", scroll); window.removeEventListener("wheel", unlock); window.removeEventListener("touchmove", unlock); window.removeEventListener("keydown", key); window.removeEventListener("popstate", unlock); window.removeEventListener("click", outsideClick); };
+  }, [pathname, open]);
 
   return (
     <header className="site-header">
       <nav className="page-width nav-bar" aria-label="Main navigation">
-        <Link className="wordmark" href="/" aria-label="Sanupa home" onClick={() => setOpen(false)}>
-          sanupa<span>.</span>
+        <Link className="wordmark" href="/" aria-label="Sanupa Gunarathne home" onClick={() => { anchorTarget.current = null; setActive("hero"); setOpen(false); }}>
+          <Brand />
         </Link>
         <div className="desktop-links">
-          {links.map((link) => <a key={link.href} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}
+          {links.map((link) => <a key={link.href} onClick={() => { anchorTarget.current = null; }} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}
         </div>
         <span className="nav-note">{"// developer & creative"}</span>
         <button
@@ -69,9 +83,20 @@ export function Navigation() {
       </nav>
       <div id="mobile-navigation" className="mobile-links page-width" hidden={!open}>
         {links.map((link) => (
-          <a key={link.href} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined} onClick={() => {
+          <a key={link.href} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined} onClick={event => {
             setOpen(false);
-            if (home) document.querySelector<HTMLElement>(link.href)?.focus({ preventScroll: true });
+            if (home) {
+              event.preventDefault();
+              anchorTarget.current = link.href.slice(1);
+              setActive(link.href.slice(1));
+              history.pushState(null, "", link.href);
+              requestAnimationFrame(() => {
+                const section = document.querySelector<HTMLElement>(link.href);
+                section?.scrollIntoView({ block: "start", behavior: "instant" });
+                section?.focus({ preventScroll: true });
+                setActive(link.href.slice(1));
+              });
+            }
           }}>{link.label}</a>
         ))}
       </div>

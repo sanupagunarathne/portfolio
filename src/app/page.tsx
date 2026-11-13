@@ -15,13 +15,16 @@ import { Expertise } from "@/components/expertise";
 import { Journey } from "@/components/journey";
 import { InterestGallery } from "@/components/interest-gallery";
 import { ExpertiseSculpture } from "@/components/expertise-sculpture";
+import { ContactForm } from "@/components/contact-form";
 import { Reveal } from "@/components/reveal";
+
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (
     <>
       <main id="main-content" tabIndex={-1}>
-        <section id="hero" className="hero page-width" aria-labelledby="hero-title">
+        <section id="hero" tabIndex={-1} className="hero page-width" aria-labelledby="hero-title">
           <div className="hero-copy"><Reveal>
             <p className="eyebrow"><span className="status-dot" /> A personal space on the web</p>
             <p className="introduction">{personal.introduction}</p>
@@ -75,13 +78,13 @@ export default function Home() {
           <InterestGallery items={interests} />
         </section>
         <section id="contact" className="contact-section" tabIndex={-1} aria-labelledby="contact-title">
-          <div className="page-width">
+          <div className="page-width contact-layout"><div>
             <p className="eyebrow">LET&apos;S CONNECT</p>
             <h2 id="contact-title">Let&apos;s make something<br />meaningful together.</h2>
             <p className="contact-description">Have an idea to explore or a project to talk about? I&apos;d love to hear from you.</p>
             <a className="button primary" href="https://www.linkedin.com/in/sanupagunarathne/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn <ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
             <dl className="contact-availability"><div><dt>Email</dt><dd>{personal.email ? <a href={`mailto:${personal.email}`}>{personal.email}</a> : "To be provided"}</dd></div><div><dt>Résumé</dt><dd>{personal.resume ? <a href={personal.resume}>Download résumé</a> : "To be added"}</dd></div></dl>
-          </div>
+          </div><ContactForm deliveryEnabled={Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL && process.env.CONTACT_FROM_EMAIL)} /></div>
         </section>
       </main>
 

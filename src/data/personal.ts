@@ -6,7 +6,7 @@ export const personal = {
   degree: "BSc (Hons) Software Engineering — University of Westminster",
   location: "Sri Lanka",
   introduction: "Hello, I'm Sanupa.",
-  headline: "Building digital experiences that feel different.",
+  headline: "BUILDING DIGITAL EXPERIENCES THAT FEEL DIFFERENT.",
   description:
     "Software Engineering undergraduate exploring the intersection of technology, creativity, and thoughtful design.",
   aboutDescription: "I'm Sanupa, a Software Engineering undergraduate at IIT Sri Lanka, studying for the University of Westminster degree. I'm interested in building useful applications and exploring how clear design can make technology easier to use.",

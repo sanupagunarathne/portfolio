@@ -13,6 +13,12 @@ const groups: { category: string; items: [string, string, string, string[]][] }[
   { category: "Frontend", items: [
     ["HTML", "html5", "Semantic structure for accessible web pages.", []], ["CSS", "css3", "Responsive layouts and considered visual details.", []],
     ["React", "react", "Reusable interfaces; used to build this portfolio.", []],
+    ["Next.js", "nextjs", "Routing and server-rendered pages in this portfolio.", []],
+    ["Tailwind CSS", "tailwindcss", "The styling toolchain in this portfolio.", []],
+  ] },
+  { category: "Libraries", items: [
+    ["Motion", "motion", "Motion and reduced-motion-aware reveals in this portfolio.", []],
+    ["Three.js", "threejs", "The interactive expertise sculpture in this portfolio.", []],
   ] },
   { category: "Backend", items: [
     ["Node.js", "nodejs", "JavaScript on the server.", ["eatwhat"]], ["Spring Boot", "spring", "Java-based application services.", ["paddock-labs", "campus-slot"]],
