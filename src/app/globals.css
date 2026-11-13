@@ -295,3 +295,47 @@ h3 { font-size: clamp(1.3rem, 2.2vw, 2rem); line-height: 1.25; font-weight: 500;
 .sculpture-controls button { min-height: 44px; min-width: 44px; font-size: .875rem; border: 1px solid var(--color-taupe); border-radius: 4px; padding: .5rem .75rem; background: var(--color-ivory); color: inherit; }
 .sculpture-controls button[aria-pressed="true"] { background: var(--color-blush); }
 @media (max-width: 767px) { .sculpture-stage { height: 270px; } }
+
+/* Phase 5 — case studies share the same quiet editorial system. */
+.case-page { padding-bottom: 4rem; }
+.case-hero { padding-block: clamp(2rem, 6vw, 5rem); }
+.case-hero > .eyebrow { margin-top: 3rem; }
+.case-hero h1 { font-size: clamp(2.8rem, 7.2vw, 7rem); overflow-wrap: anywhere; max-width: none; }
+.case-lead { font-size: clamp(1rem, 1.7vw, 1.3rem); max-width: 65ch; margin-top: 2rem; }
+.case-status { display: flex; align-items: center; gap: .65rem; font-size: .875rem; }
+.case-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.case-page > .media-frame { max-height: 720px; }
+.case-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(2rem, 6vw, 6rem); margin-top: 5rem; align-items: start; }
+.case-contents { position: sticky; top: 7rem; }
+.case-contents ol { list-style: none; margin: 1rem 0; padding: 0; }
+.case-contents a { display: inline-flex; align-items: center; min-height: 44px; font-size: .875rem; text-underline-offset: 5px; }
+.case-contents a:is(:hover, :focus-visible) { text-decoration: underline; }
+.case-story { min-width: 0; }
+.case-story section { padding-bottom: 3rem; margin-bottom: 3rem; border-bottom: 1px solid var(--color-taupe); }
+.case-story h2 { font-size: clamp(1.7rem, 2.8vw, 2.75rem); letter-spacing: -.055em; }
+.case-story p, .case-story li { line-height: 1.8; }
+.case-story .mac-window { margin-top: 2rem; }
+.case-facts { display: grid; grid-template-columns: 8ch minmax(0, 1fr); gap: 1rem; font-size: .875rem; margin: 0; line-height: 1.7; }
+.case-facts dd { margin: 0; }
+.case-facts dt { color: var(--color-stone); }
+.case-pending { padding: 1.25rem; background: var(--color-soft-gray); border-left: 2px solid var(--color-taupe); border-radius: 3px; }
+.case-pending span { display: block; margin-bottom: .65rem; font-weight: 600; }
+.case-gallery { display: grid; gap: 2rem; }
+.case-gallery figure { min-width: 0; margin: 0; }
+.case-gallery figcaption h3 { font-size: 1.15rem; }
+.case-gallery figcaption p { font-size: .875rem; }
+.next-project { border-top: 1px solid var(--color-taupe); padding-top: 2rem; }
+.next-project > a:not(.text-link) { display: flex; justify-content: space-between; align-items: center; gap: 2rem; padding-block: 1rem 2rem; }
+.next-project > a > span { display: flex; flex-direction: column; gap: 1rem; font-size: clamp(1.8rem, 4vw, 3.5rem); letter-spacing: -.06em; }
+.next-project .content-note { letter-spacing: 0; }
+.next-project svg { flex-shrink: 0; transition: transform .2s; }
+.next-project > a:hover svg { transform: translate(3px, -3px); }
+.project-notes-toggle { border: 0; border-bottom: 1px solid var(--color-taupe); background: transparent; color: inherit; font-size: .875rem; padding-inline: 0; }
+.not-found { min-height: 65vh; padding-block: 5rem; }
+.not-found h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
+@media (max-width: 900px) {
+  .case-layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; margin-top: 3rem; }
+  .case-contents { position: static; padding-bottom: 1rem; border-bottom: 1px solid var(--color-taupe); }
+  .case-contents ol { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { .next-project svg { transition: none; transform: none !important; } }

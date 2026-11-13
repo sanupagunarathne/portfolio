@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,6 +12,8 @@ const links = [
 ];
 
 export function Navigation() {
+  const pathname = usePathname();
+  const home = pathname === "/";
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -41,7 +44,7 @@ export function Navigation() {
       if (section) observer.observe(section);
     }
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   return (
     <header className="site-header">
@@ -50,7 +53,7 @@ export function Navigation() {
           sanupa<span>.</span>
         </Link>
         <div className="desktop-links">
-          {links.map((link) => <a key={link.href} href={link.href} aria-current={active === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}
+          {links.map((link) => <a key={link.href} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}
         </div>
         <span className="nav-note">{"// developer & creative"}</span>
         <button
@@ -66,9 +69,9 @@ export function Navigation() {
       </nav>
       <div id="mobile-navigation" className="mobile-links page-width" hidden={!open}>
         {links.map((link) => (
-          <a key={link.href} href={link.href} aria-current={active === link.href.slice(1) ? "location" : undefined} onClick={() => {
+          <a key={link.href} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined} onClick={() => {
             setOpen(false);
-            document.querySelector<HTMLElement>(link.href)?.focus({ preventScroll: true });
+            if (home) document.querySelector<HTMLElement>(link.href)?.focus({ preventScroll: true });
           }}>{link.label}</a>
         ))}
       </div>
