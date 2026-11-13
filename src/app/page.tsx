@@ -14,6 +14,7 @@ import { Playground } from "@/components/playground";
 import { Expertise } from "@/components/expertise";
 import { Journey } from "@/components/journey";
 import { InterestGallery } from "@/components/interest-gallery";
+import { ExpertiseSculpture } from "@/components/expertise-sculpture";
 import { Reveal } from "@/components/reveal";
 
 export default function Home() {
@@ -57,7 +58,7 @@ export default function Home() {
         </section>
         <section id="expertise" className="portfolio-section expertise-section" tabIndex={-1} aria-labelledby="expertise-title">
           <div className="page-width"><SectionHeading number="03" label="EXPERTISE" title="Tools I use to bring ideas to life." id="expertise-title" />
-            <div className="expertise-intro"><div className="toolkit-mark" aria-hidden="true"><span>{"{ }"}</span><span>build. learn. repeat.</span></div><div><p className="lead">Different tools. One curious mindset.</p><p>A collection of languages, frameworks and tools connected to my projects and studies. Individual learning statuses are still being confirmed.</p></div></div>
+            <div className="expertise-intro"><ExpertiseSculpture /><div><p className="lead">Different tools. One curious mindset.</p><p>A collection of languages, frameworks and tools connected to my projects and studies. Individual learning statuses are still being confirmed.</p></div></div>
             <Expertise />
           </div>
         </section>
