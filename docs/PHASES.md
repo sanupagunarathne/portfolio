@@ -18,3 +18,7 @@ At each handoff include branch + commit, scope, executed checks, limitations, an
 ## Phase 2 branch dependency
 
 The user explicitly requested Phase 2 before remote main included Phase 1. Phase 2 is transparently based on `f3a79ad` from `feat/phase-1-foundation`, rather than the initial main commit. Merge Phase 1 first; then review Phase 2 relative to Phase 1 (or main after that merge). The assistant has not merged or pulled main. This exception does not authorize later phases automatically.
+
+## Phase 3 branch dependency
+
+Phase 3 was requested explicitly while main still contained the initial README. `feat/phase-3-interactions` transparently depends on Phase 2 commit `8c408c3`. Review against Phase 2 until the earlier branches have been merged by Sanupa. Glass styling refinements to the shared header, windows and panels are included in this phase. Do not automatically begin Phase 4.

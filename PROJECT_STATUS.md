@@ -2,9 +2,9 @@
 
 ## Active phase
 
-Phase 2 — Complete Website Structure, on `feat/phase-2-homepage`.
+Phase 3 — Core Interactions, on `feat/phase-3-interactions`.
 
-The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Advanced interactions, 3D and case-study routes remain assigned to later phases.
+The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions are implemented in Phase 3; 3D and case-study routes remain assigned to later phases.
 
 ## Implemented
 
@@ -33,7 +33,7 @@ The repository began with only a README at `0779ae1`. The complete user brief is
 ## Incomplete / remaining phases
 
 2. Complete homepage structure implemented; see Phase 2 details below.
-3. Expertise logos and panels, timeline selection, animations, interactive playground and real-photo gallery.
+3. Core interactions implemented; see Phase 3 details below.
 4. Lazy interactive 3D, loading/error/static fallbacks and performance checks.
 5. Four project case studies, verified links, image galleries, next-project navigation and per-page metadata.
 6. Full layout/accessibility/content/3D/link QA, public-origin SEO and deployment documentation.
@@ -70,8 +70,20 @@ Hero/about portraits, all project screenshots and personal photographs, résumé
 
 ## Branch dependency and next handoff
 
-Pending user direction for the next phase: add a restrained glass effect to the light design, and refine Phase 1/2 components as needed for consistency. Keep typography, contrast, responsive behavior and non-blur fallbacks intact. This has been recorded, not yet implemented; Phase 3 has not started.
+The requested glass refinements are now implemented in Phase 3, including appropriate Phase 1/2 component updates. Typography, contrast, responsive behavior and opaque fallbacks are preserved.
 
-Remote main was still the initial README when the user explicitly requested Phase 2. This branch transparently depends on Phase 1 commit f3a79ad; no merge or pull was performed. Sanupa should merge Phase 1 before Phase 2. Stop after the Phase 2 handoff; Phase 3 remains a separate checkpoint.
+Remote main was still the initial README when the user explicitly requested Phase 2. This branch transparently depends on Phase 1 commit f3a79ad; no merge or pull was performed. Sanupa should merge Phase 1 before Phase 2. Phase 2 was handed off; the user subsequently requested Phase 3 as a separate checkpoint.
 
 Reusable cloud install_script and start_skill were previously saved as a draft. They remain applicable: npm ci, npm run dev, build/type/lint checks and production Playwright tests. Saving these does not publish the environment.
+
+## Phase 3 implementation
+
+- Interactive technology categories and selectable logo buttons; macOS-style detail panel shows description, usage, honest learning-status placeholders and related project links. No new proficiency claims.
+- Keyboard/tap-expandable education milestones with selected, hover and focus states. No fabricated years.
+- Project preview buttons expand honest notes; zoom, arrow microinteractions and cursor-follow labels are fine-pointer enhancements. Full case studies remain Phase 5.
+- Reusable Motion reveal wrapper; server content is initially visible. Reduced motion disables animated movement.
+- Native dialog gallery for supplied photos only: focus containment, Escape/backdrop/close-button dismissal and return to opener. Current missing photos remain noninteractive placeholders.
+- Header active-section tracking, refined navigation underline, and restrained glass surfaces on shared Phase 1/2 components. Opaque and reduced-transparency fallbacks preserve readability; footer socials and Doto/Geist Mono remain intact.
+- Browser coverage for selection/filter resets, keyboard/touch expansion, reduced-motion availability, opaque fallback and gallery behavior using test-only artwork.
+
+Initial Phase 3 validation passed lint, TypeScript, the production build and all 16 browser tests. Mobile selection now brings the detail panel into view and offers focus return to the selected technology. Visual layout checks fit 320, 390, 768 and 1440px. A compiled-CSS prefixing issue that dropped the standard blur declaration was found and corrected; a computed-blur assertion now covers it. Final validation after this correction passed lint, TypeScript, the production build and all 16 desktop/mobile browser tests, including the computed blur and opaque-fallback assertions. Main still held the initial README at branch creation; the user's request authorized continuing transparently from Phase 2 (`8c408c3`). No merge or pull was performed. Hand over Phase 3 and stop before Phase 4.

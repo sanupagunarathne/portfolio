@@ -1,6 +1,6 @@
 # Sanupa Gunarathne — portfolio
 
-A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. Delivered in six phases. **Phase 2 provides the complete homepage structure**; advanced interactions, 3D, case studies and final QA follow in later phases.
+A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. Delivered in six phases. **Phase 3 adds the core interactions and restrained glass styling**; 3D, case studies and final QA follow in later phases.
 
 ## Development
 
@@ -63,3 +63,16 @@ Update files in `src/data/` for supplied content. `personal.ts` controls portrai
 Compatible with the standard Next.js/Vercel build (`npm run build`), with no custom services. Connect on Vercel when deployment is authorized. Public origin, sitemap/robots configuration and full case-study SEO follow in later phases; no domain has been invented.
 
 Phase 2 was explicitly requested while remote main still held the initial README. `feat/phase-2-homepage` therefore depends on Phase 1 commit `f3a79ad`; merge Phase 1 first, then review Phase 2. No merge or pull was performed by the assistant.
+
+## Phase 3 interactions
+
+- Filter technologies by category and select a logo to see its description, editable usage/learning status, and related-project anchors. Unknown usage and proficiency remain explicitly unconfirmed.
+- Expand journey milestones with a click, tap, Enter or Space; selecting another closes the previous detail.
+- Project previews open inline project notes, with gentle zoom/arrow effects and mouse-only cursor labels. Case-study routes remain Phase 5.
+- Photo gallery buttons appear only when an interest has a real image path. The native modal supports Escape, close button, backdrop click, contained focus and focus restoration. Placeholders remain noninteractive.
+- Motion reveals keep server-rendered content visible before hydration and when JavaScript is unavailable. Reduced motion removes movement. Glass surfaces use opaque defaults when backdrop blur is unsupported and respect reduced transparency where supported.
+- Navigation highlights the current major section; footer social links and dotted hero typography are preserved.
+
+`tests/gallery.spec.ts` tests the actual gallery component in Chromium using a test-only fixture and an esbuild bundle. Only Next Image's loader is replaced with a native image; native dialog behavior and React events run in the browser. No test artwork enters portfolio content.
+
+Phase 3 was explicitly requested before main incorporated the earlier phases. `feat/phase-3-interactions` depends on Phase 2 commit `8c408c3`. Merge the earlier phases first; merging/pulling main remains the user's responsibility.

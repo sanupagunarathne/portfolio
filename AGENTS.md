@@ -13,11 +13,13 @@ Read `docs/PROJECT_BRIEF.md` for the complete user specification and `PROJECT_ST
 
 Phase 2 exception: the user explicitly requested continuing before remote main contained Phase 1. `feat/phase-2-homepage` is transparently based on Phase 1 commit `f3a79ad`; see docs/PHASES.md. This does not authorize automatic continuation into later phases.
 
+Phase 3 exception: the user explicitly requested Phase 3 while remote main was still the initial README. `feat/phase-3-interactions` depends on Phase 2 commit `8c408c3`. The dependency was communicated; do not merge/pull main or automatically begin Phase 4.
+
 ## Purpose, design and stack
 
 Latest user direction (after Phase 2): introduce a glass effect when starting the next phase. Use restrained translucent surfaces, subtle backdrop blur and fine borders within the existing light palette, with readable contrast and opaque fallbacks. Suitable locations include the header and selected panels; preserve the Doto hero and Geist Mono typography. This updates the original brief's guidance on glass effects; avoid excessive use.
 
-When starting the next phase, review and refine existing Phase 1 and 2 components as needed to integrate this direction consistently. Include those refinements on the next phase's branch and document them; do not rewrite completed branch history or merge/pull main. This request records future work and does not itself start Phase 3.
+When starting the next phase, review and refine existing Phase 1 and 2 components as needed to integrate this direction consistently. Include those refinements on the next phase's branch and document them; do not rewrite completed branch history or merge/pull main. The user subsequently authorized Phase 3; the glass refinements are implemented on that branch. Keep the opaque/no-blur and reduced-transparency fallbacks.
 
 A complete premium, light editorial portfolio for Sanupa Gunarathne: “A calm digital canvas where creativity meets engineering.” Use Next.js App Router, React, TypeScript, Tailwind CSS, Motion for React, Three.js, React Three Fiber/Drei, and Lucide. Compatible stable versions are locked in package-lock.json; install with npm ci. Geist, Geist Mono, and Doto are bundled locally; Doto is the hero display face and Geist Mono carries the supporting typography.
 
