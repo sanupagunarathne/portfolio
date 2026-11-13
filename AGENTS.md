@@ -15,6 +15,10 @@ Phase 2 exception: the user explicitly requested continuing before remote main c
 
 ## Purpose, design and stack
 
+Latest user direction (after Phase 2): introduce a glass effect when starting the next phase. Use restrained translucent surfaces, subtle backdrop blur and fine borders within the existing light palette, with readable contrast and opaque fallbacks. Suitable locations include the header and selected panels; preserve the Doto hero and Geist Mono typography. This updates the original brief's guidance on glass effects; avoid excessive use.
+
+When starting the next phase, review and refine existing Phase 1 and 2 components as needed to integrate this direction consistently. Include those refinements on the next phase's branch and document them; do not rewrite completed branch history or merge/pull main. This request records future work and does not itself start Phase 3.
+
 A complete premium, light editorial portfolio for Sanupa Gunarathne: “A calm digital canvas where creativity meets engineering.” Use Next.js App Router, React, TypeScript, Tailwind CSS, Motion for React, Three.js, React Three Fiber/Drei, and Lucide. Compatible stable versions are locked in package-lock.json; install with npm ci. Geist, Geist Mono, and Doto are bundled locally; Doto is the hero display face and Geist Mono carries the supporting typography.
 
 Mandatory palette: Stone Gray #73726E; Soft Gray #E6E5E1; Soft Blush #F2D9D0; Warm Ivory #F7F7ED; Warm Taupe #B8B5AE. Ivory dominates; darker stone-derived neutral is allowed for contrast. Tokens live in src/app/globals.css. Generous whitespace, expressive typography, varied balanced layouts, thin borders, minimal shadows. Avoid neon, dark themes, excessive gradients/glass, repetitive card grids, skill percentages, fake screenshots or decorative fake controls.

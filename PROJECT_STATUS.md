@@ -70,6 +70,8 @@ Hero/about portraits, all project screenshots and personal photographs, résumé
 
 ## Branch dependency and next handoff
 
+Pending user direction for the next phase: add a restrained glass effect to the light design, and refine Phase 1/2 components as needed for consistency. Keep typography, contrast, responsive behavior and non-blur fallbacks intact. This has been recorded, not yet implemented; Phase 3 has not started.
+
 Remote main was still the initial README when the user explicitly requested Phase 2. This branch transparently depends on Phase 1 commit f3a79ad; no merge or pull was performed. Sanupa should merge Phase 1 before Phase 2. Stop after the Phase 2 handoff; Phase 3 remains a separate checkpoint.
 
 Reusable cloud install_script and start_skill were previously saved as a draft. They remain applicable: npm ci, npm run dev, build/type/lint checks and production Playwright tests. Saving these does not publish the environment.
