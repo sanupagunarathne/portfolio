@@ -22,7 +22,7 @@ test("technology filters and keyboard selection expose honest details", async ({
   await expect(details.getByRole("heading", { name: "A closer look." })).toBeVisible();
   await expect(page.locator(".technology-group").getByRole("button", { name: "Java", exact: true })).toHaveCount(0);
   await filters.getByRole("button", { name: "All", exact: true }).click();
-  await expect(page.locator(".technology-group")).toHaveCount(5);
+  await expect(page.locator(".technology-group")).toHaveCount(6);
 });
 
 test("journey and project notes expand and collapse without navigating", async ({ page }) => {

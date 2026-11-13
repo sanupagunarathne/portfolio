@@ -74,3 +74,11 @@ The expertise sculpture is isolated in expertise-sculpture.tsx (viewport/prefere
 ## Case study reference
 
 The four routes at /projects/[slug] are generated from projects.ts; details and galleries are in case-studies.ts. Keep unknown role/features/approach/challenges/progress null and honestly labeled. Never treat null as an unfinished or unsuccessful project. Update each gallery image/alt/caption only from supplied media. Project notes and case-study links are separate controls. Footer is shared in the root layout; header anchors must point back to homepage sections from nested routes. Unknown slugs must remain 404. Do not fabricate canonical URLs or verified project/demo links.
+
+## Latest interface direction — after Phase 5
+
+Use the full name “Sanupa Gunarathne” in header and footer with a small rounded face mark and two round eyes (a user-requested brand mark, not a hero avatar). The whole Doto hero headline must be block capitals: BUILDING DIGITAL EXPERIENCES THAT FEEL DIFFERENT. Tighten excessive section spacing and give header/footer more presence. Navigation includes Home, Work, About, Expertise, Journey, Playground, Beyond and Contact, with rounded active states and keyboard/touch support. Preserve glass and light palette.
+
+Present technologies as a light spatial constellation with genuine floating icons and CSS 3D depth; keep clickable hit areas stable, motion opt-out and accessible details. Motion, Three.js, Next.js and Tailwind entries are verified by this portfolio's implementation, not proficiency claims.
+
+Contact is a labeled, validated form with name/email/topic/message, preparation/copy, submission/loading/failure preservation and success only after server acceptance. Resend is a provisional adapter: no service/key/recipient/sender is configured. Do not claim mail delivery works until configured and actually verified. Never put keys in code/chat; .env.example lists names only. No real test email was sent. The user was asked for a public recipient and service preference; activation remains pending. This refinement branch depends on Phase 5 commit 5723348; no merge/pull or automatic Phase 6 start.

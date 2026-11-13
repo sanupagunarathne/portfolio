@@ -2,7 +2,7 @@
 
 ## Active phase
 
-Phase 5 — Dedicated Project Pages, on `feat/phase-5-case-studies`.
+Post-Phase-5 interface/contact refinements, on `feat/interface-refinements`.
 
 The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions, the expertise sculpture and case-study routes are implemented in Phases 3–5; final cross-site QA remains Phase 6.
 
@@ -127,3 +127,17 @@ Phase 5 validation passed:
 - Real project screenshots, verified external project links and detailed personal contributions remain unavailable. Placeholder paths and editable fields are documented; no final content completeness or deployment claim is made.
 
  Main still included Phase 1 only, so this explicitly requested phase depends on Phase 4 (`9252149`). No merge or pull was performed; stop before Phase 6.
+
+## Post-Phase-5 interface refinement
+
+User requested tighter spacing, stronger header/footer scale, full-name branding with a rounded two-eye mark, uppercase Doto hero, complete rounded-state navigation, a more spatial technology presentation and a functional contact form.
+
+Implemented on feat/interface-refinements, based on Phase 5 (5723348):
+
+- Full-name header/footer identity, enlarged supporting layout, all eight navigation destinations and rounded active states.
+- Reduced section/hero/project gaps; uppercase hero; existing glass palette preserved.
+- Genuine technology icons arranged in a floating CSS 3D constellation; category filters/details remain keyboard-accessible. Stable hit areas and still icons for reduced motion/coarse pointers. Added verified portfolio frameworks/libraries.
+- Validated name/email/topic/message form, prepared-message copy mode, and a server-side provisional Resend adapter with loading/error/success behavior. Errors preserve entered text. No false delivery success.
+- Service credentials and recipient/sender are absent in both environment configuration and process variables. Asked the user for a public receiving email and service preference. Real sending remains blocked by this configuration; no real test emails were sent. Current UI clearly prepares unsent messages.
+
+Validation completed: lint, TypeScript and the production build passed. All 50 Playwright-run automated checks passed, including browser workflows, contact-handler provider mocks, delivery failures, preparation/copy, complete navigation, all case studies and 3D fallbacks. Initial moving-hit-area and mobile-active-state defects were corrected; a tablet navigation overflow was also fixed. Additional checks fit 320, 390, 768, 1024 and 1440px, including nested-page header checks, and desktop/mobile screenshots were inspected. Real delivery remains unconfigured and untested; this is the only outstanding contact integration prerequisite. Phase 6 has not been started; no merges or pulls were performed.

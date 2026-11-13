@@ -98,3 +98,13 @@ Set `project.screenshot` for the overview/thumbnail. Set each study's `gallery[]
 Project pages have individual title, description, Open Graph and Twitter metadata, a table of contents and next-project links (the last returns to the first). Shared header links point to homepage sections from a case study; shared footer and social links appear on every page. Unknown slugs return 404 with a recovery link. Main content and navigation remain available without JavaScript.
 
 Phase 5 depends on Phase 4 commit `9252149`; earlier unmerged phases must be merged first by Sanupa. No merge or pull was performed. Public-domain canonical URLs, sitemap and final cross-page QA remain in Phase 6.
+
+## Interface refinement after Phase 5
+
+Full-name branding and the rounded bot mark now appear in header/footer. All homepage sections have rounded navigation states, the Doto hero is uppercase, and section gaps are reduced. Technologies appear in a CSS 3D constellation with genuine Devicon logos, floating icon motion, depth and pointer tilt. Hit areas stay still; reduced-motion and coarse-pointer settings keep icons still. The existing lazy WebGL sculpture is retained.
+
+The contact form validates name, email, topic and message. With no delivery configuration it explicitly prepares an unsent message for copying and offers LinkedIn as a real contact route. No local storage or message database is used. A server-side Resend adapter is ready in /api/contact, with input/body/origin checks, a honeypot, timeout and honest error responses. No real email was sent during testing; provider success/failure is mocked in tests.
+
+To activate delivery after choosing Resend, securely configure RESEND_API_KEY, CONTACT_TO_EMAIL and CONTACT_FROM_EMAIL in deployment/environment settings. The sender must belong to a Resend-verified domain; the recipient must be provided by Sanupa. Outbound access to api.resend.com is required. See .env.example for variable names; never commit real values. The homepage reads the configured availability on each server request. Other form providers require replacing the server adapter. Provider-side abuse controls and real delivery should be verified before public activation; there is no persistent distributed rate limiter in this implementation.
+
+The refinement branch feat/interface-refinements depends on Phase 5 commit 5723348. Merge/pull main remains Sanupa's responsibility. These changes do not automatically begin Phase 6.
