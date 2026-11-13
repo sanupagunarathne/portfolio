@@ -10,7 +10,7 @@ export default function Home() {
           <div className="hero-copy">
             <p className="eyebrow"><span className="status-dot" /> A personal space on the web</p>
             <p className="introduction">{personal.introduction}</p>
-            <h1 id="hero-title">Building digital experiences that <em>feel different.</em></h1>
+            <h1 id="hero-title">{personal.headline}</h1>
             <p className="hero-description">{personal.description}</p>
             <div className="hero-actions">
               <a className="button primary" href="#work">Explore My Work <ArrowUpRight size={18} aria-hidden="true" /></a>
@@ -41,13 +41,20 @@ export default function Home() {
         <section id="contact" className="contact-section" tabIndex={-1} aria-labelledby="contact-title">
           <div className="page-width">
             <p className="eyebrow">LET&apos;S CONNECT</p>
-            <h2 id="contact-title">Let&apos;s make something<br /><em>meaningful</em> together.</h2>
-            <div className="social-links">{socials.map((social) => <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer">{social.name}<ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>)}</div>
+            <h2 id="contact-title">Let&apos;s make something<br />meaningful together.</h2>
             <p className="contact-note">Contact email and résumé will be added when available.</p>
           </div>
         </section>
       </main>
-      <footer className="page-width footer"><a href="#main-content" className="wordmark" aria-label="Sanupa — back to top">sanupa.</a><p>Thoughtfully built. Always curious.</p><span className="mono">© {new Date().getFullYear()} {personal.name}</span></footer>
+      <footer className="page-width footer">
+        <div className="footer-main">
+          <div><a href="#main-content" className="wordmark" aria-label="Sanupa — back to top">sanupa.</a><p>Thoughtfully built. Always curious.</p></div>
+          <nav className="social-links" aria-label="Social links">
+            {socials.map((social) => <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer">{social.name}<ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>)}
+          </nav>
+        </div>
+        <div className="footer-bottom"><span className="mono">© {new Date().getFullYear()} {personal.name}</span><a className="back-to-top" href="#main-content">Back to top ↑</a></div>
+      </footer>
     </>
   );
 }

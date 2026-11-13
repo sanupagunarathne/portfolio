@@ -13,9 +13,11 @@ Read `docs/PROJECT_BRIEF.md` for the complete user specification and `PROJECT_ST
 
 ## Purpose, design and stack
 
-A complete premium, light editorial portfolio for Sanupa Gunarathne: “A calm digital canvas where creativity meets engineering.” Use Next.js App Router, React, TypeScript, Tailwind CSS, Motion for React, Three.js, React Three Fiber/Drei, and Lucide. Compatible stable versions are locked in package-lock.json; install with npm ci. Geist, Geist Mono, and occasional Doto are bundled locally.
+A complete premium, light editorial portfolio for Sanupa Gunarathne: “A calm digital canvas where creativity meets engineering.” Use Next.js App Router, React, TypeScript, Tailwind CSS, Motion for React, Three.js, React Three Fiber/Drei, and Lucide. Compatible stable versions are locked in package-lock.json; install with npm ci. Geist, Geist Mono, and Doto are bundled locally; Doto is the hero display face and Geist Mono carries the supporting typography.
 
 Mandatory palette: Stone Gray #73726E; Soft Gray #E6E5E1; Soft Blush #F2D9D0; Warm Ivory #F7F7ED; Warm Taupe #B8B5AE. Ivory dominates; darker stone-derived neutral is allowed for contrast. Tokens live in src/app/globals.css. Generous whitespace, expressive typography, varied balanced layouts, thin borders, minimal shadows. Avoid neon, dark themes, excessive gradients/glass, repetitive card grids, skill percentages, fake screenshots or decorative fake controls.
+
+Typography revision: use Doto for the entire hero headline, with one consistent weight/style and no serif italic emphasis. Use Geist Mono for supporting typography, navigation and section headings to emphasize the programming identity. Keep labels and supporting text readable (generally 14px minimum). Social links belong in the footer. Preserve these preferences in later phases.
 
 Use mono section numbers, filename labels, restrained dot grids and code references. Reusable macOS windows have decorative noninteractive titlebar dots, thin borders and soft corners; use selectively, never as the entire site.
 

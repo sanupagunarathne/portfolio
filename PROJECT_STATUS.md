@@ -38,6 +38,12 @@ The repository began with only a README at `0779ae1`. The complete user brief is
 5. Four project case studies, verified links, image galleries, next-project navigation and per-page metadata.
 6. Full layout/accessibility/content/3D/link QA, public-origin SEO and deployment documentation.
 
+## Phase 1 typography refinement
+
+User requested stronger programming typography: the whole hero headline now uses consistent Doto dot-matrix letters; serif/italic mixing was removed. Geist Mono supports body text, headings, navigation and footer. Small supporting labels were enlarged. Header typography was refined, social links moved to a labeled footer navigation, and the footer now has a distinct copyright/back-to-top row. This remains Phase 1; no merge or pull was performed.
+
+Revision validation: lint, TypeScript, production build and all 6 browser tests passed. Visual checks covered 1440px, 390px and 320px widths with no horizontal overflow and confirmed the loaded Doto hero font. The portrait annotation moves below the image on mobile for readability.
+
 ## Missing content
 
 Hero/about portraits, all project screenshots and personal photographs, résumé, email, confirmed technology learning statuses, milestone dates and detailed project roles/features/results/links. Use honest labeled placeholders. No fake screenshots, dates, email or proficiency claims. Exact reserved paths are in docs/ASSETS.md.

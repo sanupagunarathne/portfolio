@@ -8,7 +8,9 @@ test("foundation renders honestly and fits the viewport", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText("feel different");
   await expect(page.getByText("Foundation preview.", { exact: false })).toBeVisible();
   await expect(page.getByRole("img", { name: /Placeholder reserved/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: /GitHub/ })).toHaveAttribute("href", "https://github.com/sanupagunarathne");
+  const footer = page.getByRole("contentinfo");
+  await expect(footer.getByRole("navigation", { name: "Social links" })).toBeVisible();
+  await expect(footer.getByRole("link", { name: /GitHub/ })).toHaveAttribute("href", "https://github.com/sanupagunarathne");
   await expect(page.getByRole("link", { name: "Explore My Work" })).toHaveAttribute("href", "#work");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   expect(errors).toEqual([]);

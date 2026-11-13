@@ -40,7 +40,7 @@ export function Navigation() {
         <div className="desktop-links">
           {links.map((link) => <a key={link.href} href={link.href}>{link.label}</a>)}
         </div>
-        <span className="nav-note">Engineering × creativity</span>
+        <span className="nav-note">{"// developer & creative"}</span>
         <button
           ref={toggle}
           className="menu-toggle"
