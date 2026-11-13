@@ -3,21 +3,25 @@ import { personal } from "@/data/personal";
 import { socials } from "@/data/socials";
 import Image from "next/image";
 import { projects } from "@/data/projects";
-import { skills, skillCategories } from "@/data/skills";
-import { timeline } from "@/data/timeline";
+
+
 import { interests } from "@/data/interests";
 import { SectionHeading } from "@/components/section-heading";
 import { MediaFrame } from "@/components/media-frame";
 import { ProjectCard } from "@/components/project-card";
 import { MacWindow } from "@/components/mac-window";
 import { Playground } from "@/components/playground";
+import { Expertise } from "@/components/expertise";
+import { Journey } from "@/components/journey";
+import { InterestGallery } from "@/components/interest-gallery";
+import { Reveal } from "@/components/reveal";
 
 export default function Home() {
   return (
     <>
       <main id="main-content" tabIndex={-1}>
         <section id="hero" className="hero page-width" aria-labelledby="hero-title">
-          <div className="hero-copy">
+          <div className="hero-copy"><Reveal>
             <p className="eyebrow"><span className="status-dot" /> A personal space on the web</p>
             <p className="introduction">{personal.introduction}</p>
             <h1 id="hero-title">{personal.headline}</h1>
@@ -26,7 +30,7 @@ export default function Home() {
               <a className="button primary" href="#work">Explore My Work <ArrowUpRight size={18} aria-hidden="true" /></a>
               <a className="text-link" href="#about">About Me <ArrowDown size={16} aria-hidden="true" /></a>
             </div>
-            <p className="location"><MapPin size={14} aria-hidden="true" /> Based in {personal.location}</p>
+            <p className="location"><MapPin size={14} aria-hidden="true" /> Based in {personal.location}</p></Reveal>
           </div>
           <div className="portrait-composition">
             <div className="portrait-placeholder" role={personal.heroPortrait ? undefined : "img"} aria-label={personal.heroPortrait ? undefined : "Placeholder reserved for Sanupa's portrait; photograph not yet provided"}>
@@ -54,12 +58,12 @@ export default function Home() {
         <section id="expertise" className="portfolio-section expertise-section" tabIndex={-1} aria-labelledby="expertise-title">
           <div className="page-width"><SectionHeading number="03" label="EXPERTISE" title="Tools I use to bring ideas to life." id="expertise-title" />
             <div className="expertise-intro"><div className="toolkit-mark" aria-hidden="true"><span>{"{ }"}</span><span>build. learn. repeat.</span></div><div><p className="lead">Different tools. One curious mindset.</p><p>A collection of languages, frameworks and tools connected to my projects and studies. Individual learning statuses are still being confirmed.</p></div></div>
-            <div className="technology-groups">{skillCategories.map(category => <div className="technology-group" key={category}><h3>{category}</h3><ul>{skills.filter(skill => skill.category === category).map(skill => <li key={skill.name}><Image src={skill.icon} alt="" width={32} height={32} /><span>{skill.name}</span></li>)}</ul></div>)}</div>
+            <Expertise />
           </div>
         </section>
         <section id="journey" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="journey-title">
           <SectionHeading number="04" label="JOURNEY" title="Every experience shapes what comes next." id="journey-title" />
-          <ol className="journey-list">{timeline.map((milestone, index) => <li key={milestone.id}><span className="journey-point" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><div><p className="eyebrow">{milestone.label}</p><h3>{milestone.title}</h3><p>{milestone.summary}</p><p className="content-note">{milestone.detail}</p></div></li>)}</ol>
+          <Journey />
         </section>
         <section id="playground" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="playground-title">
           <SectionHeading number="05" label="PLAYGROUND" title="Small experiments. Big curiosity." id="playground-title" />
@@ -67,7 +71,7 @@ export default function Home() {
         </section>
         <section id="beyond" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="beyond-title">
           <SectionHeading number="06" label="BEYOND THE SCREEN" title="There's more to me than code." id="beyond-title" />
-          <div className="interests-gallery">{interests.map(interest => <figure key={interest.id}><MediaFrame src={interest.image} alt={`${interest.title} — personal photograph by Sanupa`} label={`${interest.title} photograph`} aspect={interest.aspect} /><figcaption><h3>{interest.title}</h3><p>{interest.caption}</p></figcaption></figure>)}</div>
+          <InterestGallery items={interests} />
         </section>
         <section id="contact" className="contact-section" tabIndex={-1} aria-labelledby="contact-title">
           <div className="page-width">

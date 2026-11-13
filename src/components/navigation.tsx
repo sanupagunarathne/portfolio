@@ -12,6 +12,7 @@ const links = [
 
 export function Navigation() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
   const toggle = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -31,6 +32,17 @@ export function Navigation() {
     };
   }, [open]);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
+    }, { rootMargin: "-10% 0px -65% 0px" });
+    for (const id of ["hero", "work", "about", "contact"]) {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    }
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header className="site-header">
       <nav className="page-width nav-bar" aria-label="Main navigation">
@@ -38,7 +50,7 @@ export function Navigation() {
           sanupa<span>.</span>
         </Link>
         <div className="desktop-links">
-          {links.map((link) => <a key={link.href} href={link.href}>{link.label}</a>)}
+          {links.map((link) => <a key={link.href} href={link.href} aria-current={active === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}
         </div>
         <span className="nav-note">{"// developer & creative"}</span>
         <button
@@ -54,7 +66,7 @@ export function Navigation() {
       </nav>
       <div id="mobile-navigation" className="mobile-links page-width" hidden={!open}>
         {links.map((link) => (
-          <a key={link.href} href={link.href} onClick={() => {
+          <a key={link.href} href={link.href} aria-current={active === link.href.slice(1) ? "location" : undefined} onClick={() => {
             setOpen(false);
             document.querySelector<HTMLElement>(link.href)?.focus({ preventScroll: true });
           }}>{link.label}</a>

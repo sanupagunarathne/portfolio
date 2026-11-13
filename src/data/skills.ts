@@ -1,5 +1,5 @@
 export type LearningStatus = "Working With" | "Learning" | "Exploring";
-export type Skill = { name: string; icon: string; category: string; status: LearningStatus | null; description: string; relatedProjects: string[] };
+export type Skill = { name: string; icon: string; category: string; status: LearningStatus | null; usage?: string | null; description: string; relatedProjects: string[] };
 
 // The brief supplies this toolkit, not individual proficiency claims. Confirm statuses before publishing them.
 const groups: { category: string; items: [string, string, string, string[]][] }[] = [
