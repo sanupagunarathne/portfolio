@@ -1,6 +1,6 @@
 # Sanupa Gunarathne — portfolio
 
-A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. Delivered in six phases. **Phase 4 adds a selective 3D expertise sculpture**, alongside core interactions and restrained glass styling. Case studies and final QA follow in later phases.
+A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. Delivered in six phases. **Phase 5 adds dedicated project case studies**, alongside the complete homepage, core interactions, glass styling and selective 3D. Final QA follows in Phase 6.
 
 ## Development
 
@@ -88,3 +88,13 @@ The Expertise section contains an abstract layered sculpture using React Three F
 - The WebGL tests use Chromium's software renderer and permit it in the capability probe only within the test. They assert real renderer draw calls, controls, pause/resume, static mode and context-loss recovery. Production rejects major performance caveats and may intentionally use the fallback on machines without suitable graphics support.
 
 Phase 4 depends on Phase 3 commit `6473ce6`. Main included Phase 1 when Phase 4 was requested; merge Phases 2 and 3 before Phase 4. The assistant has not merged or pulled main.
+
+## Phase 5 case studies
+
+All four `/projects/[slug]` routes are statically generated from `src/data/projects.ts`. Detailed content is in `src/data/case-studies.ts`: problem, role, features, approach, challenges, progress and gallery. Override the shared null defaults on each individual study when confirmed content is supplied. Null values render explicitly labeled documentation placeholders; they never imply completed work.
+
+Set `project.screenshot` for the overview/thumbnail. Set each study's `gallery[].image` to its real public image path and replace `gallery[].alt`/`caption` with descriptions of the supplied screenshot. Native image dialogs distinguish project screenshots from personal photographs. Placeholders never open a fake gallery. Verified external links can be supplied in `project.github` and `project.demo`; absent links produce text rather than inactive buttons.
+
+Project pages have individual title, description, Open Graph and Twitter metadata, a table of contents and next-project links (the last returns to the first). Shared header links point to homepage sections from a case study; shared footer and social links appear on every page. Unknown slugs return 404 with a recovery link. Main content and navigation remain available without JavaScript.
+
+Phase 5 depends on Phase 4 commit `9252149`; earlier unmerged phases must be merged first by Sanupa. No merge or pull was performed. Public-domain canonical URLs, sitemap and final cross-page QA remain in Phase 6.

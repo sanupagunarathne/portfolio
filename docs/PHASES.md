@@ -26,3 +26,7 @@ Phase 3 was requested explicitly while main still contained the initial README. 
 ## Phase 4 branch dependency
 
 The user requested Phase 4 when remote main included Phase 1 but not Phases 2/3. `feat/phase-4-3d` transparently depends on Phase 3 commit `6473ce6`. Merge earlier phases first. This phase adds the primary expertise sculpture; the optional second Playground scene is omitted to keep the page lightweight. Do not automatically begin Phase 5.
+
+## Phase 5 branch dependency
+
+Phase 5 was explicitly requested before main incorporated Phases 2–4. `feat/phase-5-case-studies` transparently depends on Phase 4 commit `9252149`. Merge earlier phases first; Phase 6 is a separate checkpoint and is not started automatically.

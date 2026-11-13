@@ -37,4 +37,9 @@ test("supplied photos open a native modal, contain focus and restore it on close
   await expect(modal).toBeHidden();
   await expect(opener).toBeFocused();
   await expect(page.getByRole("button", { name: /View Missing/ })).toHaveCount(0);
+  await page.getByRole("button", { name: "View Project capture screenshot" }).click();
+  const screenshot = page.getByRole("dialog", { name: "Project capture screenshot" });
+  await expect(screenshot.getByRole("img", { name: "Actual test screenshot description" })).toBeVisible();
+  await screenshot.getByRole("button", { name: "Close screenshot" }).click();
+  await expect(screenshot).toBeHidden();
 });

@@ -2,9 +2,9 @@
 
 ## Active phase
 
-Phase 4 — 3D Experiences, on `feat/phase-4-3d`.
+Phase 5 — Dedicated Project Pages, on `feat/phase-5-case-studies`.
 
-The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions are implemented in Phase 3; 3D and case-study routes remain assigned to later phases.
+The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions, the expertise sculpture and case-study routes are implemented in Phases 3–5; final cross-site QA remains Phase 6.
 
 ## Implemented
 
@@ -35,7 +35,7 @@ The repository began with only a README at `0779ae1`. The complete user brief is
 2. Complete homepage structure implemented; see Phase 2 details below.
 3. Core interactions implemented; see Phase 3 details below.
 4. Primary expertise sculpture and lifecycle/fallback behavior implemented and validated.
-5. Four project case studies, verified links, image galleries, next-project navigation and per-page metadata.
+5. Four project case-study pages implemented with honest editable details, image galleries, next-project navigation and per-page metadata.
 6. Full layout/accessibility/content/3D/link QA, public-origin SEO and deployment documentation.
 
 ## Phase 1 typography refinement
@@ -107,3 +107,23 @@ Main contained Phase 1 at branch creation, but Phases 2 and 3 were not merged. T
 - Real-time 3D layout checks at 1440, 768, 390 and 320px: no horizontal overflow. Desktop and mobile sculpture screenshots inspected.
 - Rendering tests used Chromium's software renderer with the major-performance-caveat rejection disabled only inside the test. Production keeps that rejection and can show the static fallback on unsuitable graphics hardware. Physical-device GPU performance has not been benchmarked.
 - Optional second Playground 3D scene deliberately omitted to keep the page lightweight. Existing Playground experiments remain functional. All other Phase 4 scope completed.
+
+## Phase 5 implementation
+
+- Four statically generated `/projects/[slug]` pages include overview, problem, role, main features, stack, approach, challenges, results/progress and galleries.
+- Case-study details are editable in case-studies.ts. Known project summaries and problem areas are used; role, shipped features, approach, challenges and results remain null and explicitly labeled until confirmed. No fake statistics or project links.
+- Homepage preview links open actual case studies; inline notes remain separate controls. Next-project navigation wraps from NEX Installer back to Paddock Labs.
+- Shared footer moved to root layout. Header links from nested routes return to homepage sections. Case-study contents anchors, back-to-work links, accessible main regions and custom 404 recovery are included.
+- Gallery supports screenshots as well as personal photos, with correct labels and editable alt text. Current absent images remain noninteractive placeholders. Existing browser gallery fixture covers the screenshot variant without fabricating product assets.
+- Individual metadata includes title, description, Open Graph and Twitter fields. No production domain invented; canonical URLs and sitemap remain Phase 6 work.
+
+Phase 5 validation passed:
+
+- npm run lint: zero warnings.
+- npm run typecheck: passed.
+- npm run build: passed; all four project pages were statically generated.
+- Production Playwright suite: all 36 desktop/mobile tests passed, including four case studies, their metadata and next-project links, cross-page navigation, real 404 status, no-JavaScript content and screenshot-dialog fixtures. Existing homepage and 3D tests also passed.
+- Additional visual/layout checks: all four case studies fit 1440, 768, 390 and 320px without horizontal overflow. Desktop overview/hero and mobile hero screenshots inspected.
+- Real project screenshots, verified external project links and detailed personal contributions remain unavailable. Placeholder paths and editable fields are documented; no final content completeness or deployment claim is made.
+
+ Main still included Phase 1 only, so this explicitly requested phase depends on Phase 4 (`9252149`). No merge or pull was performed; stop before Phase 6.

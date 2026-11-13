@@ -18,3 +18,7 @@ Put files under public/ using these paths. Provide meaningful alt text based on 
 ## Editable fields
 
 Hero/about portraits: `personal.heroPortrait` / `personal.aboutPortrait`. Project screenshots: each entry's `screenshot` field in projects.ts. Interest photos: each `image` field in interests.ts. All use local paths under public/ and render through Next Image once configured; existing placeholders remain until then. Multiple case-study screenshots will be connected in Phase 5.
+
+## Case-study screenshots (Phase 5)
+
+Set overview images in `src/data/projects.ts` (`screenshot`). Each study in `src/data/case-studies.ts` has two gallery entries; set their `image`, `alt` and `caption` fields individually. Use `/images/projects/<slug>-01.webp` and `/images/projects/<slug>-02.webp`, where the exact slugs are `paddock-labs`, `eatwhat`, `campus-slot`, and `nex-installer`. These render real screenshots in the native viewer once supplied. Placeholder captions and descriptions must be replaced with accurate image descriptions.
