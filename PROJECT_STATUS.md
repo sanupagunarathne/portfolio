@@ -2,7 +2,7 @@
 
 ## Active phase
 
-Phase 3 — Core Interactions, on `feat/phase-3-interactions`.
+Phase 4 — 3D Experiences, on `feat/phase-4-3d`.
 
 The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions are implemented in Phase 3; 3D and case-study routes remain assigned to later phases.
 
@@ -34,7 +34,7 @@ The repository began with only a README at `0779ae1`. The complete user brief is
 
 2. Complete homepage structure implemented; see Phase 2 details below.
 3. Core interactions implemented; see Phase 3 details below.
-4. Lazy interactive 3D, loading/error/static fallbacks and performance checks.
+4. Primary expertise sculpture and lifecycle/fallback behavior implemented and validated.
 5. Four project case studies, verified links, image galleries, next-project navigation and per-page metadata.
 6. Full layout/accessibility/content/3D/link QA, public-origin SEO and deployment documentation.
 
@@ -87,3 +87,23 @@ Reusable cloud install_script and start_skill were previously saved as a draft. 
 - Browser coverage for selection/filter resets, keyboard/touch expansion, reduced-motion availability, opaque fallback and gallery behavior using test-only artwork.
 
 Initial Phase 3 validation passed lint, TypeScript, the production build and all 16 browser tests. Mobile selection now brings the detail panel into view and offers focus return to the selected technology. Visual layout checks fit 320, 390, 768 and 1440px. A compiled-CSS prefixing issue that dropped the standard blur declaration was found and corrected; a computed-blur assertion now covers it. Final validation after this correction passed lint, TypeScript, the production build and all 16 desktop/mobile browser tests, including the computed blur and opaque-fallback assertions. Main still held the initial README at branch creation; the user's request authorized continuing transparently from Phase 2 (`8c408c3`). No merge or pull was performed. Hand over Phase 3 and stop before Phase 4.
+
+## Phase 4 implementation
+
+- Primary expertise sculpture uses layered palette-colored torus geometry and a rounded core, R3F and Drei controls. It is isolated from all technology-selection controls.
+- Lazy client scene mounts near the viewport after a WebGL2 capability check. A stable SVG fallback is visible during SSR, reduced motion and loading, and after capability errors, context loss, scene errors or a 12-second loading timeout.
+- User rotation, keyboard buttons, reset, opt-in animation and static/interactive mode toggle. Demand rendering; optional animation stops offscreen and on document visibility change. Mobile DPR 1, desktop DPR capped at 1.5; no pan, zoom, shadows, textures, external environment maps or postprocessing.
+- Touch scrolling remains available. Existing glass styles, Doto headline and expertise panel remain intact. The optional second Playground scene was not added; the existing functional experiments are retained.
+- Tests cover reduced motion, unavailable WebGL and actual software-rendered draw calls, rotation, pause/resume offscreen, static view and context loss. All checks passed.
+
+Main contained Phase 1 at branch creation, but Phases 2 and 3 were not merged. The explicit Phase 4 request authorized continuing transparently from Phase 3 (`6473ce6`); no merge or pull was performed. Stop at Phase 4 handoff, before project case studies in Phase 5.
+
+### Phase 4 validation results
+
+- npm run lint: passed with zero warnings.
+- npm run typecheck: passed.
+- npm run build: passed; the scene remains a separate client-loaded chunk.
+- Production Playwright suite: all 22 tests passed, including desktop/mobile software-rendered 3D and missing-WebGL/reduced-motion branches. Rendered draw calls and stopped/resumed draws were checked, not merely canvas presence.
+- Real-time 3D layout checks at 1440, 768, 390 and 320px: no horizontal overflow. Desktop and mobile sculpture screenshots inspected.
+- Rendering tests used Chromium's software renderer with the major-performance-caveat rejection disabled only inside the test. Production keeps that rejection and can show the static fallback on unsuitable graphics hardware. Physical-device GPU performance has not been benchmarked.
+- Optional second Playground 3D scene deliberately omitted to keep the page lightweight. Existing Playground experiments remain functional. All other Phase 4 scope completed.

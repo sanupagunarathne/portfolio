@@ -15,6 +15,8 @@ Phase 2 exception: the user explicitly requested continuing before remote main c
 
 Phase 3 exception: the user explicitly requested Phase 3 while remote main was still the initial README. `feat/phase-3-interactions` depends on Phase 2 commit `8c408c3`. The dependency was communicated; do not merge/pull main or automatically begin Phase 4.
 
+Phase 4 exception: the user requested continuing while main included Phase 1 but not Phases 2/3. `feat/phase-4-3d` transparently depends on Phase 3 commit `6473ce6`. Do not merge/pull main or automatically start Phase 5.
+
 ## Purpose, design and stack
 
 Latest user direction (after Phase 2): introduce a glass effect when starting the next phase. Use restrained translucent surfaces, subtle backdrop blur and fine borders within the existing light palette, with readable contrast and opaque fallbacks. Suitable locations include the header and selected panels; preserve the Doto hero and Geist Mono typography. This updates the original brief's guidance on glass effects; avoid excessive use.
@@ -62,3 +64,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## 3D implementation reference
+
+The expertise sculpture is isolated in expertise-sculpture.tsx (viewport/preference/capability lifecycle), sculpture-scene.tsx (lazy R3F/Drei Canvas) and sculpture-fallback.tsx (server-visible SVG). Preserve the static fallback before hydration and for reduced motion, missing WebGL2, context loss, chunk failure and user-selected static view. Default to still demand rendering. Optional animation must pause offscreen and when the document is hidden. Keep zoom/pan disabled, touch vertical scrolling available, keyboard rotation/reset controls outside Canvas, compact DPR 1 and desktop DPR capped at 1.5. No external scene assets or expensive postprocessing. Test actual draw calls, not just canvas presence.

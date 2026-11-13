@@ -1,6 +1,6 @@
 # Sanupa Gunarathne — portfolio
 
-A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. Delivered in six phases. **Phase 3 adds the core interactions and restrained glass styling**; 3D, case studies and final QA follow in later phases.
+A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. Delivered in six phases. **Phase 4 adds a selective 3D expertise sculpture**, alongside core interactions and restrained glass styling. Case studies and final QA follow in later phases.
 
 ## Development
 
@@ -76,3 +76,15 @@ Phase 2 was explicitly requested while remote main still held the initial README
 `tests/gallery.spec.ts` tests the actual gallery component in Chromium using a test-only fixture and an esbuild bundle. Only Next Image's loader is replaced with a native image; native dialog behavior and React events run in the browser. No test artwork enters portfolio content.
 
 Phase 3 was explicitly requested before main incorporated the earlier phases. `feat/phase-3-interactions` depends on Phase 2 commit `8c408c3`. Merge the earlier phases first; merging/pulling main remains the user's responsibility.
+
+## Phase 4 sculpture
+
+The Expertise section contains an abstract layered sculpture using React Three Fiber, Drei and Three.js. No models, textures, HDR files or network assets are required. The existing Playground remains intentionally lightweight.
+
+- The scene chunk loads only near the viewport, after checking motion preferences and WebGL2 support. Static SVG is available during SSR and loading.
+- Drag gently to rotate, or use the labeled left/right buttons. Reset restores the object/camera. Animate is opt-in; Pause stops it. Static view unloads Canvas and can be toggled back.
+- Demand rendering avoids continuous frames while still. Optional animation pauses offscreen and in background tabs. Pixel ratio is 1 on mobile and capped at 1.5 on desktop; pan and zoom are disabled. Vertical touch scrolling is preserved.
+- Reduced motion uses the SVG and never loads Canvas. Missing/unsuitable WebGL2, context loss, scene errors and a loading timeout all leave the fallback and toolkit usable.
+- The WebGL tests use Chromium's software renderer and permit it in the capability probe only within the test. They assert real renderer draw calls, controls, pause/resume, static mode and context-loss recovery. Production rejects major performance caveats and may intentionally use the fallback on machines without suitable graphics support.
+
+Phase 4 depends on Phase 3 commit `6473ce6`. Main included Phase 1 when Phase 4 was requested; merge Phases 2 and 3 before Phase 4. The assistant has not merged or pulled main.
