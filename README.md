@@ -1,6 +1,6 @@
 # Sanupa Gunarathne — portfolio
 
-A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. Delivered in six phases; **Phase 1 is a foundation preview**, not the complete portfolio.
+A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. Delivered in six phases. **Phase 2 provides the complete homepage structure**; advanced interactions, 3D, case studies and final QA follow in later phases.
 
 ## Development
 
@@ -42,7 +42,7 @@ If the home cache is unwritable and browser download is needed, use `PLAYWRIGHT_
 
 - `src/app/`: server-rendered layout/page, metadata and centralized design tokens.
 - `src/components/`: reusable UI; navigation uses client disclosure state.
-- `src/data/`: editable personal/social data; more datasets follow in Phase 2.
+- `src/data/`: editable personal details, socials, projects, skills, education milestones and interests.
 - `tests/`: Playwright tests against the production build.
 - `docs/PROJECT_BRIEF.md`: complete original specification.
 - `docs/PHASES.md`: plan, branch names and acceptance checkpoints.
@@ -50,7 +50,7 @@ If the home cache is unwritable and browser download is needed, use `PLAYWRIGHT_
 - `AGENTS.md`: persistent implementation and Git rules.
 - `PROJECT_STATUS.md`: completed scope, validation, limitations and next step.
 
-Motion, Three.js, React Three Fiber/Drei and Lucide are installed. 3D and animated sections are scheduled for later phases.
+The homepage contains Hero, Selected Work, About, Expertise, Journey, Playground, Beyond the Screen, Contact and Footer. Playground includes a real editable Doto typography experiment and a hover/focus geometric study. Technology logos are authentic, locally stored Devicon assets; see docs/ATTRIBUTIONS.md. Per-technology learning statuses remain unconfirmed. Motion and 3D enhancements follow in later phases.
 
 ## Version control
 
@@ -58,6 +58,8 @@ Use `feat/phase-N-description`, `fix/description`, or `bug/description` as appro
 
 ## Content and deployment
 
-Update `src/data/personal.ts` and `socials.ts` for supplied content. Email, résumé and photo fields remain null until provided. Never fabricate details, photos or project screenshots. See the asset guide before replacing placeholders.
+Update files in `src/data/` for supplied content. `personal.ts` controls portraits, email and résumé; `projects.ts` controls summaries, screenshots and verified URLs; `skills.ts`, `timeline.ts` and `interests.ts` control the other sections. Email, résumé and photo fields remain null until provided. Never fabricate details, photos or project screenshots. See the asset guide before replacing placeholders.
 
 Compatible with the standard Next.js/Vercel build (`npm run build`), with no custom services. Connect on Vercel when deployment is authorized. Public origin, sitemap/robots configuration and full case-study SEO follow in later phases; no domain has been invented.
+
+Phase 2 was explicitly requested while remote main still held the initial README. `feat/phase-2-homepage` therefore depends on Phase 1 commit `f3a79ad`; merge Phase 1 first, then review Phase 2. No merge or pull was performed by the assistant.

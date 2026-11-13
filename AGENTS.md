@@ -11,6 +11,8 @@ Read `docs/PROJECT_BRIEF.md` for the complete user specification and `PROJECT_ST
 - Ask about blocking product/content decisions; make routine implementation decisions independently. Never invent personal claims, proficiency, dates, achievements, demo URLs, or credentials.
 - Preserve unrelated work. Push only the feature branch when delivery calls for it; never publish/deploy without authorization.
 
+Phase 2 exception: the user explicitly requested continuing before remote main contained Phase 1. `feat/phase-2-homepage` is transparently based on Phase 1 commit `f3a79ad`; see docs/PHASES.md. This does not authorize automatic continuation into later phases.
+
 ## Purpose, design and stack
 
 A complete premium, light editorial portfolio for Sanupa Gunarathne: “A calm digital canvas where creativity meets engineering.” Use Next.js App Router, React, TypeScript, Tailwind CSS, Motion for React, Three.js, React Three Fiber/Drei, and Lucide. Compatible stable versions are locked in package-lock.json; install with npm ci. Geist, Geist Mono, and Doto are bundled locally; Doto is the hero display face and Geist Mono carries the supporting typography.

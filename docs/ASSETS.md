@@ -14,3 +14,7 @@ No personal images, screenshots, email or résumé have been supplied. Keep visi
 | Résumé | /resume/sanupa-gunarathne.pdf |
 
 Put files under public/ using these paths. Provide meaningful alt text based on actual image content. Keep photographs authentic; do not generate substitutes. Set contact email in src/data/personal.ts once provided. Project links, roles, milestones and statuses still require verification.
+
+## Editable fields
+
+Hero/about portraits: `personal.heroPortrait` / `personal.aboutPortrait`. Project screenshots: each entry's `screenshot` field in projects.ts. Interest photos: each `image` field in interests.ts. All use local paths under public/ and render through Next Image once configured; existing placeholders remain until then. Multiple case-study screenshots will be connected in Phase 5.

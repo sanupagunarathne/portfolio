@@ -14,3 +14,7 @@ Each phase is a separate reviewable branch. Sanupa owns every merge into main an
 Use fix/description for standalone fixes and bug/description for investigations as needed. Changes necessary to finish a phase remain on its feature branch. Use focused conventional commits; do not create branches merely to satisfy a naming pattern.
 
 At each handoff include branch + commit, scope, executed checks, limitations, and the next phase. Open questions should identify the exact missing decision. Missing photos/email/résumé are already authorized placeholders and do not block these phases.
+
+## Phase 2 branch dependency
+
+The user explicitly requested Phase 2 before remote main included Phase 1. Phase 2 is transparently based on `f3a79ad` from `feat/phase-1-foundation`, rather than the initial main commit. Merge Phase 1 first; then review Phase 2 relative to Phase 1 (or main after that merge). The assistant has not merged or pulled main. This exception does not authorize later phases automatically.

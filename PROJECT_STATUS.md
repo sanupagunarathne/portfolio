@@ -2,9 +2,9 @@
 
 ## Active phase
 
-Phase 1 — Project Foundation, on `feat/phase-1-foundation`.
+Phase 2 — Complete Website Structure, on `feat/phase-2-homepage`.
 
-The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. The homepage is currently a foundation preview; it does not yet satisfy the full portfolio completion requirements.
+The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Advanced interactions, 3D and case-study routes remain assigned to later phases.
 
 ## Implemented
 
@@ -32,7 +32,7 @@ The repository began with only a README at `0779ae1`. The complete user brief is
 
 ## Incomplete / remaining phases
 
-2. Full nine-section homepage, all editable content datasets, reusable project/section/window/media components.
+2. Complete homepage structure implemented; see Phase 2 details below.
 3. Expertise logos and panels, timeline selection, animations, interactive playground and real-photo gallery.
 4. Lazy interactive 3D, loading/error/static fallbacks and performance checks.
 5. Four project case studies, verified links, image galleries, next-project navigation and per-page metadata.
@@ -48,8 +48,28 @@ Revision validation: lint, TypeScript, production build and all 6 browser tests 
 
 Hero/about portraits, all project screenshots and personal photographs, résumé, email, confirmed technology learning statuses, milestone dates and detailed project roles/features/results/links. Use honest labeled placeholders. No fake screenshots, dates, email or proficiency claims. Exact reserved paths are in docs/ASSETS.md.
 
-## Next handoff
+## Phase 2 implementation
 
-Only Sanupa merges and pulls main. After the Phase 1 checks pass, hand over this branch and wait for confirmation of the user's merge/pull before starting Phase 2 from the merged main commit. No later-phase implementation should be silently stacked on this branch.
+- Completed all nine homepage sections, preserving the Doto headline and readable Geist Mono typography.
+- Featured Paddock Labs spread and three additional editorial project layouts, with honest descriptions and screenshot placeholders.
+- About story and structured personal-information window; separate editable content for projects, technologies, education and interests.
+- Authentic Devicon logos hosted locally, grouped by category. No proficiency claims were inferred; statuses remain null. License and attribution retained.
+- Education timeline includes only the three supplied milestones and no invented years.
+- Playground has functional text/weight controls and a keyboard-focusable geometric hover/focus experiment; these lightweight starting points will be refined in Phase 3.
+- Personal-interest gallery with captions and photo placeholders, plus a working LinkedIn contact CTA, clearly unavailable email/résumé and footer social links.
+- Reusable SectionHeading, ProjectCard, MacWindow and MediaFrame components. Supplied image paths render actual media when configured; no fabricated photographs or screenshots.
 
-Reusable cloud install_script and start_skill were saved as a draft with npm ci, startup/readiness steps, validation commands and the user's phase/merge rules. This does not publish the environment; review/save the settings and publish separately if desired.
+## Phase 2 validation
+
+- npm run lint: passed with zero warnings.
+- npm run typecheck: passed after correcting an HTMLImageElement type annotation in the new browser test.
+- npm run build: passed; homepage and not-found route prerendered.
+- Production Playwright suite: all 8 desktop/mobile tests passed, covering navigation, reduced motion, section/project/milestone/gallery presence, working typography input/weight controls and loaded technology images.
+- Additional layout checks: 1440, 768, 390 and 320px widths fit without horizontal overflow. Desktop work/about/expertise/playground and mobile work screenshots were inspected.
+- Media remains intentionally absent; real photo rendering is wired but actual supplied-photo behavior cannot yet be validated. WebGL and case-study pages are not implemented in this phase.
+
+## Branch dependency and next handoff
+
+Remote main was still the initial README when the user explicitly requested Phase 2. This branch transparently depends on Phase 1 commit f3a79ad; no merge or pull was performed. Sanupa should merge Phase 1 before Phase 2. Stop after the Phase 2 handoff; Phase 3 remains a separate checkpoint.
+
+Reusable cloud install_script and start_skill were previously saved as a draft. They remain applicable: npm ci, npm run dev, build/type/lint checks and production Playwright tests. Saving these does not publish the environment.
