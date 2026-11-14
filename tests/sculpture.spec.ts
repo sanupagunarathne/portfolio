@@ -35,6 +35,7 @@ test("unavailable WebGL falls back without disabling the toolkit", async ({ page
   await expect(sculpture.getByRole("status")).toContainText("unavailable");
   await expect(sculpture.locator("canvas")).toHaveCount(0);
   await expect(sculpture.getByRole("img", { name: /Static geometric/ })).toBeVisible();
+  await page.getByRole("button", { name: "Pause floating icons" }).click();
   await page.locator(".technology-group").getByRole("button", { name: "React", exact: true }).click();
   await expect(page.getByRole("region", { name: "Technology details" }).getByRole("heading", { name: "React", exact: true })).toBeVisible();
 });

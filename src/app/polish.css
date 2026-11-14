@@ -1,0 +1,76 @@
+/* User-requested light/dark surfaces; the original palette remains the light default. */
+:root { --header-height: 124px; --section-line: var(--color-taupe); }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-ivory: #20231f;
+  --color-soft-gray: #30352e;
+  --color-blush: #493d37;
+  --color-taupe: #74776c;
+  --color-stone: #c0beb3;
+  --color-ink: #f2f0e6;
+  --glass-surface: #242820;
+}
+:root[data-theme="dark"] .window-bar { background: #30352e; }
+:root[data-theme="dark"] .mobile-links { background: #242820; }
+:root[data-theme="dark"] .journey-list .milestone-selected { background: #30352e; }
+:root[data-theme="dark"] .desktop-links a:hover { background: #30352e; }
+:root[data-theme="dark"] .technology-cosmos { background: radial-gradient(ellipse at 25% 25%, #34392e, transparent 65%), radial-gradient(#65695d 1px, transparent 1px); background-size: auto, 32px 32px; }
+.nav-bar { grid-template-columns: 1fr auto auto; }
+.theme-toggle { display: inline-grid; place-items: center; justify-self: end; width: 44px; height: 44px; border: 1px solid var(--color-taupe); border-radius: 50%; background: var(--color-ivory); color: var(--color-ink); }
+.nav-bar > .desktop-links { grid-column: 1 / -1; }
+.nav-note { margin-left: 0; }
+html { scroll-padding-top: calc(var(--header-height) + 20px); }
+.section-heading h2 { font-size: clamp(1.85rem, 3vw, 3.1rem); line-height: 1.18; max-width: 24ch; }
+.hero h1 { font-size: clamp(2.1rem, 4vw, 4rem); }
+.case-hero h1 { font-size: clamp(2.4rem, 5.2vw, 4.8rem); line-height: 1.12; }
+.case-story h2 { font-size: clamp(1.65rem, 2.5vw, 2.4rem); }
+.sculpture-stage { height: 240px; }
+.case-contents, .skill-panel { top: calc(var(--header-height) + 24px); }
+.case-contents { max-height: calc(100dvh - var(--header-height) - 48px); overflow-y: auto; align-self: start; }
+.portfolio-section { border-top: 1px solid var(--section-line); }
+.case-story section { border-bottom: 1px solid var(--section-line); }
+.project-preview::after { border-color: var(--color-taupe); }
+.project-preview:is(:hover, :focus-visible)::after { border-color: var(--color-ink); }
+
+/* Typographic entrances are activated once by the viewport observer. */
+.phrase-word { display: inline-block; white-space: nowrap; }
+.phrase-heading[data-typed="true"] .phrase-word { animation: phrase-type .45s steps(8, end) backwards; animation-delay: calc(var(--word-index) * 130ms); }
+@keyframes phrase-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+
+/* A static, accessible fallback is retained before JS and for reduced motion. */
+.technology-cosmos { display: block; min-height: 0; background-size: auto, 32px 32px; }
+.technology-cosmos .technology-group { display: contents; transform: none !important; }
+.technology-cosmos .technology-group h3 { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); }
+.expertise-layout .technology-cosmos ul { display: contents; }
+.technology-cosmos:not([data-bubble-ready="true"]) { display: flex; flex-wrap: wrap; gap: 1rem; align-content: start; }
+.technology-cosmos .technology-group li { display: block; width: 96px; height: 96px; transform: none; }
+.technology-cosmos[data-bubble-ready="true"] { position: relative; overflow: hidden; padding: 0; contain: layout paint; }
+.technology-cosmos[data-bubble-ready="true"] .technology-group li { position: absolute; top: 0; left: 0; width: 96px; height: 96px; will-change: transform; }
+.technology-cosmos .technology-group button { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; width: 100%; height: 100%; min-height: 0; padding: 8px; border-radius: 50%; background: radial-gradient(circle at 28% 22%, rgb(255 255 255 / .35), transparent 48%), var(--color-ivory); border: 1px solid var(--color-taupe); box-shadow: inset 2px 3px 5px rgb(255 255 255 / .22), inset -3px -4px 9px rgb(115 114 110 / .12), 0 4px 10px rgb(53 53 50 / .06); transform: none; }
+.technology-cosmos .technology-group button::before { content: ""; position: absolute; left: 20%; top: 12%; width: 28%; height: 8%; border-radius: 50%; background: rgb(255 255 255 / .35); transform: rotate(-30deg); pointer-events: none; }
+.technology-cosmos .technology-group button[aria-pressed="true"] { background: var(--color-blush); border-color: var(--color-ink); }
+.technology-cosmos .technology-group button:is(:hover, :focus-visible) { border-color: var(--color-ink); transform: none; }
+.technology-cosmos .technology-group img { animation: none !important; filter: none; width: 32px; height: 32px; object-fit: contain; transform: none !important; }
+.technology-cosmos .technology-group button span { font-size: .875rem; line-height: 1.15; }
+@media (max-width: 1100px) { .skill-panel { position: static; } }
+@media (max-width: 900px) { .case-contents { position: static; max-height: none; overflow: visible; } }
+@media (max-width: 767px) {
+  .nav-bar { gap: .5rem; }
+  .nav-bar > .wordmark { margin-right: auto; font-size: 1rem; gap: .5rem; }
+  .nav-note { display: none; }
+  .theme-toggle { flex-shrink: 0; }
+  .brand-bot { width: 36px; height: 32px; gap: 6px; }
+  .theme-toggle, .menu-toggle { width: 40px; min-width: 40px; height: 44px; }
+  .technology-cosmos .technology-group li, .technology-cosmos[data-bubble-ready="true"] .technology-group li { width: 88px; height: 88px; }
+  .section-heading h2 { font-size: clamp(1.85rem, 6.5vw, 2.6rem); }
+}
+@media (prefers-reduced-motion: reduce) { .phrase-word { animation: none !important; transform: none !important; filter: none !important; } }
+
+.technology-cosmos { perspective: none; }
+.technology-cosmos .technology-group button { padding: 4px; }
+.technology-cosmos .technology-group button span { letter-spacing: -.05em; }
+@media (max-width: 767px) { .nav-bar .brand-name { max-width: 12ch; } }
+/* Anchor targets use a heading cue instead of a page-sized focus rectangle.
+   Interactive controls retain their existing visible focus outlines. */
+main[tabindex="-1"]:focus-visible, section[tabindex="-1"]:focus-visible { outline: none; }
+section[tabindex="-1"]:focus-visible h2, main[tabindex="-1"]:focus-visible h1 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }

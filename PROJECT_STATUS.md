@@ -2,7 +2,7 @@
 
 ## Active phase
 
-Current work: motion/navigation refinement on `fix/motion-and-centered-navigation`, based on merged main `6a68728` (Phase 6 included).
+Current work: bounded bubbles, theme switching and layout polish on `feat/bubble-field-theme-polish`, based on merged main `8e7e2fd`.
 
 The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions, the expertise sculpture and case-study routes are implemented in Phases 3–5; final cross-site QA remains Phase 6.
 
@@ -173,3 +173,14 @@ Implemented word-staggered hero and portrait entrances, viewport body reveals, i
 A word-wrap regression discovered during visual inspection was corrected before final validation. The early browser run used the pre-fix build and was stopped; its partial results are not counted as a passing suite. Missing personal media and live email/domain configuration remain the previously documented prerequisites; no merge, pull, deployment or real email is performed.
 
 Final motion validation: `npm run lint`, `npm run typecheck`, `npm run build` and `git diff --check` passed. The final production Playwright run completed with **82 passed, 0 failed, 0 skipped**, covering motion timing/directions/pause, nav geometry/indicator, panel/timeline/Playground interactions, gallery entrances, reduced motion, all retained accessibility/layout/SEO/contact/case-study checks and actual 3D draw/pause/fallback behavior. Screenshots of 1440px desktop, 768px tablet and 390px mobile menu were inspected. No horizontal overflow at 320, 390, 768, 1024 or 1440px. Real-image gallery motion is tested using explicitly test-only media because no personal gallery images are supplied. Physical GPU/real-device performance and live email/deployment are not claimed.
+
+
+## Bubbles, type, themes and sizing
+
+User clarified that logos should roam freely through a specified space like water bubbles, not stay near fixed slots. Replaced fixed oscillation with bounded positions/velocities, edge reflection, gentle separation/steering, sphere-like highlights and individual hover/focus freezing. Categories and selected information stay intact. Explicit pause, offscreen/background suspension, reduced-motion/static/no-JS layouts are retained. A data attribute preserves the bubble layout across React selection/pause rerenders.
+
+Added stepped word reveals to main section phrases including Contact, a persistent light/dark control on the right of the navbar (explicitly authorized beyond the earlier light-only brief), measured-header sticky offsets, viewport-limited case-study contents and smaller titles/sculpture stages. Persistent section/preview borders and content-only case-study reveals address disappearing boundaries. Labels remain readable. New tests cover bounds, theme persistence/dark accessibility, type activation and NEX Installer sidebar clearance; earlier fixed-slot animation tests were updated to the new roaming/pause behavior.
+
+All previous content, case studies, SEO and contact workflows are preserved. Real media and live deployment/domain/email prerequisites remain as documented. No merge, pull, deployment or real email is performed.
+
+Validation: lint, standalone type checking, production build and whitespace checks passed. Full production regression: **88 passed, 0 failed, 0 skipped**. After the localized randomized-start placement change, rebuilt and reran bubble/theme/motion checks: **14 passed**. After the final noninteractive anchor focus-style correction, rebuilt and reran foundation/navigation/bubble/theme checks: **14 passed**. These affected reruns also verify dark-mode accessibility/persistence and measured sidebar clearance. A resume assertion was corrected to bring the field back onscreen, respecting intentional offscreen suspension. Inspected light bubble-field, dark case-study and 320px dark-mobile visuals; responsive regression checks remain green. No physical-device/GPU or live integration/deployment claim is made.

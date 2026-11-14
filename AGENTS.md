@@ -90,3 +90,7 @@ Phase 6 starts from merged main c2e0c85, including the full-site restoration; pr
 ## Motion refinement direction
 
 Keep navigation compact and centered with equal link padding and one smoothly moving rounded active marker. Preserve the effects/preference contract in docs/MOTION.md: word-by-word hero, portrait/body reveals, independent multi-direction logo drift and pause, panel/timeline/menu/gallery/status transitions, small hover cues and pointer/tap Playground rearrangement. Do not restore the blanket constellation hover pause or coarse-pointer animation disable; explicit pause and reduced motion govern motion instead. Keep accessible content visible without JavaScript, collapsed timeline details inert, and all existing 3D lifecycle controls. Validate motion behavior and geometry with tests/motion.spec.ts plus the full quality suite.
+
+## Bubble field and theme direction
+
+The user's latest request supersedes the original light-only restriction: retain default light and a persistent light/dark switch on the navbar's right. See docs/BUBBLES-AND-THEMES.md. Technologies roam within a bounded bubble field with no fixed-home attraction, edge bounce, separation and separate selected information; pause and hover/focus freezing make targets accessible. Reduced motion/no-JS use a static layout. Do not replace it with fixed-slot logo oscillation. Keep section phrase typing, stable borders, restrained heading/canvas sizes, and measured-header offsets for case-study contents/skill panels. Test dark surfaces as well as light.

@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, type CSSProperties } from "react";
+import { useRef, useState } from "react";
 import { skills, skillCategories } from "@/data/skills";
 import { projects } from "@/data/projects";
+import { useBubbleField } from "./use-bubble-field";
 import { MacWindow } from "./mac-window";
 
 export function Expertise() {
@@ -12,7 +13,7 @@ export function Expertise() {
   const [paused, setPaused] = useState(false);
   const [category, setCategory] = useState("All");
   const [selected, setSelected] = useState<string | null>(null);
-  const cosmos = useRef<HTMLDivElement>(null);
+  const cosmos = useBubbleField(category, paused);
   const skill = skills.find(item => item.name === selected);
 
   return <div className="expertise-browser">
@@ -21,12 +22,7 @@ export function Expertise() {
     </div>
     <button className="text-link motion-toggle" type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? "Resume floating icons" : "Pause floating icons"}</button>
     <div className="expertise-layout">
-      <div ref={cosmos} className={`technology-groups technology-cosmos ${paused ? "is-still" : ""}`} role="group" aria-label="Floating technology constellation" onPointerMove={event => {
-        if (paused || event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        const bounds = event.currentTarget.getBoundingClientRect();
-        cosmos.current?.style.setProperty("--tilt-x", `${(event.clientY - bounds.top - bounds.height / 2) / bounds.height * -5}deg`);
-        cosmos.current?.style.setProperty("--tilt-y", `${(event.clientX - bounds.left - bounds.width / 2) / bounds.width * 7}deg`);
-      }} onPointerLeave={() => { cosmos.current?.style.setProperty("--tilt-x", "0deg"); cosmos.current?.style.setProperty("--tilt-y", "0deg"); }}>{skillCategories.filter(item => category === "All" || item === category).map(group => <div className="technology-group" key={group}><h3>{group}</h3><ul>{skills.filter(item => item.category === group).map((item, index) => <li key={item.name} style={{ "--float-delay": `${index * -.8}s`, "--depth": `${(index % 3) * 12}px`, "--drift-x": `${[6, -5, 4, -7][index % 4]}px`, "--drift-y": `${[-8, 5, -6, 7][index % 4]}px`, "--float-duration": `${6 + index % 4}s` } as CSSProperties}><button type="button" aria-pressed={selected === item.name} aria-controls="technology-details" onClick={event => {
+      <div ref={cosmos} className={`technology-groups technology-cosmos ${paused ? "is-still" : ""}`} role="group" aria-label="Floating technology constellation">{skillCategories.filter(item => category === "All" || item === category).map(group => <div className="technology-group" key={group}><h3>{group}</h3><ul>{skills.filter(item => item.category === group).map(item => <li key={item.name}><button type="button" aria-pressed={selected === item.name} aria-controls="technology-details" onClick={event => {
         opener.current = event.currentTarget;
         setSelected(item.name);
         if (window.matchMedia("(max-width: 767px)").matches) requestAnimationFrame(() => {

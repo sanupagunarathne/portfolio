@@ -8,7 +8,7 @@ import { projects } from "@/data/projects";
 
 
 import { interests } from "@/data/interests";
-import { SectionHeading } from "@/components/section-heading";
+import { PhraseHeading, SectionHeading } from "@/components/section-heading";
 import { MediaFrame } from "@/components/media-frame";
 import { ProjectCard } from "@/components/project-card";
 import { MacWindow } from "@/components/mac-window";
@@ -89,7 +89,7 @@ export default function Home() {
         <section id="contact" className="contact-section" tabIndex={-1} aria-labelledby="contact-title">
           <div className="page-width contact-layout"><div>
             <p className="eyebrow">LET&apos;S CONNECT</p>
-            <h2 id="contact-title">Let&apos;s make something<br />meaningful together.</h2>
+            <PhraseHeading id="contact-title" title="Let's make something meaningful together." />
             <p className="contact-description">Have an idea to explore or a project to talk about? I&apos;d love to hear from you.</p>
             <a className="button primary" href="https://www.linkedin.com/in/sanupagunarathne/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn <ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
             <dl className="contact-availability"><div><dt>Email</dt><dd>{personal.email ? <a href={`mailto:${personal.email}`}>{personal.email}</a> : "To be provided"}</dd></div><div><dt>Résumé</dt><dd>{personal.resume ? <a href={personal.resume}>Download résumé</a> : "To be added"}</dd></div></dl>
