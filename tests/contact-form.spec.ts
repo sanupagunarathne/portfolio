@@ -30,3 +30,29 @@ test("configured form preserves failed messages and resets only after acceptance
   await expect(page.locator("#contact-message")).toHaveValue("");
   expect(calls).toBe(2);
 });
+
+test("prepared drafts are invalidated when the visitor edits the message", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#contact-name").fill("A visitor");
+  await page.locator("#contact-email").fill("visitor@example.com");
+  await page.locator("#contact-message").fill("An initial message about a creative project.");
+  await page.getByRole("button", { name: "Prepare message" }).click();
+  await expect(page.getByLabel("Your prepared message")).toBeVisible();
+  await page.locator("#contact-message").fill("An updated message about a different idea.");
+  await expect(page.getByLabel("Your prepared message")).toHaveCount(0);
+  await expect(page.locator(".form-status")).toBeEmpty();
+});
+
+test("unexpected successful HTTP responses do not erase or claim delivery", async ({ page }) => {
+  await page.route("http://contact.test/**", async route => {
+    if (route.request().url().endsWith("/api/contact")) return route.fulfill({ status: 200, contentType: "application/json", body: '{}' });
+    return route.fulfill({ contentType: "text/html", body: '<main id="root"></main><script>' + bundle.replaceAll("</script", "<\\/script") + '</script>' });
+  });
+  await page.goto("http://contact.test/");
+  await page.locator("#contact-name").fill("A visitor");
+  await page.locator("#contact-email").fill("visitor@example.com");
+  await page.locator("#contact-message").fill("A message that must be retained.");
+  await page.getByRole("button", { name: "Send message" }).click();
+  await expect(page.getByRole("status")).toContainText("could not be sent");
+  await expect(page.locator("#contact-message")).toHaveValue("A message that must be retained.");
+});

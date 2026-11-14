@@ -2,7 +2,7 @@
 
 ## Active phase
 
-Corrective restoration on `fix/restore-complete-portfolio`, based on current remote main `00ab4d4`. Full site and requested interface refinements recovered from `feat/interface-refinements` (`effd5d0`).
+Phase 6 — Quality Assurance, on `feat/phase-6-quality`, based on merged main `c2e0c85` (restoration `1572eb9` verified in ancestry).
 
 The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions, the expertise sculpture and case-study routes are implemented in Phases 3–5; final cross-site QA remains Phase 6.
 
@@ -36,7 +36,7 @@ The repository began with only a README at `0779ae1`. The complete user brief is
 3. Core interactions implemented; see Phase 3 details below.
 4. Primary expertise sculpture and lifecycle/fallback behavior implemented and validated.
 5. Four project case-study pages implemented with honest editable details, image galleries, next-project navigation and per-page metadata.
-6. Full layout/accessibility/content/3D/link QA, public-origin SEO and deployment documentation.
+6. Phase 6 implementation and automated QA completed for review; see final validation and docs/QA.md. Missing real assets, configured production domain/delivery and real-device verification remain documented.
 
 ## Phase 1 typography refinement
 
@@ -152,3 +152,14 @@ Restored: all homepage sections, project content and four case-study routes, sha
 Contact delivery still requires the previously documented provider credentials and sender/recipient configuration; no real mail delivery is claimed. Personal photos and unverified project details remain honestly labeled. This restoration does not start Phase 6.
 
 Restoration validation in this task: `npm ci`, `npm run lint`, `npm run typecheck` and `npm run build` passed. The production build includes the homepage, contact API and all four generated project routes. `CI=1 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e` completed with all 50 tests passing, including desktop/mobile homepage, case studies, contact provider mocks, navigation, gallery, toolkit, journey, playground, actual 3D draw calls, context-loss recovery and reduced-motion/WebGL fallbacks. Application code, tests, dependencies and assets match the recovered `effd5d0` tree exactly; only README and this status file add restoration context. No real email was sent. No merge, pull or deployment performed; the user must merge this corrective branch for main to show the complete site.
+
+
+## Phase 6 — Quality Assurance
+
+Preserved the complete homepage and all four case studies from merged main. Added automated axe accessibility audits, five-width cross-page layout/fragment/link checks, configured/unconfigured/preview SEO checks and contact regression tests. Fixed low-contrast definition labels, invalid generic-element ARIA labels, unreadable hover risks, stale contact drafts and unexpected-success response handling. Sending locks editable inputs. Added a user-operated floating-icon pause control.
+
+Added explicit SITE_URL-based canonical/Open Graph URLs, robots and sitemap, with noindex/no sitemap entries before domain configuration and on Vercel previews. Configured production output was exercised using a temporary example origin in local tests only. No public origin or personal data was invented. Deployment/activation instructions and measured QA limitations are in docs/DEPLOYMENT.md and docs/QA.md.
+
+Remaining content/integrations: actual photos/screenshots, résumé, confirmed public email/domain, project links/contributions/results/dates, learning statuses and real provider delivery configuration. Real-device/Safari/Firefox/assistive-technology and physical-GPU checks are not claimed. No real email, merge, pull or deployment performed.
+
+Phase 6 final validation: lint, standalone type checking, production build and whitespace checks passed. Final production Playwright run: **74 passed, 0 failed, 0 skipped** across desktop/mobile, including the new accessibility/layout/link/contact/SEO regressions and retained 3D/gallery/case-study suite. A separate local configured-origin production build verified all five canonical/Open Graph URLs, indexing metadata, sitemap entries and robots output. The default unset-origin build was then restored. Phase 6 implementation/automated QA is complete for review; outstanding content, live integrations and real-device checks are recorded rather than claimed complete. Sanupa owns the merge/pull and any later deployment.

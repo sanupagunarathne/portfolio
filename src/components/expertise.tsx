@@ -9,6 +9,7 @@ import { MacWindow } from "./mac-window";
 export function Expertise() {
   const opener = useRef<HTMLButtonElement | null>(null);
   const panel = useRef<HTMLDivElement | null>(null);
+  const [paused, setPaused] = useState(false);
   const [category, setCategory] = useState("All");
   const [selected, setSelected] = useState<string | null>(null);
   const cosmos = useRef<HTMLDivElement>(null);
@@ -18,9 +19,10 @@ export function Expertise() {
     <div className="category-filters" role="group" aria-label="Technology category">
       {["All", ...skillCategories].map(item => <button key={item} type="button" aria-pressed={category === item} onClick={() => { setCategory(item); setSelected(null); }}>{item}</button>)}
     </div>
+    <button className="text-link motion-toggle" type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? "Resume floating icons" : "Pause floating icons"}</button>
     <div className="expertise-layout">
-      <div ref={cosmos} className="technology-groups technology-cosmos" aria-label="Floating technology constellation" onPointerMove={event => {
-        if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      <div ref={cosmos} className={`technology-groups technology-cosmos ${paused ? "is-still" : ""}`} role="group" aria-label="Floating technology constellation" onPointerMove={event => {
+        if (paused || event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         const bounds = event.currentTarget.getBoundingClientRect();
         cosmos.current?.style.setProperty("--tilt-x", `${(event.clientY - bounds.top - bounds.height / 2) / bounds.height * -5}deg`);
         cosmos.current?.style.setProperty("--tilt-y", `${(event.clientX - bounds.left - bounds.width / 2) / bounds.width * 7}deg`);

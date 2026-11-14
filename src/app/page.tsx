@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { getSiteOrigin } from "@/lib/site";
 import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
 import { personal } from "@/data/personal";
 
@@ -17,6 +19,13 @@ import { InterestGallery } from "@/components/interest-gallery";
 import { ExpertiseSculpture } from "@/components/expertise-sculpture";
 import { ContactForm } from "@/components/contact-form";
 import { Reveal } from "@/components/reveal";
+
+const origin = getSiteOrigin();
+export const metadata: Metadata = {
+  alternates: origin ? { canonical: new URL("/", origin).href } : undefined,
+  openGraph: { title: "Sanupa Gunarathne — Developer & Creative", description: personal.description, type: "website", locale: "en_US", url: origin?.href },
+  twitter: { card: "summary", title: "Sanupa Gunarathne — Developer & Creative", description: personal.description },
+};
 
 export const dynamic = "force-dynamic";
 
