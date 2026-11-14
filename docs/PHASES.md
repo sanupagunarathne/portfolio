@@ -30,7 +30,3 @@ The user requested Phase 4 when remote main included Phase 1 but not Phases 2/3.
 ## Phase 5 branch dependency
 
 Phase 5 was explicitly requested before main incorporated Phases 2–4. `feat/phase-5-case-studies` transparently depends on Phase 4 commit `9252149`. Merge earlier phases first; Phase 6 is a separate checkpoint and is not started automatically.
-
-## Phase 6 dependency and handoff
-
-Phase 6 is explicitly authorized and starts from merged main `c2e0c85`, verified to contain restoration `1572eb9`. Branch: `feat/phase-6-quality`. Scope is cross-site QA, verified defect corrections, configurable origin/SEO and release documentation. Missing personal media, domain and delivery credentials remain documented placeholders/integrations. No automatic merge, pull or deployment is authorized. See docs/QA.md and docs/DEPLOYMENT.md.

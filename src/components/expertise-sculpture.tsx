@@ -75,7 +75,7 @@ export function ExpertiseSculpture() {
       {enabled && <SceneBoundary onError={onLost}><div className={`sculpture-canvas ${ready ? "is-ready" : ""}`}><Scene compact={compact} animate={animate && visible && foreground} turn={turn} reset={reset} onReady={onReady} onLost={onLost} /></div></SceneBoundary>}
     </div>
     <p className="sculpture-status" role="status">{status}</p>
-    <div className="sculpture-controls" role="group" aria-label="Sculpture controls">
+    <div className="sculpture-controls" aria-label="Sculpture controls">
       {interactive && <><button type="button" aria-label="Rotate sculpture left" onClick={() => setTurn(value => value - Math.PI / 8)}>←</button><button type="button" aria-label="Rotate sculpture right" onClick={() => setTurn(value => value + Math.PI / 8)}>→</button><button type="button" onClick={() => { setTurn(-.4); setReset(value => value + 1); setAnimate(false); }}>Reset</button><button type="button" aria-pressed={animate} onClick={() => setAnimate(!animate)}>{animate ? "Pause" : "Animate"}</button></>}
       {!reduced && available === true && !failed && <button type="button" aria-pressed={still} onClick={() => { setStill(!still); setReady(false); setAnimate(false); }}>{still ? "Interactive view" : "Static view"}</button>}
     </div>

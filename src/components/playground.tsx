@@ -8,7 +8,7 @@ export function Playground() {
   const [shifted, setShifted] = useState(false);
   const [text, setText] = useState("hello, world.");
   const [weight, setWeight] = useState(600);
-  return <div className="playground-grid">
+  return <Reveal className="playground-grid">
     <MacWindow title="type-lab.tsx"><label htmlFor="type-input">A thought, in dots.</label><input id="type-input" value={text} maxLength={32} onChange={event => setText(event.target.value)} autoComplete="off" spellCheck={false} /><div className="type-preview" style={{ fontWeight: weight }} aria-hidden="true">{text || "Your words here."}</div><label className="range-label" htmlFor="type-weight">Font weight <output htmlFor="type-weight">{weight}</output></label><input id="type-weight" type="range" min="100" max="900" step="100" value={weight} onChange={event => setWeight(Number(event.target.value))} /><p className="content-note">Type something. Give it a little weight.</p></MacWindow>
     <MacWindow title="interaction.css"><button ref={shapes} className="orbit-study" type="button" data-shifted={shifted} aria-pressed={shifted} aria-label="Rearrange geometric composition" onClick={() => setShifted(!shifted)} onPointerMove={event => {
       if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

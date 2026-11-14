@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-import { getSiteOrigin } from "@/lib/site";
 import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
 import { personal } from "@/data/personal";
 
@@ -45,7 +43,7 @@ export default function Home() {
             </div>
             <p className="location"><MapPin size={14} aria-hidden="true" /> Based in {personal.location}</p>
           </div>
-          <div className="portrait-composition">
+          <Reveal className="portrait-composition" delay={.12}>
             <div className="portrait-placeholder" role={personal.heroPortrait ? undefined : "img"} aria-label={personal.heroPortrait ? undefined : "Placeholder reserved for Sanupa's portrait; photograph not yet provided"}>
               {personal.heroPortrait ? <Image src={personal.heroPortrait} alt="Sanupa Gunarathne" fill sizes="(max-width: 767px) 90vw, 45vw" priority className="hero-photo" /> : <>
               <span className="portrait-index">FIG. 01 — THE PERSON BEHIND THE PIXELS</span>
@@ -54,7 +52,7 @@ export default function Home() {
               </>}
             </div>
             <span className="portrait-margin-note">A little curiosity. A lot of possibility.</span>
-          </div>
+          </Reveal>
         </section>
 
         <section id="work" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="work-title">
@@ -63,10 +61,10 @@ export default function Home() {
         </section>
         <section id="about" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="about-title">
           <SectionHeading number="02" label="ABOUT" title="More than just lines of code." id="about-title" />
-          <div className="about-layout">
+          <Reveal className="about-layout">
             <MediaFrame src={personal.aboutPortrait} alt="Sanupa Gunarathne" label="About Sanupa photograph" aspect="portrait" />
             <div className="about-copy"><p className="lead">I like the space where a practical idea meets a thoughtful experience.</p><p>{personal.aboutDescription}</p><p>{personal.interestsDescription}</p><MacWindow title="about-me.ts"><dl className="profile-list"><div><dt>name</dt><dd>{personal.name}</dd></div><div><dt>basedIn</dt><dd>{personal.location}</dd></div><div><dt>studying</dt><dd>{personal.degree}</dd></div><div><dt>at</dt><dd>{personal.university}</dd></div></dl></MacWindow></div>
-          </div>
+          </Reveal>
         </section>
         <section id="expertise" className="portfolio-section expertise-section" tabIndex={-1} aria-labelledby="expertise-title">
           <div className="page-width"><SectionHeading number="03" label="EXPERTISE" title="Tools I use to bring ideas to life." id="expertise-title" />
@@ -87,13 +85,13 @@ export default function Home() {
           <InterestGallery items={interests} />
         </section>
         <section id="contact" className="contact-section" tabIndex={-1} aria-labelledby="contact-title">
-          <div className="page-width contact-layout"><div>
+          <Reveal className="page-width contact-layout"><div>
             <p className="eyebrow">LET&apos;S CONNECT</p>
             <h2 id="contact-title">Let&apos;s make something<br />meaningful together.</h2>
             <p className="contact-description">Have an idea to explore or a project to talk about? I&apos;d love to hear from you.</p>
             <a className="button primary" href="https://www.linkedin.com/in/sanupagunarathne/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn <ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
             <dl className="contact-availability"><div><dt>Email</dt><dd>{personal.email ? <a href={`mailto:${personal.email}`}>{personal.email}</a> : "To be provided"}</dd></div><div><dt>Résumé</dt><dd>{personal.resume ? <a href={personal.resume}>Download résumé</a> : "To be added"}</dd></div></dl>
-          </div><ContactForm deliveryEnabled={Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL && process.env.CONTACT_FROM_EMAIL)} /></div>
+          </div><ContactForm deliveryEnabled={Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL && process.env.CONTACT_FROM_EMAIL)} /></Reveal>
         </section>
       </main>
 

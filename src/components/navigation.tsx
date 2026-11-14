@@ -1,5 +1,6 @@
 "use client";
 
+import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Brand } from "./brand";
@@ -14,6 +15,7 @@ const links = [
 ];
 
 export function Navigation() {
+  const reduced = useReducedMotion();
   const pathname = usePathname();
   const home = pathname === "/";
   const [open, setOpen] = useState(false);

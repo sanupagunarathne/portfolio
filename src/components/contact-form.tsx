@@ -10,7 +10,6 @@ export function ContactForm({ deliveryEnabled }: { deliveryEnabled: boolean }) {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (busy) return;
     const data = new FormData(event.currentTarget);
     const payload = Object.fromEntries(data.entries());
     if (String(payload.name).trim().length < 2 || String(payload.message).trim().length < 10) {
@@ -22,23 +21,22 @@ export function ContactForm({ deliveryEnabled }: { deliveryEnabled: boolean }) {
     setBusy(true);
     try {
       const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal: AbortSignal.timeout(15_000) });
-      if (!response.ok || (await response.json()).accepted !== true) throw new Error("Delivery failed");
+      if (!response.ok) throw new Error("Delivery failed");
       setStatus("Your message was accepted for delivery. Thank you for getting in touch.");
       setDraft(""); form.current?.reset();
     } catch { setStatus("Your message could not be sent. Your text is still here; please try again or copy it below."); }
     finally { setBusy(false); }
   }
 
-  return <form ref={form} className="contact-form mac-window" onSubmit={submit} aria-busy={busy} onChange={() => { setDraft(""); setStatus(""); }}>
+  return <form ref={form} className="contact-form mac-window" onSubmit={submit}>
     <div className="window-bar"><span className="window-dots" aria-hidden="true"><i /><i /><i /></span>new-message.ts</div>
     <div className="window-body">
       <h3>Tell me what you have in mind.</h3>
       <p className="content-note">{deliveryEnabled ? "Send a project idea, a question, or just say hello." : "Direct delivery is not connected yet. Prepare and copy a message here, or reach me on LinkedIn."}</p>
-      <fieldset disabled={busy} className="contact-editable"><legend className="sr-only">Your contact details and message</legend><div className="contact-fields"><div><label htmlFor="contact-name">Your name <span>(required)</span></label><input id="contact-name" name="name" autoComplete="name" required minLength={2} maxLength={100} /></div><div><label htmlFor="contact-email">Your email <span>(required)</span></label><input id="contact-email" name="email" type="email" autoComplete="email" required maxLength={254} /></div></div>
+      <div className="contact-fields"><div><label htmlFor="contact-name">Your name <span>(required)</span></label><input id="contact-name" name="name" autoComplete="name" required minLength={2} maxLength={100} /></div><div><label htmlFor="contact-email">Your email <span>(required)</span></label><input id="contact-email" name="email" type="email" autoComplete="email" required maxLength={254} /></div></div>
       <label htmlFor="contact-topic">What is this about?</label><select id="contact-topic" name="topic" defaultValue="Project idea"><option>Project idea</option><option>Collaboration</option><option>Question</option><option>Just saying hello</option></select>
       <label htmlFor="contact-message">Your message <span>(required)</span></label><textarea id="contact-message" name="message" rows={5} required minLength={10} maxLength={5000} placeholder="A little context, an idea, or a question…" />
       <div className="contact-honeypot" aria-hidden="true"><label htmlFor="contact-website">Leave blank</label><input id="contact-website" name="website" tabIndex={-1} autoComplete="off" /></div>
-      </fieldset>
       <p className="content-note">Your details are used only to respond to this message. Nothing is saved in your browser.</p>
       <button className="button primary" type="submit" disabled={busy}>{busy ? "Sending…" : deliveryEnabled ? "Send message ↗" : "Prepare message ↗"}</button>
       <p className="form-status" role="status" aria-live="polite">{status && <span key={status} className="status-message">{status}</span>}</p>

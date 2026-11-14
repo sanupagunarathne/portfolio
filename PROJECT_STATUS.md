@@ -36,7 +36,7 @@ The repository began with only a README at `0779ae1`. The complete user brief is
 3. Core interactions implemented; see Phase 3 details below.
 4. Primary expertise sculpture and lifecycle/fallback behavior implemented and validated.
 5. Four project case-study pages implemented with honest editable details, image galleries, next-project navigation and per-page metadata.
-6. Phase 6 implementation and automated QA completed for review; see final validation and docs/QA.md. Missing real assets, configured production domain/delivery and real-device verification remain documented.
+6. Full layout/accessibility/content/3D/link QA, public-origin SEO and deployment documentation.
 
 ## Phase 1 typography refinement
 
@@ -142,17 +142,22 @@ Implemented on feat/interface-refinements, based on Phase 5 (5723348):
 
 Validation completed: lint, TypeScript and the production build passed. All 50 Playwright-run automated checks passed, including browser workflows, contact-handler provider mocks, delivery failures, preparation/copy, complete navigation, all case studies and 3D fallbacks. Initial moving-hit-area and mobile-active-state defects were corrected; a tablet navigation overflow was also fixed. Additional checks fit 320, 390, 768, 1024 and 1440px, including nested-page header checks, and desktop/mobile screenshots were inspected. Real delivery remains unconfigured and untested; this is the only outstanding contact integration prerequisite. Phase 6 has not been started; no merges or pulls were performed.
 
+## Navbar spacing correction
 
-## Complete-site restoration
+Grouped desktop navigation links at the start of the row instead of distributing them across its full width. Existing responsive link padding, small gaps, rounded active states and mobile menu are preserved.
 
-The earlier `fix/portfolio-layout-contact-technologies` branch was incorrectly based on the old Phase 1 checkout and was subsequently merged into main as `00ab4d4`. This corrective branch starts from that main commit and restores the complete tracked tree from `effd5d0` (`feat/interface-refinements`), which already contains Phases 2–5 and the requested interface refinements. It preserves Git history without merging, pulling, resetting or force pushing.
+Validation: npm run lint, npm run typecheck and npm run build passed. Six existing desktop/mobile rendering and navigation Playwright checks passed using installed Chrome via PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH. Initial validation found a missing esbuild dependency; npm ci restored the locked dependencies. The first browser attempt could not launch because bundled Chromium was absent; the Chrome rerun passed. No merge, pull or deployment performed.
 
-Restored: all homepage sections, project content and four case-study routes, shared footer, full navigation, uppercase hero/full-name bot branding, tighter spacing, floating technology icons and filters, journey/playground/gallery interactions, 3D sculpture with fallbacks, contact form and server adapter, local logo assets, documentation and the full existing test suite. The old duplicate technology implementation and foundation-only tests are replaced with the complete-site versions.
+## Animation refinement after Phase 5
 
-Contact delivery still requires the previously documented provider credentials and sender/recipient configuration; no real mail delivery is claimed. Personal photos and unverified project details remain honestly labeled. This restoration does not start Phase 6.
+User requested broader animation and particular attention to smooth, freely drifting Expertise icons without shared orbits. Implemented on the existing feat/interface-refinements branch; this does not begin Phase 6.
 
-Restoration validation in this task: `npm ci`, `npm run lint`, `npm run typecheck` and `npm run build` passed. The production build includes the homepage, contact API and all four generated project routes. `CI=1 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e` completed with all 50 tests passing, including desktop/mobile homepage, case studies, contact provider mocks, navigation, gallery, toolkit, journey, playground, actual 3D draw calls, context-loss recovery and reduced-motion/WebGL fallbacks. Application code, tests, dependencies and assets match the recovered `effd5d0` tree exactly; only README and this status file add restoration context. No real email was sent. No merge, pull or deployment performed; the user must merge this corrective branch for main to show the complete site.
+- Independent multi-axis icon/label drift with varied frequencies/phases, subtle rotation/depth and damped pointer response. Removed synchronized vertical bob/group tilt and heavy individual tile surfaces. Button targets stay stationary and selection works while drifting.
+- Pause/Resume preserves motion time and position. requestAnimationFrame work stops offscreen and when the document is hidden; reduced-motion and coarse-pointer views stay still. Motion preference changes are handled live. The separate WebGL sculpture keeps all existing opt-in/fallback behavior.
+- Staggered uppercase Doto hero, once-only editorial/gallery/case-study reveals, sliding navigation highlight, mobile-menu entrances, smooth milestone expansion and small project/contact/footer feedback.
+- Playground shapes respond to pointer movement, tap/Enter, arrow keys, Escape and a reset button. No new dependency or fabricated content/assets.
 
+Validation: npm run lint, npm run typecheck and npm run build passed. The full npm run test:e2e suite passed all 58 checks in installed Chrome, including desktop/mobile animation checks and actual software-rendered sculpture draw calls. PLAYWRIGHT_PORT=3100 ensured the fresh production server was tested without stopping the existing server on 3000. Layout checks fit 320, 390, 768, 1024 and 1440px; desktop and 390px screenshots were inspected. An initial 57/58 run exposed a scrolling-sensitive geometry assertion (0.2px viewport movement); measuring button geometry relative to its field corrected the test, and focused plus full reruns passed.
 
 ## Phase 6 — Quality Assurance
 
