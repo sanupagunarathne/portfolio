@@ -427,9 +427,9 @@ html { scroll-padding-top: 11rem; }
   .footer p, .footer .mono { font-size: .9375rem; }
 }
 @media (prefers-reduced-motion: reduce) { .technology-cosmos li, .technology-cosmos img, .technology-cosmos .technology-group, .technology-cosmos button { animation: none; transition: none; transform: none !important; } }
-.technology-cosmos:is(:hover, :focus-within) img { animation-play-state: paused; }
+
 .brand-bot i { width: 8px; height: 8px; }
-@media (hover: none) { .technology-cosmos img { animation: none; } }
+
 .desktop-links { min-width: 0; width: 100%; gap: .2rem; }
 .desktop-links a { padding-inline: clamp(.4rem, 1vw, .8rem); }
 @media (max-width: 767px) {

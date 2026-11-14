@@ -12,7 +12,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   const cursor = useRef<HTMLSpanElement>(null);
   const reduced = useReducedMotion();
   const panelId = `${project.slug}-notes`;
-  return <motion.article className={`project-entry project-${index + 1}`} aria-labelledby={`${project.slug}-title`} initial={false} whileInView={reduced ? undefined : { y: [12, 0], opacity: [0.7, 1] }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.5 }}>
+  return <motion.article className={`project-entry project-${index + 1}`} aria-labelledby={`${project.slug}-title`} initial={false} whileInView={reduced !== false ? undefined : { y: [12, 0], opacity: [0.7, 1] }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.5 }}>
     <Link className="project-preview" href={`/projects/${project.slug}`} aria-label={`View ${project.title} project`} onPointerMove={event => {
       if (reduced || event.pointerType !== "mouse" || !cursor.current) return;
       const bounds = event.currentTarget.getBoundingClientRect();

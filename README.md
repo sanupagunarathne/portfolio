@@ -117,3 +117,7 @@ The refinement branch feat/interface-refinements depends on Phase 5 commit 57233
 ## Phase 6 quality checks
 
 Automated axe checks run against the homepage and all four project pages on desktop/mobile. Route layout checks cover 320, 390, 768, 1024 and 1440px widths. Floating icons have an explicit pause control. Prepared contact drafts invalidate on edits, and unexpected HTTP success payloads do not erase messages or claim delivery. See [QA evidence](docs/QA.md) and [deployment handoff](docs/DEPLOYMENT.md).
+
+## Motion refinement
+
+See [motion behavior and preferences](docs/MOTION.md). The homepage now has word/portrait entrances, viewport body reveals, independent logo drift, animated panel/timeline/gallery/status entrances and pointer/tap Playground controls. Navigation links form a compact centered group with equal padding and a smoothly moving active marker. Reduced motion, icon pause and existing opt-in 3D controls remain supported; real galleries still require supplied media. `tests/motion.spec.ts` checks timing, vectors, pause, responsive nav geometry and interaction states.

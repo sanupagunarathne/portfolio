@@ -18,7 +18,7 @@ import { Journey } from "@/components/journey";
 import { InterestGallery } from "@/components/interest-gallery";
 import { ExpertiseSculpture } from "@/components/expertise-sculpture";
 import { ContactForm } from "@/components/contact-form";
-import { Reveal } from "@/components/reveal";
+import { HeroHeadline } from "@/components/hero-headline";
 
 const origin = getSiteOrigin();
 export const metadata: Metadata = {
@@ -34,16 +34,16 @@ export default function Home() {
     <>
       <main id="main-content" tabIndex={-1}>
         <section id="hero" tabIndex={-1} className="hero page-width" aria-labelledby="hero-title">
-          <div className="hero-copy"><Reveal>
+          <div className="hero-copy">
             <p className="eyebrow"><span className="status-dot" /> A personal space on the web</p>
             <p className="introduction">{personal.introduction}</p>
-            <h1 id="hero-title">{personal.headline}</h1>
+            <HeroHeadline text={personal.headline} />
             <p className="hero-description">{personal.description}</p>
             <div className="hero-actions">
               <a className="button primary" href="#work">Explore My Work <ArrowUpRight size={18} aria-hidden="true" /></a>
               <a className="text-link" href="#about">About Me <ArrowDown size={16} aria-hidden="true" /></a>
             </div>
-            <p className="location"><MapPin size={14} aria-hidden="true" /> Based in {personal.location}</p></Reveal>
+            <p className="location"><MapPin size={14} aria-hidden="true" /> Based in {personal.location}</p>
           </div>
           <div className="portrait-composition">
             <div className="portrait-placeholder" role={personal.heroPortrait ? undefined : "img"} aria-label={personal.heroPortrait ? undefined : "Placeholder reserved for Sanupa's portrait; photograph not yet provided"}>
