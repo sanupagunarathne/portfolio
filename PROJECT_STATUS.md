@@ -2,7 +2,7 @@
 
 ## Active phase
 
-Current work: caret/retro computer/contact refinement on `feat/caret-retro-computer-contact`, based on merged main `325c4bc`.
+Current work: local retro computer and About loop on `feat/local-retro-computer-about-loop`, based on merged main `2d99841`.
 
 The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions, the expertise sculpture and case-study routes are implemented in Phases 3–5; final cross-site QA remains Phase 6.
 
@@ -194,3 +194,12 @@ Expertise now uses the user-supplied Sketchfab Retro computer by Urpo, with attr
 User corrected the address to sanupar07@gmail.com. It is now the public Contact email and prepared-draft mailto target; .env.example suggests it as CONTACT_TO_EMAIL. No real email is sent. Direct website delivery still needs secure Resend configuration, while the email-app handoff works without API keys. docs/EMAIL-SETUP.md explains domain verification, secure variables, the free-tier caveat, free mailto and hosted-form alternatives. Current provider quotas/pricing could not be independently retrieved under the network policy.
 
 Validation: lint, standalone type checking, production build and whitespace checks passed. Full final regression: **88 passed, 0 failed, 0 skipped**. A final SVG knockout adjustment makes the LinkedIn logo work on both primary buttons and page surfaces; after rebuilding, all **4 affected caret/social/contact checks passed** again. The caret test scrubs the real character and pseudo-element animations and verifies exactly one visible advancing caret. Sketchfab requests are mocked in embed checks; live model rendering is not verified. No real email, deployment, merge or pull occurred.
+
+
+## Local computer and About paragraph loop
+
+Replaced the Sketchfab iframe with original procedural CRT desktop/keyboard/mouse geometry, reusing the local lazy Three.js lifecycle. It appears without a load action and auto-rotates while visible/foreground. Pause, drag/rotation, reset, static mode, context-loss handling, reduced motion and static computer SVG fallback are retained. No external model requests/downloads or iframe remain. It is a reference-inspired interpretation, not an exact reproduction of Urpo's mesh.
+
+Added 12 editable paragraphs drawn only from supplied identity/education/interests. About types each with the existing caret, holds five seconds after typing, fades for 450ms and advances/wraps. Pause and manual previous/next support reading; offscreen/background suspend remaining timers. Reduced motion remains still and manually navigable. Reserved height avoids paragraph-length jumps. The changing text does not announce constantly to screen readers. Existing email, theme, bubble field and case studies are preserved.
+
+Validation: lint, standalone type checking, production build and whitespace checks passed. Final full production Playwright suite: **96 passed, 0 failed, 0 skipped**, including deterministic About timing/manual/reduced-motion tests, actual local computer draw calls/rotation/offscreen pause/context-loss recovery, and retained accessibility/route/layout/contact/theme/bubble regressions. A rendered local-computer screenshot was inspected; the runtime page contained zero iframes. The early timing test had real-time setup drift; freezing its clock and resetting the paragraph removed that test flakiness before the final passing run. No physical GPU/device performance or exact-reference reproduction is claimed. No merge, pull, deployment or real email occurred.

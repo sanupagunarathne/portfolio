@@ -24,7 +24,7 @@ export function ExpertiseSculpture() {
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [still, setStill] = useState(false);
-  const [animate, setAnimate] = useState(false);
+  const [animate, setAnimate] = useState(true);
   const [turn, setTurn] = useState(-.4);
   const [reset, setReset] = useState(0);
   const onReady = useCallback(() => setReady(true), []);
@@ -67,9 +67,9 @@ export function ExpertiseSculpture() {
     return () => window.clearTimeout(timeout);
   }, [enabled, ready, onLost]);
   const interactive = enabled && ready;
-  const status = reduced ? "A still moment. Reduced motion is respected." : still ? "Static view selected." : failed || available === false ? "Static view. Interactive graphics are unavailable." : interactive ? "Drag to explore, or use the rotation buttons." : "A sculpture in balance.";
+  const status = reduced ? "A still moment. Reduced motion is respected." : still ? "Static view selected." : failed || available === false ? "Static view. Interactive graphics are unavailable." : interactive ? "Drag to explore, or use the rotation buttons. Auto-rotation can be paused." : "A retro computer, built in code.";
 
-  return <div ref={host} className="expertise-sculpture" role="group" aria-label="Geometric sculpture">
+  return <div ref={host} className="expertise-sculpture" role="group" aria-label="Retro computer">
     <div className="sculpture-stage">
       {!interactive && <SculptureFallback />}
       {enabled && <SceneBoundary onError={onLost}><div className={`sculpture-canvas ${ready ? "is-ready" : ""}`}><Scene compact={compact} animate={animate && visible && foreground} turn={turn} reset={reset} onReady={onReady} onLost={onLost} /></div></SceneBoundary>}
@@ -77,7 +77,7 @@ export function ExpertiseSculpture() {
     <p className="sculpture-status" role="status">{status}</p>
     <div className="sculpture-controls" role="group" aria-label="Sculpture controls">
       {interactive && <><button type="button" aria-label="Rotate sculpture left" onClick={() => setTurn(value => value - Math.PI / 8)}>←</button><button type="button" aria-label="Rotate sculpture right" onClick={() => setTurn(value => value + Math.PI / 8)}>→</button><button type="button" onClick={() => { setTurn(-.4); setReset(value => value + 1); setAnimate(false); }}>Reset</button><button type="button" aria-pressed={animate} onClick={() => setAnimate(!animate)}>{animate ? "Pause" : "Animate"}</button></>}
-      {!reduced && available === true && !failed && <button type="button" aria-pressed={still} onClick={() => { setStill(!still); setReady(false); setAnimate(false); }}>{still ? "Interactive view" : "Static view"}</button>}
+      {!reduced && available === true && !failed && <button type="button" aria-pressed={still} onClick={() => { setStill(!still); setReady(false); setAnimate(true); }}>{still ? "Interactive view" : "Static view"}</button>}
     </div>
   </div>;
 }

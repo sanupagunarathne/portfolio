@@ -88,3 +88,15 @@ section[tabindex="-1"]:focus-visible h2, main[tabindex="-1"]:focus-visible h1 { 
 .model-credit a { text-decoration: underline; text-underline-offset: 3px; }
 .social-logo { flex-shrink: 0; }
 @media (prefers-reduced-motion: reduce) { .type-character { opacity: 1 !important; } .type-character::after { display: none; } }
+.about-paragraph { min-height: 12rem; }
+.about-paragraph p { line-height: 1.8; font-size: 1rem; margin-top: 0; }
+.about-paragraph.is-leaving { animation: about-fade-out .45s ease-in forwards; }
+@keyframes about-fade-out { to { opacity: 0; } }
+.typing-paused .type-character, .typing-paused .type-character::after { animation-play-state: paused !important; }
+.about-loop[data-running="false"] .about-paragraph.is-leaving { animation-play-state: paused; }
+.about-loop-controls { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; font-size: .875rem; margin-bottom: 1.5rem; }
+.about-loop-controls button { min-height: 44px; color: inherit; background: transparent; border: 1px solid var(--color-taupe); border-radius: 8px; padding: .5rem .75rem; }
+@media (prefers-reduced-motion: reduce) { .about-paragraph.is-leaving { opacity: 1; } }
+.about-paragraph { display: grid; }
+.about-paragraph > p { grid-area: 1 / 1; }
+.about-measure { visibility: hidden; pointer-events: none; }

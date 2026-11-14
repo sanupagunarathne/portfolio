@@ -16,6 +16,7 @@ import { Playground } from "@/components/playground";
 import { Expertise } from "@/components/expertise";
 import { Journey } from "@/components/journey";
 import { InterestGallery } from "@/components/interest-gallery";
+import { AboutLoop } from "@/components/about-loop";
 import { RetroComputer } from "@/components/retro-computer";
 import { SocialIcon } from "@/components/social-icon";
 import { ContactForm } from "@/components/contact-form";
@@ -66,7 +67,7 @@ export default function Home() {
           <SectionHeading number="02" label="ABOUT" title="More than just lines of code." id="about-title" />
           <div className="about-layout">
             <MediaFrame src={personal.aboutPortrait} alt="Sanupa Gunarathne" label="About Sanupa photograph" aspect="portrait" />
-            <div className="about-copy"><p className="lead">I like the space where a practical idea meets a thoughtful experience.</p><p>{personal.aboutDescription}</p><p>{personal.interestsDescription}</p><MacWindow title="about-me.ts"><dl className="profile-list"><div><dt>name</dt><dd>{personal.name}</dd></div><div><dt>basedIn</dt><dd>{personal.location}</dd></div><div><dt>studying</dt><dd>{personal.degree}</dd></div><div><dt>at</dt><dd>{personal.university}</dd></div></dl></MacWindow></div>
+            <div className="about-copy"><p className="lead">I like the space where a practical idea meets a thoughtful experience.</p><AboutLoop /><MacWindow title="about-me.ts"><dl className="profile-list"><div><dt>name</dt><dd>{personal.name}</dd></div><div><dt>basedIn</dt><dd>{personal.location}</dd></div><div><dt>studying</dt><dd>{personal.degree}</dd></div><div><dt>at</dt><dd>{personal.university}</dd></div></dl></MacWindow></div>
           </div>
         </section>
         <section id="expertise" className="portfolio-section expertise-section" tabIndex={-1} aria-labelledby="expertise-title">

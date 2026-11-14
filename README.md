@@ -129,3 +129,9 @@ The toolkit now uses free-roaming water-like bubbles inside a bounded area, reta
 ## Caret, retro computer and contact update
 
 Dark is the new default, with explicit saved light preferences retained. Headings use continuous character typing and one advancing caret. Social links include platform logos. Expertise replaces the abstract sculpture with the attributed Sketchfab Retro computer by Urpo, loaded only on explicit request and removable with Close. The third-party viewer depends on external connectivity; embed tests mock the provider and do not certify live model rendering. The public Contact address is sanupar07@gmail.com. Prepared drafts can open in the visitor's email app without an API; see [email setup and free alternatives](docs/EMAIL-SETUP.md) for server-side Resend configuration.
+
+## Local retro computer and About loop
+
+The Sketchfab embed has been replaced by an original code-built CRT desktop, keyboard and mouse in the local Three.js scene. It starts automatically near the viewport and rotates by default, with pause/drag/rotation/reset/static controls and reduced-motion/WebGL fallback. There are no model downloads, iframes or external model requests. This is a retro-hardware interpretation, not an exact copy of Urpo's asset.
+
+`src/data/about.ts` holds 12 editable paragraphs using supplied identity, education and interests. About types a paragraph with the caret, holds it for five seconds after typing, fades for 450ms and advances, wrapping after the last paragraph. Pause/resume and previous/next controls are included. Offscreen/background pauses preserve the timer; reduced motion shows a static manually selectable paragraph. The text area reserves space for the longest paragraph. Contact and theme configuration are unchanged.
