@@ -1,21 +1,38 @@
-export const categories = ["All", "Languages", "Frontend", "Backend", "Libraries", "Data & tools"] as const;
-export type Category = typeof categories[number];
-export type Skill = { name: string; icon: string; category: Category; description: string; usage: string; projects: string[]; status: string };
-const entries: Omit<Skill, "status">[] = [
-  { name: "Java", icon: "java", category: "Languages", description: "An object-oriented language for applications and services.", usage: "Listed in the project stacks below.", projects: ["Paddock Labs", "Campus Slot"] },
-  { name: "Python", icon: "python", category: "Languages", description: "A language for scripting, data and machine learning.", usage: "Part of the Paddock Labs technology direction.", projects: ["Paddock Labs"] },
-  { name: "JavaScript", icon: "javascript", category: "Languages", description: "The language behind interactive web experiences.", usage: "Listed in the EatWhat project stack.", projects: ["EatWhat"] },
-  { name: "TypeScript", icon: "typescript", category: "Languages", description: "JavaScript with static types for clearer interfaces.", usage: "Used throughout this portfolio.", projects: ["This portfolio"] },
-  { name: "C#", icon: "csharp", category: "Languages", description: "A typed language in the .NET ecosystem.", usage: "Part of the NEX Installer concept.", projects: ["NEX Installer"] },
-  { name: "HTML", icon: "html5", category: "Frontend", description: "The semantic structure of the web.", usage: "Accessible page structure in this portfolio.", projects: ["This portfolio"] },
-  { name: "CSS", icon: "css3", category: "Frontend", description: "Layout, typography and visual interaction for the web.", usage: "Responsive styling and floating logo depth in this portfolio.", projects: ["This portfolio"] },
-  { name: "Next.js", icon: "nextjs", category: "Frontend", description: "A React framework for full web applications.", usage: "App Router and static rendering for this portfolio.", projects: ["This portfolio"] },
-  { name: "React", icon: "react", category: "Libraries", description: "A library for composing interactive user interfaces.", usage: "Navigation, the contact form and technology selection.", projects: ["This portfolio"] },
-  { name: "Three.js", icon: "threejs", category: "Libraries", description: "A library for rendering 3D scenes on the web.", usage: "The optional interactive technology constellation.", projects: ["This portfolio"] },
-  { name: "Node.js", icon: "nodejs", category: "Backend", description: "A JavaScript runtime for server applications and tools.", usage: "Listed in EatWhat and used to build this portfolio.", projects: ["EatWhat", "This portfolio"] },
-  { name: "Spring Boot", icon: "spring", category: "Backend", description: "A framework for building Java services.", usage: "Listed in these project stacks; completion remains unverified.", projects: ["Paddock Labs", "Campus Slot"] },
-  { name: ".NET", icon: "dotnetcore", category: "Backend", description: "A platform for building applications with C# and other languages.", usage: "Part of the NEX Installer concept.", projects: ["NEX Installer"] },
-  { name: "PostgreSQL", icon: "postgresql", category: "Data & tools", description: "A relational database for structured application data.", usage: "Listed in the project stacks below.", projects: ["Paddock Labs", "EatWhat"] },
-  { name: "Git", icon: "git", category: "Data & tools", description: "Version control for tracking and reviewing changes.", usage: "Version control for this portfolio repository.", projects: ["This portfolio"] },
+export type LearningStatus = "Working With" | "Learning" | "Exploring";
+export type Skill = { name: string; icon: string; category: string; status: LearningStatus | null; usage?: string | null; description: string; relatedProjects: string[] };
+
+// The brief supplies this toolkit, not individual proficiency claims. Confirm statuses before publishing them.
+const groups: { category: string; items: [string, string, string, string[]][] }[] = [
+  { category: "Languages", items: [
+    ["Java", "java", "Application development and backend systems.", ["paddock-labs", "campus-slot"]],
+    ["Python", "python", "Data analysis and machine learning experiments.", ["paddock-labs"]],
+    ["JavaScript", "javascript", "Interactive experiences on the web.", ["eatwhat"]],
+    ["TypeScript", "typescript", "Typed interfaces and components in this portfolio.", []],
+    ["C#", "csharp", "Windows applications and the .NET ecosystem.", ["nex-installer"]],
+  ] },
+  { category: "Frontend", items: [
+    ["HTML", "html5", "Semantic structure for accessible web pages.", []], ["CSS", "css3", "Responsive layouts and considered visual details.", []],
+    ["React", "react", "Reusable interfaces; used to build this portfolio.", []],
+    ["Next.js", "nextjs", "Routing and server-rendered pages in this portfolio.", []],
+    ["Tailwind CSS", "tailwindcss", "The styling toolchain in this portfolio.", []],
+  ] },
+  { category: "Libraries", items: [
+    ["Motion", "motion", "Motion and reduced-motion-aware reveals in this portfolio.", []],
+    ["Three.js", "threejs", "The interactive expertise sculpture in this portfolio.", []],
+  ] },
+  { category: "Backend", items: [
+    ["Node.js", "nodejs", "JavaScript on the server.", ["eatwhat"]], ["Spring Boot", "spring", "Java-based application services.", ["paddock-labs", "campus-slot"]],
+    ["ASP.NET Core", "dotnetcore", "Web applications within the .NET ecosystem.", []],
+  ] },
+  { category: "Databases", items: [
+    ["PostgreSQL", "postgresql", "Relational data for application workflows.", ["paddock-labs", "eatwhat"]], ["MySQL", "mysql", "Relational database design and queries.", []],
+  ] },
+  { category: "Tools", items: [
+    ["Git", "git", "Version control and a traceable development process.", []], ["GitHub", "github", "Repositories and collaboration.", []],
+    ["VS Code", "vscode", "An editor for development and experimentation.", []], ["IntelliJ IDEA", "intellij", "Tools for Java application development.", []],
+    ["Visual Studio", "visualstudio", "Development in the .NET ecosystem.", ["nex-installer"]], ["Figma", "figma", "Interface exploration and visual design.", []],
+    ["Postman", "postman", "Exploring and testing API requests.", []], ["Google Colab", "googlecolab", "Notebook-based data experiments.", ["paddock-labs"]],
+  ] },
 ];
-export const skills: Skill[] = entries.map((entry) => ({ ...entry, status: "Learning status to be confirmed" }));
+export const skillCategories = groups.map(group => group.category);
+export const skills: Skill[] = groups.flatMap(group => group.items.map(([name, icon, description, relatedProjects]) => ({ name, icon: `/images/technologies/${icon}.svg`, category: group.category, status: null, description, relatedProjects })));

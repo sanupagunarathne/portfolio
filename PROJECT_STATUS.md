@@ -2,9 +2,9 @@
 
 ## Active phase
 
-Current work: user-requested layout/contact/technology refinement on `fix/portfolio-layout-contact-technologies`. Phase 1 foundation is merged in the starting checkout (`a7d4df2`); the full portfolio remains incomplete.
+Corrective restoration on `fix/restore-complete-portfolio`, based on current remote main `00ab4d4`. Full site and requested interface refinements recovered from `feat/interface-refinements` (`effd5d0`).
 
-The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. The homepage is currently a foundation preview; it does not yet satisfy the full portfolio completion requirements.
+The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions, the expertise sculpture and case-study routes are implemented in Phases 3–5; final cross-site QA remains Phase 6.
 
 ## Implemented
 
@@ -32,10 +32,10 @@ The repository began with only a README at `0779ae1`. The complete user brief is
 
 ## Incomplete / remaining phases
 
-2. Full nine-section homepage, all editable content datasets, reusable project/section/window/media components.
-3. Expertise logos and panels, timeline selection, animations, interactive playground and real-photo gallery.
-4. Lazy interactive 3D, loading/error/static fallbacks and performance checks.
-5. Four project case studies, verified links, image galleries, next-project navigation and per-page metadata.
+2. Complete homepage structure implemented; see Phase 2 details below.
+3. Core interactions implemented; see Phase 3 details below.
+4. Primary expertise sculpture and lifecycle/fallback behavior implemented and validated.
+5. Four project case-study pages implemented with honest editable details, image galleries, next-project navigation and per-page metadata.
 6. Full layout/accessibility/content/3D/link QA, public-origin SEO and deployment documentation.
 
 ## Phase 1 typography refinement
@@ -48,31 +48,107 @@ Revision validation: lint, TypeScript, production build and all 6 browser tests 
 
 Hero/about portraits, all project screenshots and personal photographs, résumé, email, confirmed technology learning statuses, milestone dates and detailed project roles/features/results/links. Use honest labeled placeholders. No fake screenshots, dates, email or proficiency claims. Exact reserved paths are in docs/ASSETS.md.
 
-## Next handoff
+## Phase 2 implementation
 
-Only Sanupa merges and pulls main. After the Phase 1 checks pass, hand over this branch and wait for confirmation of the user's merge/pull before starting Phase 2 from the merged main commit. No later-phase implementation should be silently stacked on this branch.
+- Completed all nine homepage sections, preserving the Doto headline and readable Geist Mono typography.
+- Featured Paddock Labs spread and three additional editorial project layouts, with honest descriptions and screenshot placeholders.
+- About story and structured personal-information window; separate editable content for projects, technologies, education and interests.
+- Authentic Devicon logos hosted locally, grouped by category. No proficiency claims were inferred; statuses remain null. License and attribution retained.
+- Education timeline includes only the three supplied milestones and no invented years.
+- Playground has functional text/weight controls and a keyboard-focusable geometric hover/focus experiment; these lightweight starting points will be refined in Phase 3.
+- Personal-interest gallery with captions and photo placeholders, plus a working LinkedIn contact CTA, clearly unavailable email/résumé and footer social links.
+- Reusable SectionHeading, ProjectCard, MacWindow and MediaFrame components. Supplied image paths render actual media when configured; no fabricated photographs or screenshots.
 
-Reusable cloud install_script and start_skill were saved as a draft with npm ci, startup/readiness steps, validation commands and the user's phase/merge rules. This does not publish the environment; review/save the settings and publish separately if desired.
+## Phase 2 validation
 
-## User-requested layout, contact and technology refinement
+- npm run lint: passed with zero warnings.
+- npm run typecheck: passed after correcting an HTMLImageElement type annotation in the new browser test.
+- npm run build: passed; homepage and not-found route prerendered.
+- Production Playwright suite: all 8 desktop/mobile tests passed, covering navigation, reduced motion, section/project/milestone/gallery presence, working typography input/weight controls and loaded technology images.
+- Additional layout checks: 1440, 768, 390 and 320px widths fit without horizontal overflow. Desktop work/about/expertise/playground and mobile work screenshots were inspected.
+- Media remains intentionally absent; real photo rendering is wired but actual supplied-photo behavior cannot yet be validated. WebGL and case-study pages are not implemented in this phase.
 
-Branch: `fix/portfolio-layout-contact-technologies`, based on the checkout containing the merged Phase 1 commit `a7d4df2`. No interrupted uncommitted work was present. This is the user's explicitly requested refinement scope, not completion of the other planned portfolio phases.
+## Branch dependency and next handoff
 
-- Reduced hero/section spacing, enlarged header and footer identity, uppercase Doto headline.
-- Shared full-name wordmark with a rounded two-eye bot mark in header and footer.
-- Navigation for Home, Work, About, Technologies and Contact, with rounded active/hover states and scroll tracking. Mobile menu overlays the page to avoid shifting the selected section when reopened.
-- Editable technology data, local licensed Devicon SVGs, category filters, keyboard/touch selectors, project information and unconfirmed learning statuses.
-- Floating logo depth, pause control, reduced-motion support and an optional lazy React Three Fiber scene with draggable 3D logo tiles. Rendering is on demand; fallback selectors remain independent of WebGL.
-- Structured Contact form with native validation, trimmed-input validation, topic selection, character count, message review, copy/download and invalidation of stale drafts on edits.
-- Delivery remains unconfigured: the user confirmed form placement in Contact but supplied no email or service destination. No data is sent or persisted; the interface explicitly labels drafts. A supplied `personal.email` enables an email-app handoff, not server delivery.
+The requested glass refinements are now implemented in Phase 3, including appropriate Phase 1/2 component updates. Typography, contrast, responsive behavior and opaque fallbacks are preserved.
 
-Remaining portfolio phases and missing real assets above remain outstanding; project previews and case studies were not expanded by this refinement.
+Remote main was still the initial README when the user explicitly requested Phase 2. This branch transparently depends on Phase 1 commit f3a79ad; no merge or pull was performed. Sanupa should merge Phase 1 before Phase 2. Phase 2 was handed off; the user subsequently requested Phase 3 as a separate checkpoint.
 
-Refinement validation:
-- `npm ci`: passed (436 locked packages).
-- `npm run lint`, `npm run typecheck`, `npm run build`, `git diff --check`: passed.
-- `CI=1 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e`: all 14 tests passed across desktop and mobile.
-- Inspected desktop/mobile screenshots and verified no document overflow at 320, 768, 1024 and 1440px widths.
-- Independently rendered and dragged the 3D scene in Chromium with SwiftShader; no page errors or invalid WebGL texture warnings. Explicit SVG dimensions fixed initially blank textures. The 3D render is verified using software rendering, not a physical GPU performance benchmark.
-- Mobile active-navigation test uses a touch at the visible sticky menu position: Chromium's automated scrollIntoView used by locator.click can move the page before the click. Ordinary touch interaction preserves the selected section.
-- No merge, pull, push or deployment performed.
+Reusable cloud install_script and start_skill were previously saved as a draft. They remain applicable: npm ci, npm run dev, build/type/lint checks and production Playwright tests. Saving these does not publish the environment.
+
+## Phase 3 implementation
+
+- Interactive technology categories and selectable logo buttons; macOS-style detail panel shows description, usage, honest learning-status placeholders and related project links. No new proficiency claims.
+- Keyboard/tap-expandable education milestones with selected, hover and focus states. No fabricated years.
+- Project preview buttons expand honest notes; zoom, arrow microinteractions and cursor-follow labels are fine-pointer enhancements. Full case studies remain Phase 5.
+- Reusable Motion reveal wrapper; server content is initially visible. Reduced motion disables animated movement.
+- Native dialog gallery for supplied photos only: focus containment, Escape/backdrop/close-button dismissal and return to opener. Current missing photos remain noninteractive placeholders.
+- Header active-section tracking, refined navigation underline, and restrained glass surfaces on shared Phase 1/2 components. Opaque and reduced-transparency fallbacks preserve readability; footer socials and Doto/Geist Mono remain intact.
+- Browser coverage for selection/filter resets, keyboard/touch expansion, reduced-motion availability, opaque fallback and gallery behavior using test-only artwork.
+
+Initial Phase 3 validation passed lint, TypeScript, the production build and all 16 browser tests. Mobile selection now brings the detail panel into view and offers focus return to the selected technology. Visual layout checks fit 320, 390, 768 and 1440px. A compiled-CSS prefixing issue that dropped the standard blur declaration was found and corrected; a computed-blur assertion now covers it. Final validation after this correction passed lint, TypeScript, the production build and all 16 desktop/mobile browser tests, including the computed blur and opaque-fallback assertions. Main still held the initial README at branch creation; the user's request authorized continuing transparently from Phase 2 (`8c408c3`). No merge or pull was performed. Hand over Phase 3 and stop before Phase 4.
+
+## Phase 4 implementation
+
+- Primary expertise sculpture uses layered palette-colored torus geometry and a rounded core, R3F and Drei controls. It is isolated from all technology-selection controls.
+- Lazy client scene mounts near the viewport after a WebGL2 capability check. A stable SVG fallback is visible during SSR, reduced motion and loading, and after capability errors, context loss, scene errors or a 12-second loading timeout.
+- User rotation, keyboard buttons, reset, opt-in animation and static/interactive mode toggle. Demand rendering; optional animation stops offscreen and on document visibility change. Mobile DPR 1, desktop DPR capped at 1.5; no pan, zoom, shadows, textures, external environment maps or postprocessing.
+- Touch scrolling remains available. Existing glass styles, Doto headline and expertise panel remain intact. The optional second Playground scene was not added; the existing functional experiments are retained.
+- Tests cover reduced motion, unavailable WebGL and actual software-rendered draw calls, rotation, pause/resume offscreen, static view and context loss. All checks passed.
+
+Main contained Phase 1 at branch creation, but Phases 2 and 3 were not merged. The explicit Phase 4 request authorized continuing transparently from Phase 3 (`6473ce6`); no merge or pull was performed. Stop at Phase 4 handoff, before project case studies in Phase 5.
+
+### Phase 4 validation results
+
+- npm run lint: passed with zero warnings.
+- npm run typecheck: passed.
+- npm run build: passed; the scene remains a separate client-loaded chunk.
+- Production Playwright suite: all 22 tests passed, including desktop/mobile software-rendered 3D and missing-WebGL/reduced-motion branches. Rendered draw calls and stopped/resumed draws were checked, not merely canvas presence.
+- Real-time 3D layout checks at 1440, 768, 390 and 320px: no horizontal overflow. Desktop and mobile sculpture screenshots inspected.
+- Rendering tests used Chromium's software renderer with the major-performance-caveat rejection disabled only inside the test. Production keeps that rejection and can show the static fallback on unsuitable graphics hardware. Physical-device GPU performance has not been benchmarked.
+- Optional second Playground 3D scene deliberately omitted to keep the page lightweight. Existing Playground experiments remain functional. All other Phase 4 scope completed.
+
+## Phase 5 implementation
+
+- Four statically generated `/projects/[slug]` pages include overview, problem, role, main features, stack, approach, challenges, results/progress and galleries.
+- Case-study details are editable in case-studies.ts. Known project summaries and problem areas are used; role, shipped features, approach, challenges and results remain null and explicitly labeled until confirmed. No fake statistics or project links.
+- Homepage preview links open actual case studies; inline notes remain separate controls. Next-project navigation wraps from NEX Installer back to Paddock Labs.
+- Shared footer moved to root layout. Header links from nested routes return to homepage sections. Case-study contents anchors, back-to-work links, accessible main regions and custom 404 recovery are included.
+- Gallery supports screenshots as well as personal photos, with correct labels and editable alt text. Current absent images remain noninteractive placeholders. Existing browser gallery fixture covers the screenshot variant without fabricating product assets.
+- Individual metadata includes title, description, Open Graph and Twitter fields. No production domain invented; canonical URLs and sitemap remain Phase 6 work.
+
+Phase 5 validation passed:
+
+- npm run lint: zero warnings.
+- npm run typecheck: passed.
+- npm run build: passed; all four project pages were statically generated.
+- Production Playwright suite: all 36 desktop/mobile tests passed, including four case studies, their metadata and next-project links, cross-page navigation, real 404 status, no-JavaScript content and screenshot-dialog fixtures. Existing homepage and 3D tests also passed.
+- Additional visual/layout checks: all four case studies fit 1440, 768, 390 and 320px without horizontal overflow. Desktop overview/hero and mobile hero screenshots inspected.
+- Real project screenshots, verified external project links and detailed personal contributions remain unavailable. Placeholder paths and editable fields are documented; no final content completeness or deployment claim is made.
+
+ Main still included Phase 1 only, so this explicitly requested phase depends on Phase 4 (`9252149`). No merge or pull was performed; stop before Phase 6.
+
+## Post-Phase-5 interface refinement
+
+User requested tighter spacing, stronger header/footer scale, full-name branding with a rounded two-eye mark, uppercase Doto hero, complete rounded-state navigation, a more spatial technology presentation and a functional contact form.
+
+Implemented on feat/interface-refinements, based on Phase 5 (5723348):
+
+- Full-name header/footer identity, enlarged supporting layout, all eight navigation destinations and rounded active states.
+- Reduced section/hero/project gaps; uppercase hero; existing glass palette preserved.
+- Genuine technology icons arranged in a floating CSS 3D constellation; category filters/details remain keyboard-accessible. Stable hit areas and still icons for reduced motion/coarse pointers. Added verified portfolio frameworks/libraries.
+- Validated name/email/topic/message form, prepared-message copy mode, and a server-side provisional Resend adapter with loading/error/success behavior. Errors preserve entered text. No false delivery success.
+- Service credentials and recipient/sender are absent in both environment configuration and process variables. Asked the user for a public receiving email and service preference. Real sending remains blocked by this configuration; no real test emails were sent. Current UI clearly prepares unsent messages.
+
+Validation completed: lint, TypeScript and the production build passed. All 50 Playwright-run automated checks passed, including browser workflows, contact-handler provider mocks, delivery failures, preparation/copy, complete navigation, all case studies and 3D fallbacks. Initial moving-hit-area and mobile-active-state defects were corrected; a tablet navigation overflow was also fixed. Additional checks fit 320, 390, 768, 1024 and 1440px, including nested-page header checks, and desktop/mobile screenshots were inspected. Real delivery remains unconfigured and untested; this is the only outstanding contact integration prerequisite. Phase 6 has not been started; no merges or pulls were performed.
+
+
+## Complete-site restoration
+
+The earlier `fix/portfolio-layout-contact-technologies` branch was incorrectly based on the old Phase 1 checkout and was subsequently merged into main as `00ab4d4`. This corrective branch starts from that main commit and restores the complete tracked tree from `effd5d0` (`feat/interface-refinements`), which already contains Phases 2–5 and the requested interface refinements. It preserves Git history without merging, pulling, resetting or force pushing.
+
+Restored: all homepage sections, project content and four case-study routes, shared footer, full navigation, uppercase hero/full-name bot branding, tighter spacing, floating technology icons and filters, journey/playground/gallery interactions, 3D sculpture with fallbacks, contact form and server adapter, local logo assets, documentation and the full existing test suite. The old duplicate technology implementation and foundation-only tests are replaced with the complete-site versions.
+
+Contact delivery still requires the previously documented provider credentials and sender/recipient configuration; no real mail delivery is claimed. Personal photos and unverified project details remain honestly labeled. This restoration does not start Phase 6.
+
+Restoration validation in this task: `npm ci`, `npm run lint`, `npm run typecheck` and `npm run build` passed. The production build includes the homepage, contact API and all four generated project routes. `CI=1 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e` completed with all 50 tests passing, including desktop/mobile homepage, case studies, contact provider mocks, navigation, gallery, toolkit, journey, playground, actual 3D draw calls, context-loss recovery and reduced-motion/WebGL fallbacks. Application code, tests, dependencies and assets match the recovered `effd5d0` tree exactly; only README and this status file add restoration context. No real email was sent. No merge, pull or deployment performed; the user must merge this corrective branch for main to show the complete site.
