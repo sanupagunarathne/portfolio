@@ -61,3 +61,13 @@ Use `feat/phase-N-description`, `fix/description`, or `bug/description` as appro
 Update `src/data/personal.ts` and `socials.ts` for supplied content. Email, résumé and photo fields remain null until provided. Never fabricate details, photos or project screenshots. See the asset guide before replacing placeholders.
 
 Compatible with the standard Next.js/Vercel build (`npm run build`), with no custom services. Connect on Vercel when deployment is authorized. Public origin, sitemap/robots configuration and full case-study SEO follow in later phases; no domain has been invented.
+
+## Layout and contact refinement
+
+The header and footer use the full name and a shared rounded bot mark. Navigation highlights the current section and includes every currently implemented section. The hero headline is uppercase; section spacing is more compact.
+
+`src/data/skills.ts` supplies the technology categories and project associations. The light constellation uses local Devicon artwork (license in `public/technology/`) and accessible logo selectors. Floating motion can be paused and respects reduced motion. “Explore in 3D” loads React Three Fiber on demand; drag to orbit. It renders only when needed, with a 2D selector available independently of WebGL. Learning status remains unconfirmed rather than asserting proficiency.
+
+The Contact section validates name, email and message, prepares a reviewable draft, and offers copy/download. Editing the form invalidates the old preview. It sends no data to a server or browser storage. Direct delivery is pending a verified email or form service; no success message claims delivery. Setting `personal.email` enables an explicit “Open email app” handoff after preparing the draft; it does not create a server-side mail service.
+
+Run `npm run test:e2e` after building for the foundation and refinement checks, including navigation, form validation/download, technology filters and narrow-screen overflow.

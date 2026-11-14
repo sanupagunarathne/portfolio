@@ -1,4 +1,7 @@
 import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
+import { Brand } from "@/components/brand";
+import { ContactForm } from "@/components/contact-form";
+import { TechnologySpace } from "@/components/technology-space";
 import { personal } from "@/data/personal";
 import { socials } from "@/data/socials";
 
@@ -6,7 +9,7 @@ export default function Home() {
   return (
     <>
       <main id="main-content" tabIndex={-1}>
-        <section className="hero page-width" aria-labelledby="hero-title">
+        <section id="home" tabIndex={-1} className="hero page-width" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="eyebrow"><span className="status-dot" /> A personal space on the web</p>
             <p className="introduction">{personal.introduction}</p>
@@ -38,17 +41,25 @@ export default function Home() {
           <p className="eyebrow">02 / ABOUT</p>
           <div className="section-line"><h2 id="about-title">More than just<br />lines of code.</h2><div><p>{personal.identity} at {personal.university}.</p><p className="degree">{personal.degree}</p></div></div>
         </section>
+        <section id="expertise" className="expertise-section page-width" tabIndex={-1} aria-labelledby="expertise-title">
+          <p className="eyebrow">03 / TECHNOLOGIES</p>
+          <div className="section-line"><h2 id="expertise-title">A universe of<br />possibilities.</h2><p>Languages, frameworks and libraries behind the ideas. Select a logo to explore its place in my projects.</p></div>
+          <TechnologySpace />
+        </section>
         <section id="contact" className="contact-section" tabIndex={-1} aria-labelledby="contact-title">
           <div className="page-width">
             <p className="eyebrow">LET&apos;S CONNECT</p>
-            <h2 id="contact-title">Let&apos;s make something<br />meaningful together.</h2>
-            <p className="contact-note">Contact email and résumé will be added when available.</p>
+            <div className="contact-layout"><div className="contact-intro"><h2 id="contact-title">Let&apos;s make something meaningful together.</h2>
+            <p>An idea, a collaboration, or a simple hello. Start with a few words.</p>
+            <dl className="contact-availability"><div><dt>Email</dt><dd>{personal.email ?? "Address to be added"}</dd></div><div><dt>Résumé</dt><dd>{personal.resume ? <a className="text-link" href={personal.resume}>View résumé</a> : "Not available yet"}</dd></div></dl>
+            <a className="text-link" href="https://www.linkedin.com/in/sanupagunarathne/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn <ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a></div>
+            <ContactForm email={personal.email} /></div>
           </div>
         </section>
       </main>
       <footer className="page-width footer">
         <div className="footer-main">
-          <div><a href="#main-content" className="wordmark" aria-label="Sanupa — back to top">sanupa.</a><p>Thoughtfully built. Always curious.</p></div>
+          <div><a href="#main-content" className="wordmark" aria-label="Sanupa Gunarathne — back to top"><Brand /></a><p>Thoughtfully built. Always curious.</p></div>
           <nav className="social-links" aria-label="Social links">
             {socials.map((social) => <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer">{social.name}<ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>)}
           </nav>

@@ -21,6 +21,10 @@ Typography revision: use Doto for the entire hero headline, with one consistent 
 
 Use mono section numbers, filename labels, restrained dot grids and code references. Reusable macOS windows have decorative noninteractive titlebar dots, thin borders and soft corners; use selectively, never as the entire site.
 
+## Latest user refinements
+
+Use the uppercase hero headline “BUILDING DIGITAL EXPERIENCES THAT FEEL DIFFERENT.” Keep tighter section spacing and more prominent header/footer branding. Both wordmarks use “Sanupa Gunarathne” alongside a rounded face bot with two round eyes. Navigation includes every implemented homepage section, with rounded active/hover highlights. The technology section is a light floating constellation with authentic local logos, category filters, detail panels and an optional 3D view. Respect reduced motion and retain independent accessible selectors. Keep the structured form in Contact. Delivery is not configured; never claim a message was sent when only a draft was prepared. Ask for a verified destination before connecting delivery.
+
 ## Content
 
 Sanupa Gunarathne is a Software Engineering undergraduate / developer in Sri Lanka, studying BSc (Hons) Software Engineering — University of Westminster at IIT Sri Lanka. Previously attended Maliyadeva College and completed foundation studies; no dates supplied. Interests: software, creative web, photography, motorcycling, tennis, graphic design and experimentation.
