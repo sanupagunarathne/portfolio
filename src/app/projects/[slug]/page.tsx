@@ -1,3 +1,4 @@
+import { getSiteOrigin } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,10 +17,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find(item => item.slug === slug);
   if (!project) notFound();
+  const origin = getSiteOrigin();
+  const canonical = origin ? new URL(`/projects/${slug}`, origin).href : undefined;
   return {
+    alternates: canonical ? { canonical } : undefined,
     title: project.title,
     description: project.summary,
-    openGraph: { title: `${project.title} — Sanupa Gunarathne`, description: project.summary, type: "article" },
+    openGraph: { title: `${project.title} — Sanupa Gunarathne`, description: project.summary, type: "article", url: canonical },
     twitter: { card: "summary", title: project.title, description: project.summary },
   };
 }

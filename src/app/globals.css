@@ -436,3 +436,12 @@ html { scroll-padding-top: 11rem; }
   .mobile-links { position: absolute; top: 100%; left: 0; right: 0; margin-inline: auto; background: var(--glass-surface); backdrop-filter: blur(16px); padding: 1rem; border: 1px solid var(--color-taupe); border-radius: 0 0 16px 16px; box-shadow: 0 12px 24px rgb(115 114 110 / .12); }
 }
 @media (prefers-reduced-transparency: reduce) { .mobile-links { background: var(--color-ivory); backdrop-filter: none; } }
+
+.contact-editable { border: 0; padding: 0; margin: 0; min-width: 0; }
+.profile-list dt, .case-facts dt { color: var(--color-ink); }
+.motion-toggle { background: transparent; color: inherit; border: 0; border-bottom: 1px solid var(--color-taupe); margin-bottom: 1rem; }
+.technology-cosmos.is-still img { animation: none; }
+.expertise-layout .technology-cosmos.is-still .technology-group { transform: none; }
+/* Keep small button/link text above AA contrast while hovered. */
+.primary:hover { background: var(--color-ink); }
+.social-links a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 5px; }

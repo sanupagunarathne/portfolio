@@ -1,10 +1,10 @@
 # Sanupa Gunarathne — portfolio
 
-A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. Delivered in six phases. **Phase 5 adds dedicated project case studies**, alongside the complete homepage, core interactions, glass styling and selective 3D. Final QA follows in Phase 6.
+A calm digital canvas where creativity meets engineering. Built with Next.js App Router, React, TypeScript and Tailwind CSS. The full homepage and four project case studies include interactive technologies, journey, playground, glass styling and selective 3D. Phase 6 adds accessibility/regression audits, contact fixes and configurable SEO.
 
 ## Development
 
-Use Node.js 24.22.1 (`nvm use` if installed) and npm. No API keys or environment variables are required for the foundation.
+Use Node.js 24.22.1 (`nvm use` if installed) and npm. No environment variables are required for local preparation/copy mode. Public indexing and real contact delivery are optional configured integrations.
 
 ```sh
 cd /workspace/portfolio # or your local checkout directory
@@ -36,7 +36,7 @@ This cloud machine has Chromium already installed:
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e
 ```
 
-If the home cache is unwritable and browser download is needed, use `PLAYWRIGHT_BROWSERS_PATH=/tmp/portfolio-playwright npx playwright install chromium` and set the same variable when testing. Tests cover desktop/mobile rendering, navigation, keyboard access, overflow and reduced motion; they do not certify unfinished sections or 3D.
+If the home cache is unwritable and browser download is needed, use `PLAYWRIGHT_BROWSERS_PATH=/tmp/portfolio-playwright npx playwright install chromium` and set the same variable when testing. Tests cover desktop/mobile workflows, all project routes, accessibility scans, responsive widths, links, reduced motion, contact mocks and actual 3D draw/pause/fallback behavior using SwiftShader. See docs/QA.md for scope and limitations.
 
 ## Structure
 
@@ -50,7 +50,7 @@ If the home cache is unwritable and browser download is needed, use `PLAYWRIGHT_
 - `AGENTS.md`: persistent implementation and Git rules.
 - `PROJECT_STATUS.md`: completed scope, validation, limitations and next step.
 
-The homepage contains Hero, Selected Work, About, Expertise, Journey, Playground, Beyond the Screen, Contact and Footer. Playground includes a real editable Doto typography experiment and a hover/focus geometric study. Technology logos are authentic, locally stored Devicon assets; see docs/ATTRIBUTIONS.md. Per-technology learning statuses remain unconfirmed. Motion and 3D enhancements follow in later phases.
+The homepage contains Hero, Selected Work, About, Expertise, Journey, Playground, Beyond the Screen, Contact and Footer. Playground includes a real editable Doto typography experiment and a hover/focus geometric study. Technology logos are authentic, locally stored Devicon assets; see docs/ATTRIBUTIONS.md. Per-technology learning statuses remain unconfirmed. Motion and lazy 3D include reduced-motion/static fallbacks.
 
 ## Version control
 
@@ -60,7 +60,7 @@ Use `feat/phase-N-description`, `fix/description`, or `bug/description` as appro
 
 Update files in `src/data/` for supplied content. `personal.ts` controls portraits, email and résumé; `projects.ts` controls summaries, screenshots and verified URLs; `skills.ts`, `timeline.ts` and `interests.ts` control the other sections. Email, résumé and photo fields remain null until provided. Never fabricate details, photos or project screenshots. See the asset guide before replacing placeholders.
 
-Compatible with the standard Next.js/Vercel build (`npm run build`), with no custom services. Connect on Vercel when deployment is authorized. Public origin, sitemap/robots configuration and full case-study SEO follow in later phases; no domain has been invented.
+Compatible with the standard Next.js/Vercel build (`npm run build`), with no custom services. Connect on Vercel when deployment is authorized. See [deployment instructions](docs/DEPLOYMENT.md) for SITE_URL, robots/sitemap, indexing and optional contact delivery. No domain has been invented.
 
 Phase 2 was explicitly requested while remote main still held the initial README. `feat/phase-2-homepage` therefore depends on Phase 1 commit `f3a79ad`; merge Phase 1 first, then review Phase 2. No merge or pull was performed by the assistant.
 
@@ -68,7 +68,7 @@ Phase 2 was explicitly requested while remote main still held the initial README
 
 - Filter technologies by category and select a logo to see its description, editable usage/learning status, and related-project anchors. Unknown usage and proficiency remain explicitly unconfirmed.
 - Expand journey milestones with a click, tap, Enter or Space; selecting another closes the previous detail.
-- Project previews open inline project notes, with gentle zoom/arrow effects and mouse-only cursor labels. Case-study routes remain Phase 5.
+- Project previews open inline project notes, with gentle zoom/arrow effects and mouse-only cursor labels. Case-study links are available alongside inline notes.
 - Photo gallery buttons appear only when an interest has a real image path. The native modal supports Escape, close button, backdrop click, contained focus and focus restoration. Placeholders remain noninteractive.
 - Motion reveals keep server-rendered content visible before hydration and when JavaScript is unavailable. Reduced motion removes movement. Glass surfaces use opaque defaults when backdrop blur is unsupported and respect reduced transparency where supported.
 - Navigation highlights the current major section; footer social links and dotted hero typography are preserved.
@@ -97,7 +97,7 @@ Set `project.screenshot` for the overview/thumbnail. Set each study's `gallery[]
 
 Project pages have individual title, description, Open Graph and Twitter metadata, a table of contents and next-project links (the last returns to the first). Shared header links point to homepage sections from a case study; shared footer and social links appear on every page. Unknown slugs return 404 with a recovery link. Main content and navigation remain available without JavaScript.
 
-Phase 5 depends on Phase 4 commit `9252149`; earlier unmerged phases must be merged first by Sanupa. No merge or pull was performed. Public-domain canonical URLs, sitemap and final cross-page QA remain in Phase 6.
+Phase 5 depends on Phase 4 commit `9252149`; earlier unmerged phases must be merged first by Sanupa. No merge or pull was performed. Phase 6 provides configurable public-domain canonical URLs, sitemap and cross-page QA.
 
 ## Interface refinement after Phase 5
 
@@ -113,3 +113,7 @@ The refinement branch feat/interface-refinements depends on Phase 5 commit 57233
 ## Corrective complete-site branch
 
 `fix/restore-complete-portfolio` restores the full site and interface refinements from `feat/interface-refinements` (`effd5d0`) on top of main (`00ab4d4`). It supersedes the foundation-only `fix/portfolio-layout-contact-technologies` branch. All homepage sections and the four project case studies are retained. Contact preparation works without credentials; actual delivery still requires the configuration described above.
+
+## Phase 6 quality checks
+
+Automated axe checks run against the homepage and all four project pages on desktop/mobile. Route layout checks cover 320, 390, 768, 1024 and 1440px widths. Floating icons have an explicit pause control. Prepared contact drafts invalidate on edits, and unexpected HTTP success payloads do not erase messages or claim delivery. See [QA evidence](docs/QA.md) and [deployment handoff](docs/DEPLOYMENT.md).
