@@ -147,3 +147,16 @@ Validation completed: lint, TypeScript and the production build passed. All 50 P
 Grouped desktop navigation links at the start of the row instead of distributing them across its full width. Existing responsive link padding, small gaps, rounded active states and mobile menu are preserved.
 
 Validation: npm run lint, npm run typecheck and npm run build passed. Six existing desktop/mobile rendering and navigation Playwright checks passed using installed Chrome via PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH. Initial validation found a missing esbuild dependency; npm ci restored the locked dependencies. The first browser attempt could not launch because bundled Chromium was absent; the Chrome rerun passed. No merge, pull or deployment performed.
+
+## Animation refinement after Phase 5
+
+User requested broader animation and particular attention to smooth, freely drifting Expertise icons without shared orbits. Implemented on the existing feat/interface-refinements branch; this does not begin Phase 6.
+
+- Independent multi-axis icon/label drift with varied frequencies/phases, subtle rotation/depth and damped pointer response. Removed synchronized vertical bob/group tilt and heavy individual tile surfaces. Button targets stay stationary and selection works while drifting.
+- Pause/Resume preserves motion time and position. requestAnimationFrame work stops offscreen and when the document is hidden; reduced-motion and coarse-pointer views stay still. Motion preference changes are handled live. The separate WebGL sculpture keeps all existing opt-in/fallback behavior.
+- Staggered uppercase Doto hero, once-only editorial/gallery/case-study reveals, sliding navigation highlight, mobile-menu entrances, smooth milestone expansion and small project/contact/footer feedback.
+- Playground shapes respond to pointer movement, tap/Enter, arrow keys, Escape and a reset button. No new dependency or fabricated content/assets.
+
+Validation: npm run lint, npm run typecheck and npm run build passed. The full npm run test:e2e suite passed all 58 checks in installed Chrome, including desktop/mobile animation checks and actual software-rendered sculpture draw calls. PLAYWRIGHT_PORT=3100 ensured the fresh production server was tested without stopping the existing server on 3000. Layout checks fit 320, 390, 768, 1024 and 1440px; desktop and 390px screenshots were inspected. An initial 57/58 run exposed a scrolling-sensitive geometry assertion (0.2px viewport movement); measuring button geometry relative to its field corrected the test, and focused plus full reruns passed.
+
+The separately staged navigation alignment change is preserved outside the animation commit. Contact delivery remains unconfigured, media/content placeholders remain, and physical-device GPU performance is not newly benchmarked. No push, merge, pull, deployment or automatic Phase 6 continuation.

@@ -1,5 +1,6 @@
 "use client";
 
+import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Brand } from "./brand";
@@ -14,6 +15,7 @@ const links = [
 ];
 
 export function Navigation() {
+  const reduced = useReducedMotion();
   const pathname = usePathname();
   const home = pathname === "/";
   const [open, setOpen] = useState(false);
@@ -66,9 +68,9 @@ export function Navigation() {
         <Link className="wordmark" href="/" aria-label="Sanupa Gunarathne home" onClick={() => { anchorTarget.current = null; setActive("hero"); setOpen(false); }}>
           <Brand />
         </Link>
-        <div className="desktop-links">
-          {links.map((link) => <a key={link.href} onClick={() => { anchorTarget.current = null; }} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}
-        </div>
+        <LayoutGroup id="main-navigation"><div className="desktop-links">
+          {links.map((link) => <a key={link.href} onClick={() => { anchorTarget.current = null; }} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined}>{home && active === link.href.slice(1) && !reduced && <motion.span className="nav-active-pill" layoutId="active-section" transition={{ type: "spring", stiffness: 380, damping: 36 }} aria-hidden="true" />}<span className="nav-label">{link.label}</span></a>)}
+        </div></LayoutGroup>
         <span className="nav-note">{"// developer & creative"}</span>
         <button
           ref={toggle}
@@ -82,8 +84,8 @@ export function Navigation() {
         </button>
       </nav>
       <div id="mobile-navigation" className="mobile-links page-width" hidden={!open}>
-        {links.map((link) => (
-          <a key={link.href} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined} onClick={event => {
+        {links.map((link, index) => (
+          <a style={{ animationDelay: `${index * 25}ms` }} key={link.href} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined} onClick={event => {
             setOpen(false);
             if (home) {
               event.preventDefault();

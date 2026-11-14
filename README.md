@@ -108,3 +108,11 @@ The contact form validates name, email, topic and message. With no delivery conf
 To activate delivery after choosing Resend, securely configure RESEND_API_KEY, CONTACT_TO_EMAIL and CONTACT_FROM_EMAIL in deployment/environment settings. The sender must belong to a Resend-verified domain; the recipient must be provided by Sanupa. Outbound access to api.resend.com is required. See .env.example for variable names; never commit real values. The homepage reads the configured availability on each server request. Other form providers require replacing the server adapter. Provider-side abuse controls and real delivery should be verified before public activation; there is no persistent distributed rate limiter in this implementation.
 
 The refinement branch feat/interface-refinements depends on Phase 5 commit 5723348. Merge/pull main remains Sanupa's responsibility. These changes do not automatically begin Phase 6.
+
+## Animation refinement
+
+The hero uses staggered Doto word entrances; major content and supplied-media galleries reveal once. Navigation has a sliding active pill and short mobile-menu entrances. Journey details expand smoothly; project, contact and footer interactions have restrained feedback. The geometric Playground responds to pointer movement, tap/Enter and arrow keys, with Escape and a reset button.
+
+Expertise replaces the synchronized bob and group tilt with independent wandering icon/label visuals. Different frequencies and phases give each tool its own path without a common orbit. A damped pointer offset adds gentle depth; button hit areas stay fixed. Pause/Resume preserves drift time and position. Animation runs only while the field is visible and the document is foregrounded, with still visuals for coarse pointers and reduced motion (including live preference changes). The existing lazy sculpture remains independently controlled. No animation dependency was added.
+
+`tests/animation.spec.ts` checks actual visual displacement on both axes, stationary button geometry, pause/resume, background/offscreen lifecycle, live motion preferences, selection, Playground controls and overflow at 320-1440px. Use `PLAYWRIGHT_PORT` to select a free production-test port instead of reusing a server on 3000. On Windows, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to an installed Chrome executable if bundled Chromium is absent.
