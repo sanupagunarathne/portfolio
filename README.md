@@ -121,3 +121,7 @@ Automated axe checks run against the homepage and all four project pages on desk
 ## Motion refinement
 
 See [motion behavior and preferences](docs/MOTION.md). The homepage now has word/portrait entrances, viewport body reveals, independent logo drift, animated panel/timeline/gallery/status entrances and pointer/tap Playground controls. Navigation links form a compact centered group with equal padding and a smoothly moving active marker. Reduced motion, icon pause and existing opt-in 3D controls remain supported; real galleries still require supplied media. `tests/motion.spec.ts` checks timing, vectors, pause, responsive nav geometry and interaction states.
+
+## Bubble field and light/dark themes
+
+The toolkit now uses free-roaming water-like bubbles inside a bounded area, retaining category filters and the separate detail panel. Pause or focus a target to select it reliably; reduced motion gets a static layout. The navbar's right-side theme switch remembers a light/dark preference. Section phrases type in on entry; case-study sidebar offsets follow the measured header height. See [implementation and accessibility notes](docs/BUBBLES-AND-THEMES.md).

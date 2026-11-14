@@ -46,28 +46,30 @@ test("navigation is centered with equal padding and a moving active marker", asy
   }).toBeLessThan(1);
 });
 
-test("logos drift in independent directions and the explicit pause stops them", async ({ page }) => {
+test("bubble icons move freely and pause at their current position", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
-  const vectors = await page.locator(".technology-group").first().locator("button img").evaluateAll(images => images.slice(0, 2).map(image => {
-    const animation = image.getAnimations()[0];
-    animation.pause();
-    const duration = Number(animation.effect!.getTiming().duration);
-    animation.currentTime = duration / 2;
-    const matrix = new DOMMatrix(getComputedStyle(image).transform);
-    return { x: matrix.m41, y: matrix.m42 };
-  }));
-  expect(vectors[0].x * vectors[1].x).toBeLessThan(0);
-  expect(vectors[0].y * vectors[1].y).toBeLessThan(0);
+  const field = page.locator(".technology-cosmos");
+  await field.scrollIntoViewIfNeeded();
+  await expect(field).toHaveAttribute("data-running", "true");
+  const bubble = page.locator(".technology-group li").first();
+  const start = await bubble.evaluate(element => getComputedStyle(element).transform);
+  await expect.poll(() => bubble.evaluate(element => getComputedStyle(element).transform)).not.toBe(start);
   await page.getByRole("button", { name: "Pause floating icons" }).click();
-  await expect(page.locator(".technology-cosmos img").first()).toHaveCSS("animation-name", "none");
+  await expect(field).toHaveAttribute("data-running", "false");
+  const stopped = await bubble.evaluate(element => getComputedStyle(element).transform);
+  await page.waitForTimeout(200);
+  expect(await bubble.evaluate(element => getComputedStyle(element).transform)).toBe(stopped);
   await page.getByRole("button", { name: "Resume floating icons" }).click();
-  await expect(page.locator(".technology-cosmos img").first()).toHaveCSS("animation-name", "token-drift");
+  // The resume control may scroll the tall field out of view; motion is intentionally suspended there.
+  await field.scrollIntoViewIfNeeded();
+  await expect(field).toHaveAttribute("data-running", "true");
 });
 
 test("details, milestones, status and tap-driven playground have motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
+  await page.getByRole("button", { name: "Pause floating icons" }).click();
   await page.locator(".technology-group").getByRole("button", { name: "Java", exact: true }).click();
   await expect(page.locator(".skill-content")).toHaveCSS("animation-name", "content-in");
   const milestone = page.getByRole("button", { name: /Maliyadeva College/ });

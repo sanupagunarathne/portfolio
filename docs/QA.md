@@ -30,3 +30,7 @@ No deployment or merge was performed. Real domain, portraits/photos/screenshots,
 ## Subsequent motion/navigation regression pass
 
 `fix/motion-and-centered-navigation`, based on merged Phase 6 main `6a68728`, implements the effects in docs/MOTION.md. Its final production regression run reports **82 passed, 0 failed, 0 skipped**, including the retained Phase 6 audits. Lint, type checking, build and whitespace checks pass. It preserves full content, case studies and release configuration; missing real assets/integrations and the real-device limitations above remain unchanged.
+
+## Bubble/theme refinement
+
+`feat/bubble-field-theme-polish` starts from merged main `8e7e2fd`. Full regression: 88 passed; final randomized-placement and anchor-focus refinements were rebuilt and covered by affected 14-check motion/theme and 14-check navigation/theme reruns, all passed. Dark-mode axe scans/persistence, moving-field bounds/pause/selection, typing activation and real sidebar clearance were added. See docs/BUBBLES-AND-THEMES.md. Real assets, live email/domain and deployment limits remain as above.

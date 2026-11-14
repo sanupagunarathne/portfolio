@@ -4,6 +4,7 @@ import "@fontsource-variable/geist-mono";
 import "@fontsource-variable/doto";
 import "./globals.css";
 import "./motion.css";
+import "./polish.css";
 import { ViewportMotion } from "@/components/viewport-motion";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
@@ -28,7 +29,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem("portfolio-theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}` }} /></head>
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <Navigation />

@@ -61,7 +61,8 @@ test("homepage content and typography experiment work", async ({ page }) => {
   await expect(page.locator(".type-preview")).toHaveText("build with care");
   await page.getByRole("slider", { name: "Font weight" }).fill("900");
   await expect(page.locator(".type-preview")).toHaveCSS("font-weight", "900");
-  for (const group of await page.locator(".technology-group").all()) await group.scrollIntoViewIfNeeded();
+  await page.locator(".technology-cosmos").scrollIntoViewIfNeeded();
+  await page.locator(".technology-cosmos img").evaluateAll(images => images.forEach(image => { (image as HTMLImageElement).loading = "eager"; }));
   await expect.poll(async () => page.locator("img").evaluateAll(images =>
     (images as HTMLImageElement[]).filter(image => !image.complete || image.naturalWidth === 0).map(image => image.src)
   )).toEqual([]);

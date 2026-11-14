@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ThemeToggle } from "./theme-toggle";
 import { Brand } from "./brand";
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
@@ -81,6 +82,14 @@ export function Navigation() {
     return () => observer.disconnect();
   }, [active, pathname]);
 
+  useEffect(() => {
+    const header = desktop.current?.closest("header");
+    if (!header) return;
+    const observer = new ResizeObserver(() => document.documentElement.style.setProperty("--header-height", `${header.getBoundingClientRect().height}px`));
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header className="site-header">
       <nav className="page-width nav-bar" aria-label="Main navigation">
@@ -92,6 +101,7 @@ export function Navigation() {
           {links.map((link) => <a key={link.href} onClick={() => { anchorTarget.current = null; }} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}
         </div>
         <span className="nav-note">{"// developer & creative"}</span>
+        <ThemeToggle />
         <button
           ref={toggle}
           className="menu-toggle"
