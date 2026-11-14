@@ -115,4 +115,10 @@ The hero uses staggered Doto word entrances; major content and supplied-media ga
 
 Expertise replaces the synchronized bob and group tilt with independent wandering icon/label visuals. Different frequencies and phases give each tool its own path without a common orbit. A damped pointer offset adds gentle depth; button hit areas stay fixed. Pause/Resume preserves drift time and position. Animation runs only while the field is visible and the document is foregrounded, with still visuals for coarse pointers and reduced motion (including live preference changes). The existing lazy sculpture remains independently controlled. No animation dependency was added.
 
-`tests/animation.spec.ts` checks actual visual displacement on both axes, stationary button geometry, pause/resume, background/offscreen lifecycle, live motion preferences, selection, Playground controls and overflow at 320-1440px. Use `PLAYWRIGHT_PORT` to select a free production-test port instead of reusing a server on 3000. On Windows, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to an installed Chrome executable if bundled Chromium is absent.
+## Phase 6 quality checks
+
+Automated axe checks run against the homepage and all four project pages on desktop/mobile. Route layout checks cover 320, 390, 768, 1024 and 1440px widths. Floating icons have an explicit pause control. Prepared contact drafts invalidate on edits, and unexpected HTTP success payloads do not erase messages or claim delivery. See [QA evidence](docs/QA.md) and [deployment handoff](docs/DEPLOYMENT.md).
+
+## Motion refinement
+
+See [motion behavior and preferences](docs/MOTION.md). The homepage now has word/portrait entrances, viewport body reveals, independent logo drift, animated panel/timeline/gallery/status entrances and pointer/tap Playground controls. Navigation links form a compact centered group with equal padding and a smoothly moving active marker. Reduced motion, icon pause and existing opt-in 3D controls remain supported; real galleries still require supplied media. `tests/motion.spec.ts` checks timing, vectors, pause, responsive nav geometry and interaction states.

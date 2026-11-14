@@ -2,7 +2,7 @@
 
 ## Active phase
 
-Post-Phase-5 interface/contact refinements, on `feat/interface-refinements`.
+Current work: motion/navigation refinement on `fix/motion-and-centered-navigation`, based on merged main `6a68728` (Phase 6 included).
 
 The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions, the expertise sculpture and case-study routes are implemented in Phases 3–5; final cross-site QA remains Phase 6.
 
@@ -159,4 +159,22 @@ User requested broader animation and particular attention to smooth, freely drif
 
 Validation: npm run lint, npm run typecheck and npm run build passed. The full npm run test:e2e suite passed all 58 checks in installed Chrome, including desktop/mobile animation checks and actual software-rendered sculpture draw calls. PLAYWRIGHT_PORT=3100 ensured the fresh production server was tested without stopping the existing server on 3000. Layout checks fit 320, 390, 768, 1024 and 1440px; desktop and 390px screenshots were inspected. An initial 57/58 run exposed a scrolling-sensitive geometry assertion (0.2px viewport movement); measuring button geometry relative to its field corrected the test, and focused plus full reruns passed.
 
-The separately staged navigation alignment change is preserved outside the animation commit. Contact delivery remains unconfigured, media/content placeholders remain, and physical-device GPU performance is not newly benchmarked. No push, merge, pull, deployment or automatic Phase 6 continuation.
+## Phase 6 — Quality Assurance
+
+Preserved the complete homepage and all four case studies from merged main. Added automated axe accessibility audits, five-width cross-page layout/fragment/link checks, configured/unconfigured/preview SEO checks and contact regression tests. Fixed low-contrast definition labels, invalid generic-element ARIA labels, unreadable hover risks, stale contact drafts and unexpected-success response handling. Sending locks editable inputs. Added a user-operated floating-icon pause control.
+
+Added explicit SITE_URL-based canonical/Open Graph URLs, robots and sitemap, with noindex/no sitemap entries before domain configuration and on Vercel previews. Configured production output was exercised using a temporary example origin in local tests only. No public origin or personal data was invented. Deployment/activation instructions and measured QA limitations are in docs/DEPLOYMENT.md and docs/QA.md.
+
+Remaining content/integrations: actual photos/screenshots, résumé, confirmed public email/domain, project links/contributions/results/dates, learning statuses and real provider delivery configuration. Real-device/Safari/Firefox/assistive-technology and physical-GPU checks are not claimed. No real email, merge, pull or deployment performed.
+
+Phase 6 final validation: lint, standalone type checking, production build and whitespace checks passed. Final production Playwright run: **74 passed, 0 failed, 0 skipped** across desktop/mobile, including the new accessibility/layout/link/contact/SEO regressions and retained 3D/gallery/case-study suite. A separate local configured-origin production build verified all five canonical/Open Graph URLs, indexing metadata, sitemap entries and robots output. The default unset-origin build was then restored. Phase 6 implementation/automated QA is complete for review; outstanding content, live integrations and real-device checks are recorded rather than claimed complete. Sanupa owns the merge/pull and any later deployment.
+
+## Motion and navigation corrective refinement
+
+Branch `fix/motion-and-centered-navigation` starts from merged main `6a68728`, including Phase 6. Investigation found the hero was revealed as a block, section bodies were often static, several panels/dialogs lacked entrances and every logo shared a vertical-only motion. Blanket hover/focus and coarse-pointer rules also suppressed logo movement. Navigation spread its links with full-width space-between.
+
+Implemented word-staggered hero and portrait entrances, viewport body reveals, independent logo drift and explicit pause retention, a compact centered navigation group with equal padding and a moving rounded marker, project frame/border/arrow cues, button/social SVG movement, expertise content transition, animated timeline expansion, staggered mobile links, real-gallery dialog/photo entrances, contact focus/status motion and pointer/tap/keyboard Playground rearrangement. Existing opt-in 3D animation and visibility/reduced-motion controls are preserved. All content, case studies and SEO/contact integrations remain intact. Full effects and access/performance contracts are documented in docs/MOTION.md.
+
+A word-wrap regression discovered during visual inspection was corrected before final validation. The early browser run used the pre-fix build and was stopped; its partial results are not counted as a passing suite. Missing personal media and live email/domain configuration remain the previously documented prerequisites; no merge, pull, deployment or real email is performed.
+
+Final motion validation: `npm run lint`, `npm run typecheck`, `npm run build` and `git diff --check` passed. The final production Playwright run completed with **82 passed, 0 failed, 0 skipped**, covering motion timing/directions/pause, nav geometry/indicator, panel/timeline/Playground interactions, gallery entrances, reduced motion, all retained accessibility/layout/SEO/contact/case-study checks and actual 3D draw/pause/fallback behavior. Screenshots of 1440px desktop, 768px tablet and 390px mobile menu were inspected. No horizontal overflow at 320, 390, 768, 1024 or 1440px. Real-image gallery motion is tested using explicitly test-only media because no personal gallery images are supplied. Physical GPU/real-device performance and live email/deployment are not claimed.

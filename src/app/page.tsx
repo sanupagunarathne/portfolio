@@ -16,7 +16,14 @@ import { Journey } from "@/components/journey";
 import { InterestGallery } from "@/components/interest-gallery";
 import { ExpertiseSculpture } from "@/components/expertise-sculpture";
 import { ContactForm } from "@/components/contact-form";
-import { Reveal, HeroHeadline } from "@/components/reveal";
+import { HeroHeadline } from "@/components/hero-headline";
+
+const origin = getSiteOrigin();
+export const metadata: Metadata = {
+  alternates: origin ? { canonical: new URL("/", origin).href } : undefined,
+  openGraph: { title: "Sanupa Gunarathne — Developer & Creative", description: personal.description, type: "website", locale: "en_US", url: origin?.href },
+  twitter: { card: "summary", title: "Sanupa Gunarathne — Developer & Creative", description: personal.description },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -29,11 +36,11 @@ export default function Home() {
             <p className="eyebrow"><span className="status-dot" /> A personal space on the web</p>
             <p className="introduction">{personal.introduction}</p>
             <HeroHeadline text={personal.headline} />
-            <Reveal delay={.18}><p className="hero-description">{personal.description}</p></Reveal>
-            <Reveal delay={.25} className="hero-actions">
+            <p className="hero-description">{personal.description}</p>
+            <div className="hero-actions">
               <a className="button primary" href="#work">Explore My Work <ArrowUpRight size={18} aria-hidden="true" /></a>
               <a className="text-link" href="#about">About Me <ArrowDown size={16} aria-hidden="true" /></a>
-            </Reveal>
+            </div>
             <p className="location"><MapPin size={14} aria-hidden="true" /> Based in {personal.location}</p>
           </div>
           <Reveal className="portrait-composition" delay={.12}>

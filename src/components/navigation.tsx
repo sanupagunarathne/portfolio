@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Brand } from "./brand";
 import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 const links = [
   { href: "#hero", label: "Home" }, { href: "#work", label: "Work" },
@@ -21,6 +21,8 @@ export function Navigation() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const anchorTarget = useRef<string | null>(null);
+  const desktop = useRef<HTMLDivElement>(null);
+  const indicator = useRef<HTMLSpanElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -62,15 +64,35 @@ export function Navigation() {
     return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", scroll); window.removeEventListener("resize", scroll); window.removeEventListener("wheel", unlock); window.removeEventListener("touchmove", unlock); window.removeEventListener("keydown", key); window.removeEventListener("popstate", unlock); window.removeEventListener("click", outsideClick); };
   }, [pathname, open]);
 
+  useEffect(() => {
+    const container = desktop.current;
+    const marker = indicator.current;
+    if (!container || !marker) return;
+    const update = () => {
+      const link = container.querySelector<HTMLElement>('a[aria-current="location"]');
+      if (!link) { marker.style.opacity = "0"; return; }
+      marker.style.width = `${link.offsetWidth}px`;
+      marker.style.height = `${link.offsetHeight}px`;
+      marker.style.transform = `translate(${link.offsetLeft}px, ${link.offsetTop}px)`;
+      marker.style.opacity = "1";
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(container);
+    document.fonts.ready.then(update);
+    return () => observer.disconnect();
+  }, [active, pathname]);
+
   return (
     <header className="site-header">
       <nav className="page-width nav-bar" aria-label="Main navigation">
         <Link className="wordmark" href="/" aria-label="Sanupa Gunarathne home" onClick={() => { anchorTarget.current = null; setActive("hero"); setOpen(false); }}>
           <Brand />
         </Link>
-        <LayoutGroup id="main-navigation"><div className="desktop-links">
-          {links.map((link) => <a key={link.href} onClick={() => { anchorTarget.current = null; }} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined}>{home && active === link.href.slice(1) && !reduced && <motion.span className="nav-active-pill" layoutId="active-section" transition={{ type: "spring", stiffness: 380, damping: 36 }} aria-hidden="true" />}<span className="nav-label">{link.label}</span></a>)}
-        </div></LayoutGroup>
+        <div ref={desktop} className="desktop-links">
+          <span ref={indicator} className="nav-indicator" aria-hidden="true" />
+          {links.map((link) => <a key={link.href} onClick={() => { anchorTarget.current = null; }} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}
+        </div>
         <span className="nav-note">{"// developer & creative"}</span>
         <button
           ref={toggle}
@@ -85,7 +107,7 @@ export function Navigation() {
       </nav>
       <div id="mobile-navigation" className="mobile-links page-width" hidden={!open}>
         {links.map((link, index) => (
-          <a style={{ animationDelay: `${index * 25}ms` }} key={link.href} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined} onClick={event => {
+          <a key={link.href} style={{ "--link-index": index } as CSSProperties} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined} onClick={event => {
             setOpen(false);
             if (home) {
               event.preventDefault();
