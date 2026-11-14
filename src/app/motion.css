@@ -1,0 +1,67 @@
+/* Compact, centered navigation with equal padding and one moving marker. */
+.nav-bar { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1rem; min-height: 124px; }
+.nav-bar > .wordmark { justify-self: start; }
+.nav-note { justify-self: end; }
+.desktop-links { position: relative; isolation: isolate; grid-column: 1 / -1; width: max-content; max-width: 100%; justify-self: center; justify-content: center; flex-basis: auto; gap: .25rem; margin-inline: auto; }
+.desktop-links a { position: relative; z-index: 1; padding: .6rem .7rem; flex: 0 0 auto; transition: color .2s, background .2s; }
+.desktop-links a[aria-current] { background: transparent; border-color: transparent; }
+.desktop-links a:hover { background: rgb(230 229 225 / .5); }
+.nav-indicator { position: absolute; top: 0; left: 0; z-index: 0; pointer-events: none; border-radius: 12px; background: var(--color-soft-gray); border: 1px solid var(--color-taupe); opacity: 0; transition: transform .35s cubic-bezier(.2,.7,.2,1), width .35s, height .35s, opacity .15s; }
+
+/* Entrances use backwards fill only; final content never depends on JS. */
+.hero-copy { min-width: 0; }
+.hero-word { display: inline-block; white-space: nowrap; animation: hero-word-in .7s cubic-bezier(.2,.7,.2,1) backwards; animation-delay: calc(var(--word-index) * 85ms + 80ms); }
+.portrait-composition { animation: portrait-in .95s cubic-bezier(.2,.7,.2,1) .15s backwards; }
+@keyframes hero-word-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes portrait-in { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes content-in { from { opacity: .2; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes photograph-in { from { opacity: .15; transform: scale(.98); } to { opacity: 1; transform: scale(1); } }
+
+/* Each logo follows its own gentle vector; its button stays in place. */
+.technology-cosmos button img { animation: token-drift var(--float-duration, 7s) ease-in-out infinite; animation-delay: var(--float-delay); }
+@keyframes token-drift { 0%, 100% { transform: translate3d(0, 0, var(--depth)); } 50% { transform: translate3d(var(--drift-x, 5px), var(--drift-y, -7px), var(--depth)); } }
+.technology-cosmos.is-still img { animation: none; }
+.skill-content { animation: content-in .32s ease-out; }
+
+.project-preview { box-shadow: inset 0 0 0 1px var(--color-taupe); transition: box-shadow .3s; }
+.project-preview::after { content: ""; position: absolute; pointer-events: none; inset: 0; border: 1px solid transparent; border-radius: inherit; transition: border-color .3s; }
+.project-preview:is(:hover, :focus-visible)::after { border-color: var(--color-ink); }
+.project-preview .media-frame { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.project-preview:is(:hover, :focus-visible) .media-frame { transform: scale(1.02); }
+.button, .text-link, .social-links a { transition: color .2s, background-color .2s, border-color .2s, transform .2s; }
+.button svg, .text-link svg, .social-links svg { transition: transform .25s ease; }
+.button:is(:hover, :focus-visible) svg, .text-link:is(:hover, :focus-visible) svg, .social-links a:is(:hover, :focus-visible) svg { transform: translate(2px, -2px); }
+.social-links a:is(:hover, :focus-visible) { color: var(--color-ink); }
+
+.milestone-expansion { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; transition: grid-template-rows .35s ease, opacity .3s ease, visibility .35s; }
+.milestone-expansion > div { min-height: 0; overflow: hidden; }
+.milestone-expansion[data-expanded="true"] { grid-template-rows: 1fr; opacity: 1; visibility: visible; }
+.journey-list li { transition: border-color .3s, background-color .3s; }
+.journey-list .milestone-selected { background: rgb(242 217 208 / .2); }
+.photo-dialog[open] { animation: dialog-in .3s ease-out; }
+.photo-dialog[open]::backdrop { animation: backdrop-in .3s ease-out; }
+.photo-dialog[open] .expanded-photo { animation: photograph-in .45s ease-out; }
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+.contact-form input, .contact-form textarea, .contact-form select { transition: border-color .2s, box-shadow .2s, background-color .2s; }
+.contact-form :is(input, textarea, select):focus { border-color: var(--color-ink); box-shadow: 0 0 0 3px var(--color-blush); }
+.form-status:not(:empty), .status-message { animation: content-in .3s ease-out; }
+
+.orbit-study { width: 100%; border: 0; background: transparent; padding: 0; color: inherit; cursor: pointer; }
+.orbit-study span:first-child { transform: translate(calc(-35px + var(--pointer-x, 0px)), calc(-25px + var(--pointer-y, 0px))); }
+.orbit-study span:nth-child(2) { transform: translate(calc(30px - var(--pointer-x, 0px)), var(--pointer-y, 0px)) rotate(30deg); }
+.orbit-study span:last-child { transform: translate(calc(15px + var(--pointer-x, 0px)), calc(40px - var(--pointer-y, 0px))); }
+.orbit-study[data-shifted="true"] span:first-child { transform: translate(calc(20px + var(--pointer-x, 0px)), calc(20px + var(--pointer-y, 0px))); }
+.orbit-study[data-shifted="true"] span:nth-child(2) { transform: translate(calc(-15px - var(--pointer-x, 0px)), var(--pointer-y, 0px)) rotate(75deg); }
+.orbit-study[data-shifted="true"] span:last-child { transform: translate(calc(-40px + var(--pointer-x, 0px)), calc(-30px - var(--pointer-y, 0px))); }
+@media (min-width: 768px) and (max-width: 900px) { .desktop-links { gap: .1rem; } .desktop-links a { padding-inline: .6rem; font-size: .875rem; } }
+@media (max-width: 767px) {
+  .nav-bar { display: flex; min-height: 88px; }
+  .desktop-links { display: none; }
+  .mobile-links { background: rgb(247 247 237 / .97); }
+  .mobile-links:not([hidden]) a { animation: content-in .3s ease-out backwards; animation-delay: calc(var(--link-index) * 30ms); text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .hero-word, .portrait-composition, .button svg, .text-link svg, .social-links svg, .project-preview .media-frame { transform: none !important; }
+}

@@ -26,3 +26,7 @@ No deployment or merge was performed. Real domain, portraits/photos/screenshots,
 ## Final results
 
 `npm run lint`, `npm run typecheck`, `npm run build` and `git diff --check` passed. The final command `CI=1 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e` completed with **74 passed, 0 failed, 0 skipped**, across desktop and mobile. The configured-origin local production smoke passed separately. Initial axe violations were corrected and all final scans pass. The final on-disk build uses the unset-origin/noindex configuration.
+
+## Subsequent motion/navigation regression pass
+
+`fix/motion-and-centered-navigation`, based on merged Phase 6 main `6a68728`, implements the effects in docs/MOTION.md. Its final production regression run reports **82 passed, 0 failed, 0 skipped**, including the retained Phase 6 audits. Lint, type checking, build and whitespace checks pass. It preserves full content, case studies and release configuration; missing real assets/integrations and the real-device limitations above remain unchanged.

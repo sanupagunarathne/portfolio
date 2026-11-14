@@ -41,7 +41,7 @@ export function ContactForm({ deliveryEnabled }: { deliveryEnabled: boolean }) {
       </fieldset>
       <p className="content-note">Your details are used only to respond to this message. Nothing is saved in your browser.</p>
       <button className="button primary" type="submit" disabled={busy}>{busy ? "Sending…" : deliveryEnabled ? "Send message ↗" : "Prepare message ↗"}</button>
-      <p className="form-status" role="status" aria-live="polite">{status}</p>
+      <p className="form-status" role="status" aria-live="polite">{status && <span key={status} className="status-message">{status}</span>}</p>
       {draft && <div className="message-draft"><label htmlFor="message-draft">Your prepared message</label><textarea id="message-draft" value={draft} readOnly rows={7} /><button className="text-link" type="button" onClick={async () => { try { await navigator.clipboard.writeText(draft); setStatus("Message copied. It has not been sent."); } catch { setStatus("Copy is unavailable in this browser. Select the prepared message and copy it manually."); } }}>Copy message</button></div>}
     </div>
   </form>;

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { readFile } from "node:fs/promises";
 import { build } from "esbuild";
 
 let bundle: string;
@@ -20,11 +21,15 @@ test("supplied photos open a native modal, contain focus and restore it on close
     if (route.request().url().endsWith("fixture.svg")) return route.fulfill({ contentType: "image/svg+xml", body: '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="0" y="50">TEST ONLY</text></svg>' });
     return route.fulfill({ contentType: "text/html", body: '<main id="root"></main><script>' + bundle.replaceAll("</script", "<\\/script") + '</script>' });
   });
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("http://gallery.test/");
+  await page.addStyleTag({ content: await readFile("src/app/motion.css", "utf8") });
   const opener = page.getByRole("button", { name: "View Test image photograph" });
   await opener.click();
   const modal = page.getByRole("dialog", { name: "Test image photograph" });
   await expect(modal).toBeVisible();
+  await expect(modal).toHaveCSS("animation-name", "dialog-in");
+  await expect(modal.locator(".expanded-photo")).toHaveCSS("animation-name", "photograph-in");
   await expect(modal.getByRole("button", { name: "Close photograph" })).toBeFocused();
   await page.keyboard.press("Tab");
   await page.keyboard.press("Tab");
