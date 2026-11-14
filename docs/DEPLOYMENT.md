@@ -27,3 +27,7 @@ Use `docs/ASSETS.md` for portrait, project screenshot and personal photo paths. 
 ## Release verification
 
 Run the documented checks and the production Playwright suite. After an authorized deployment verify the real homepage, all four case studies, unknown-route 404, canonical URLs, robots and sitemap. Check desktop/mobile navigation, keyboard focus, filters, journey, playground, reduced motion and 3D fallback on representative real devices. Review social destinations manually; local checks validate their exact configured URLs without claiming remote account availability. Check real image loading and descriptions when assets arrive. Real-device assistive technology, physical GPU performance and live email delivery remain separate from automated Chromium/SwiftShader evidence.
+
+## Latest contact and external viewer
+
+Public recipient was confirmed as sanupar07@gmail.com. See EMAIL-SETUP.md for secure Resend configuration and free email-app/hosted-form alternatives. The email-app draft handoff works without a provider key; website sending still needs configured credentials/sender. Expertise now loads an attributed Sketchfab iframe only when requested. Allow https://sketchfab.com in frame-src if introducing a Content Security Policy; verify real model rendering in the deployed browser. No self-hosted model download or license verification is claimed. Dark is the new default, with saved explicit light preferences respected.

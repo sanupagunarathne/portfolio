@@ -16,7 +16,8 @@ import { Playground } from "@/components/playground";
 import { Expertise } from "@/components/expertise";
 import { Journey } from "@/components/journey";
 import { InterestGallery } from "@/components/interest-gallery";
-import { ExpertiseSculpture } from "@/components/expertise-sculpture";
+import { RetroComputer } from "@/components/retro-computer";
+import { SocialIcon } from "@/components/social-icon";
 import { ContactForm } from "@/components/contact-form";
 import { HeroHeadline } from "@/components/hero-headline";
 
@@ -70,7 +71,7 @@ export default function Home() {
         </section>
         <section id="expertise" className="portfolio-section expertise-section" tabIndex={-1} aria-labelledby="expertise-title">
           <div className="page-width"><SectionHeading number="03" label="EXPERTISE" title="Tools I use to bring ideas to life." id="expertise-title" />
-            <div className="expertise-intro"><ExpertiseSculpture /><div><p className="lead">Different tools. One curious mindset.</p><p>A collection of languages, frameworks and tools connected to my projects and studies. Individual learning statuses are still being confirmed.</p></div></div>
+            <div className="expertise-intro"><RetroComputer /><div><p className="lead">Different tools. One curious mindset.</p><p>A collection of languages, frameworks and tools connected to my projects and studies. Individual learning statuses are still being confirmed.</p></div></div>
             <Expertise />
           </div>
         </section>
@@ -91,7 +92,7 @@ export default function Home() {
             <p className="eyebrow">LET&apos;S CONNECT</p>
             <PhraseHeading id="contact-title" title="Let's make something meaningful together." />
             <p className="contact-description">Have an idea to explore or a project to talk about? I&apos;d love to hear from you.</p>
-            <a className="button primary" href="https://www.linkedin.com/in/sanupagunarathne/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn <ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
+            <a className="button primary" href="https://www.linkedin.com/in/sanupagunarathne/" target="_blank" rel="noopener noreferrer"><SocialIcon name="LinkedIn" />Connect on LinkedIn <ArrowUpRight size={18} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
             <dl className="contact-availability"><div><dt>Email</dt><dd>{personal.email ? <a href={`mailto:${personal.email}`}>{personal.email}</a> : "To be provided"}</dd></div><div><dt>Résumé</dt><dd>{personal.resume ? <a href={personal.resume}>Download résumé</a> : "To be added"}</dd></div></dl>
           </div><ContactForm deliveryEnabled={Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL && process.env.CONTACT_FROM_EMAIL)} /></div>
         </section>

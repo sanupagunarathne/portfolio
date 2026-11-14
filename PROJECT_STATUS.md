@@ -2,7 +2,7 @@
 
 ## Active phase
 
-Current work: bounded bubbles, theme switching and layout polish on `feat/bubble-field-theme-polish`, based on merged main `8e7e2fd`.
+Current work: caret/retro computer/contact refinement on `feat/caret-retro-computer-contact`, based on merged main `325c4bc`.
 
 The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. Phase 2 replaces the foundation preview with all nine homepage sections. Core interactions, the expertise sculpture and case-study routes are implemented in Phases 3–5; final cross-site QA remains Phase 6.
 
@@ -184,3 +184,13 @@ Added stepped word reveals to main section phrases including Contact, a persiste
 All previous content, case studies, SEO and contact workflows are preserved. Real media and live deployment/domain/email prerequisites remain as documented. No merge, pull, deployment or real email is performed.
 
 Validation: lint, standalone type checking, production build and whitespace checks passed. Full production regression: **88 passed, 0 failed, 0 skipped**. After the localized randomized-start placement change, rebuilt and reran bubble/theme/motion checks: **14 passed**. After the final noninteractive anchor focus-style correction, rebuilt and reran foundation/navigation/bubble/theme checks: **14 passed**. These affected reruns also verify dark-mode accessibility/persistence and measured sidebar clearance. A resume assertion was corrected to bring the field back onscreen, respecting intentional offscreen suspension. Inspected light bubble-field, dark case-study and 320px dark-mobile visuals; responsive regression checks remain green. No physical-device/GPU or live integration/deployment claim is made.
+
+## Caret typing, dark default, social logos and retro computer
+
+Branch `feat/caret-retro-computer-contact` starts from merged main `325c4bc`. Headings now reserve their final layout and type continuously by character with one advancing caret, rather than animate separate words. Dark is the default; saved explicit light preferences still win. Footer social links and the Contact LinkedIn action include platform logos with accessible text.
+
+Expertise now uses the user-supplied Sketchfab Retro computer by Urpo, with attribution, explicit load/close controls, a direct model link and no automatic third-party request. A reduced-motion preference change unloads the viewer. The provider controls rendering; live model/license verification was blocked by the environment's outbound policy. Embed tests mock the provider and verify URL, credit, activation and unloading; they do not claim live 3D performance. The previous local sculpture is no longer mounted and its old GPU-specific tests were replaced by tests of the new integration.
+
+User corrected the address to sanupar07@gmail.com. It is now the public Contact email and prepared-draft mailto target; .env.example suggests it as CONTACT_TO_EMAIL. No real email is sent. Direct website delivery still needs secure Resend configuration, while the email-app handoff works without API keys. docs/EMAIL-SETUP.md explains domain verification, secure variables, the free-tier caveat, free mailto and hosted-form alternatives. Current provider quotas/pricing could not be independently retrieved under the network policy.
+
+Validation: lint, standalone type checking, production build and whitespace checks passed. Full final regression: **88 passed, 0 failed, 0 skipped**. A final SVG knockout adjustment makes the LinkedIn logo work on both primary buttons and page surfaces; after rebuilding, all **4 affected caret/social/contact checks passed** again. The caret test scrubs the real character and pseudo-element animations and verifies exactly one visible advancing caret. Sketchfab requests are mocked in embed checks; live model rendering is not verified. No real email, deployment, merge or pull occurred.

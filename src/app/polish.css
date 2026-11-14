@@ -74,3 +74,17 @@ html { scroll-padding-top: calc(var(--header-height) + 20px); }
    Interactive controls retain their existing visible focus outlines. */
 main[tabindex="-1"]:focus-visible, section[tabindex="-1"]:focus-visible { outline: none; }
 section[tabindex="-1"]:focus-visible h2, main[tabindex="-1"]:focus-visible h1 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+.type-word { display: inline-block; white-space: nowrap; }
+.type-character { position: relative; }
+.typing-text[data-typed="true"] .type-character { animation: character-in 1ms steps(1, end) backwards; animation-delay: calc(var(--character) * 35ms); }
+.typing-text[data-typed="true"] .type-character::after { content: ""; position: absolute; right: 0; top: .05em; height: .95em; width: 2px; background: currentColor; opacity: 0; animation: caret-step 35ms linear backwards; animation-delay: calc(var(--character) * 35ms); }
+@keyframes character-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes caret-step { 0%, 100% { opacity: 0; } 1%, 99% { opacity: 1; } }
+.retro-stage { height: 340px; border: 1px solid var(--color-taupe); border-radius: 16px; overflow: hidden; background: var(--color-soft-gray); }
+.retro-stage iframe { width: 100%; height: 100%; border: 0; display: block; }
+.retro-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center; }
+.retro-placeholder h3 { font-size: 1.3rem; margin: .75rem 0 0; }
+.retro-placeholder p, .model-credit { font-size: .875rem; }
+.model-credit a { text-decoration: underline; text-underline-offset: 3px; }
+.social-logo { flex-shrink: 0; }
+@media (prefers-reduced-motion: reduce) { .type-character { opacity: 1 !important; } .type-character::after { display: none; } }
