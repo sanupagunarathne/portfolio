@@ -6,7 +6,7 @@ export const personal = {
   degree: "BSc (Hons) Software Engineering — University of Westminster",
   location: "Sri Lanka",
   introduction: "Hello, I'm Sanupa.",
-  headline: "Building digital experiences that feel different.",
+  headline: "BUILDING DIGITAL EXPERIENCES THAT FEEL DIFFERENT.",
   description:
     "Software Engineering undergraduate exploring the intersection of technology, creativity, and thoughtful design.",
   email: null as string | null,

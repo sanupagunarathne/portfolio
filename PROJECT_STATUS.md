@@ -2,7 +2,7 @@
 
 ## Active phase
 
-Phase 1 — Project Foundation, on `feat/phase-1-foundation`.
+Current work: user-requested layout/contact/technology refinement on `fix/portfolio-layout-contact-technologies`. Phase 1 foundation is merged in the starting checkout (`a7d4df2`); the full portfolio remains incomplete.
 
 The repository began with only a README at `0779ae1`. The complete user brief is preserved in docs/PROJECT_BRIEF.md. The homepage is currently a foundation preview; it does not yet satisfy the full portfolio completion requirements.
 
@@ -53,3 +53,26 @@ Hero/about portraits, all project screenshots and personal photographs, résumé
 Only Sanupa merges and pulls main. After the Phase 1 checks pass, hand over this branch and wait for confirmation of the user's merge/pull before starting Phase 2 from the merged main commit. No later-phase implementation should be silently stacked on this branch.
 
 Reusable cloud install_script and start_skill were saved as a draft with npm ci, startup/readiness steps, validation commands and the user's phase/merge rules. This does not publish the environment; review/save the settings and publish separately if desired.
+
+## User-requested layout, contact and technology refinement
+
+Branch: `fix/portfolio-layout-contact-technologies`, based on the checkout containing the merged Phase 1 commit `a7d4df2`. No interrupted uncommitted work was present. This is the user's explicitly requested refinement scope, not completion of the other planned portfolio phases.
+
+- Reduced hero/section spacing, enlarged header and footer identity, uppercase Doto headline.
+- Shared full-name wordmark with a rounded two-eye bot mark in header and footer.
+- Navigation for Home, Work, About, Technologies and Contact, with rounded active/hover states and scroll tracking. Mobile menu overlays the page to avoid shifting the selected section when reopened.
+- Editable technology data, local licensed Devicon SVGs, category filters, keyboard/touch selectors, project information and unconfirmed learning statuses.
+- Floating logo depth, pause control, reduced-motion support and an optional lazy React Three Fiber scene with draggable 3D logo tiles. Rendering is on demand; fallback selectors remain independent of WebGL.
+- Structured Contact form with native validation, trimmed-input validation, topic selection, character count, message review, copy/download and invalidation of stale drafts on edits.
+- Delivery remains unconfigured: the user confirmed form placement in Contact but supplied no email or service destination. No data is sent or persisted; the interface explicitly labels drafts. A supplied `personal.email` enables an email-app handoff, not server delivery.
+
+Remaining portfolio phases and missing real assets above remain outstanding; project previews and case studies were not expanded by this refinement.
+
+Refinement validation:
+- `npm ci`: passed (436 locked packages).
+- `npm run lint`, `npm run typecheck`, `npm run build`, `git diff --check`: passed.
+- `CI=1 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e`: all 14 tests passed across desktop and mobile.
+- Inspected desktop/mobile screenshots and verified no document overflow at 320, 768, 1024 and 1440px widths.
+- Independently rendered and dragged the 3D scene in Chromium with SwiftShader; no page errors or invalid WebGL texture warnings. Explicit SVG dimensions fixed initially blank textures. The 3D render is verified using software rendering, not a physical GPU performance benchmark.
+- Mobile active-navigation test uses a touch at the visible sticky menu position: Chromium's automated scrollIntoView used by locator.click can move the page before the click. Ordinary touch interaction preserves the selected section.
+- No merge, pull, push or deployment performed.

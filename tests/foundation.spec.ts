@@ -5,7 +5,7 @@ test("foundation renders honestly and fits the viewport", async ({ page }) => {
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   await expect(page).toHaveTitle(/Sanupa Gunarathne/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("feel different");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("FEEL DIFFERENT");
   await expect(page.getByText("Foundation preview.", { exact: false })).toBeVisible();
   await expect(page.getByRole("img", { name: /Placeholder reserved/ })).toBeVisible();
   const footer = page.getByRole("contentinfo");
