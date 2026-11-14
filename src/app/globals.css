@@ -348,7 +348,7 @@ html { scroll-padding-top: 11rem; }
 .brand-bot i { width: 7px; height: 11px; background: var(--color-ink); border-radius: 50%; }
 .nav-bar { flex-wrap: wrap; min-height: 134px; gap: .5rem 1.5rem; padding-block: 1rem .6rem; }
 .nav-note { margin-left: auto; }
-.desktop-links { order: 3; flex-basis: 100%; justify-content: space-between; gap: .4rem; }
+.desktop-links { order: 3; flex-basis: 100%; justify-content: flex-start; gap: .4rem; }
 .desktop-links a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .6rem .8rem; border: 1px solid transparent; border-radius: 12px; }
 .desktop-links a::after { display: none; }
 .desktop-links a:is(:hover, [aria-current]), .mobile-links a[aria-current] { background: var(--color-soft-gray); border-color: var(--color-taupe); opacity: 1; }

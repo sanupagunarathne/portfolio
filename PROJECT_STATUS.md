@@ -141,3 +141,9 @@ Implemented on feat/interface-refinements, based on Phase 5 (5723348):
 - Service credentials and recipient/sender are absent in both environment configuration and process variables. Asked the user for a public receiving email and service preference. Real sending remains blocked by this configuration; no real test emails were sent. Current UI clearly prepares unsent messages.
 
 Validation completed: lint, TypeScript and the production build passed. All 50 Playwright-run automated checks passed, including browser workflows, contact-handler provider mocks, delivery failures, preparation/copy, complete navigation, all case studies and 3D fallbacks. Initial moving-hit-area and mobile-active-state defects were corrected; a tablet navigation overflow was also fixed. Additional checks fit 320, 390, 768, 1024 and 1440px, including nested-page header checks, and desktop/mobile screenshots were inspected. Real delivery remains unconfigured and untested; this is the only outstanding contact integration prerequisite. Phase 6 has not been started; no merges or pulls were performed.
+
+## Navbar spacing correction
+
+Grouped desktop navigation links at the start of the row instead of distributing them across its full width. Existing responsive link padding, small gaps, rounded active states and mobile menu are preserved.
+
+Validation: npm run lint, npm run typecheck and npm run build passed. Six existing desktop/mobile rendering and navigation Playwright checks passed using installed Chrome via PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH. Initial validation found a missing esbuild dependency; npm ci restored the locked dependencies. The first browser attempt could not launch because bundled Chromium was absent; the Chrome rerun passed. No merge, pull or deployment performed.
