@@ -63,5 +63,5 @@ test("reduced motion keeps content available and glass has an opaque fallback", 
       } } catch { /* Cross-origin font stylesheets need no modification. */ }
     }
   });
-  await expect(page.locator(".site-header")).toHaveCSS("background-color", "rgb(247, 247, 237)");
+  await expect(page.locator(".site-header")).toHaveCSS("background-color", "rgb(32, 35, 31)");
 });

@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("hero words stagger, section content reveals, and reduced motion stays static", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
-  const words = page.locator(".hero-word");
+  const words = page.locator("#hero-title .type-character");
   expect(await words.count()).toBeGreaterThan(4);
   const delays = await words.evaluateAll(elements => elements.map(element => parseFloat(getComputedStyle(element).animationDelay)));
   expect(delays.every((delay, index) => index === 0 || delay > delays[index - 1])).toBe(true);

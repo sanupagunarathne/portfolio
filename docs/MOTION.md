@@ -35,3 +35,7 @@ Gallery motion is exercised with the real component and explicitly test-only med
 ## Validation
 
 Lint, standalone types, production build and whitespace checks passed. The final production Playwright suite reports **82 passed, 0 failed, 0 skipped**. Added tests verify word stagger, portrait/viewport entrances, independent rendered drift vectors, pause/resume, centered equal-padding nav geometry/marker, panel/timeline/status/tap transitions and gallery dialog/photo entrances; retained quality/accessibility/3D tests pass. Desktop/tablet/mobile screenshots were inspected and 320–1440px document-overflow checks pass. Merge and deployment remain separate from this branch's push.
+
+## Caret/computer update
+
+Latest direction uses continuous character typing with one advancing caret, not independent word entrances. Word wrappers only reserve layout and preserve wrapping; character/caret timing advances globally across the phrase. Reduced motion keeps all text visible and hides the caret. Dark is now the default. Runtime Expertise replaces the local abstract sculpture with the attributed, user-supplied Sketchfab Retro computer by Urpo; the previous local renderer is not mounted. External viewing is explicitly loaded/closed, with credit and a direct link. Live provider rendering was blocked from independent inspection here; tests mock the iframe response instead of claiming real WebGL draw/performance coverage for Sketchfab.

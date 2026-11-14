@@ -24,7 +24,7 @@ test("bubble field bounds, accessible selection and reduced-motion fallback", as
 test("dark theme persists, is accessible and can return to light", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  await page.getByRole("button", { name: "Switch to dark theme" }).click();
+  await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   const audit = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(audit.violations).toEqual([]);
@@ -42,7 +42,7 @@ test("case-study sidebar clears header and phrases type on entry", async ({ page
   await page.goto("/");
   await page.locator("#about-title").scrollIntoViewIfNeeded();
   await expect(page.locator("#about-title")).toHaveAttribute("data-typed", "true");
-  await expect(page.locator("#about-title .phrase-word").first()).toHaveCSS("animation-name", "phrase-type");
+  await expect(page.locator("#about-title .type-character").first()).toHaveCSS("animation-name", "character-in");
   await page.goto("/projects/nex-installer#stack");
   if (!isMobile) {
     await page.locator("#stack").scrollIntoViewIfNeeded();

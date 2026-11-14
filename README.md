@@ -125,3 +125,7 @@ See [motion behavior and preferences](docs/MOTION.md). The homepage now has word
 ## Bubble field and light/dark themes
 
 The toolkit now uses free-roaming water-like bubbles inside a bounded area, retaining category filters and the separate detail panel. Pause or focus a target to select it reliably; reduced motion gets a static layout. The navbar's right-side theme switch remembers a light/dark preference. Section phrases type in on entry; case-study sidebar offsets follow the measured header height. See [implementation and accessibility notes](docs/BUBBLES-AND-THEMES.md).
+
+## Caret, retro computer and contact update
+
+Dark is the new default, with explicit saved light preferences retained. Headings use continuous character typing and one advancing caret. Social links include platform logos. Expertise replaces the abstract sculpture with the attributed Sketchfab Retro computer by Urpo, loaded only on explicit request and removable with Close. The third-party viewer depends on external connectivity; embed tests mock the provider and do not certify live model rendering. The public Contact address is sanupar07@gmail.com. Prepared drafts can open in the visitor's email app without an API; see [email setup and free alternatives](docs/EMAIL-SETUP.md) for server-side Resend configuration.

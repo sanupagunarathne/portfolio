@@ -34,3 +34,7 @@ No deployment or merge was performed. Real domain, portraits/photos/screenshots,
 ## Bubble/theme refinement
 
 `feat/bubble-field-theme-polish` starts from merged main `8e7e2fd`. Full regression: 88 passed; final randomized-placement and anchor-focus refinements were rebuilt and covered by affected 14-check motion/theme and 14-check navigation/theme reruns, all passed. Dark-mode axe scans/persistence, moving-field bounds/pause/selection, typing activation and real sidebar clearance were added. See docs/BUBBLES-AND-THEMES.md. Real assets, live email/domain and deployment limits remain as above.
+
+## Caret, dark default, social logos and retro computer
+
+`feat/caret-retro-computer-contact`, based on merged main `325c4bc`: full regression **88 passed**, followed by rebuilt **4 affected tests passed** after a final LinkedIn SVG contrast/knockout adjustment. Lint, standalone types, build and whitespace checks passed. Runtime 3D now uses the explicitly loaded Sketchfab computer; old local-sculpture draw-call tests were replaced with mocked iframe/attribution/load/unload tests. Do not read historical SwiftShader coverage as verification of the new third-party model. External model/pricing access was blocked, and no live email was sent. Confirmed public recipient is sanupar07@gmail.com; see EMAIL-SETUP.md.
