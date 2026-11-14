@@ -76,8 +76,8 @@ main[tabindex="-1"]:focus-visible, section[tabindex="-1"]:focus-visible { outlin
 section[tabindex="-1"]:focus-visible h2, main[tabindex="-1"]:focus-visible h1 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }
 .type-word { display: inline-block; white-space: nowrap; }
 .type-character { position: relative; }
-.typing-text[data-typed="true"] .type-character { animation: character-in 1ms steps(1, end) backwards; animation-delay: calc(var(--character) * 35ms); }
-.typing-text[data-typed="true"] .type-character::after { content: ""; position: absolute; right: 0; top: .05em; height: .95em; width: 2px; background: currentColor; opacity: 0; animation: caret-step 35ms linear backwards; animation-delay: calc(var(--character) * 35ms); }
+.typing-text[data-typed="true"] .type-character { animation: character-in 1ms steps(1, end) backwards; animation-delay: calc(var(--character) * var(--typing-step, 35ms)); }
+.typing-text[data-typed="true"] .type-character::after { content: ""; position: absolute; right: 0; top: .05em; height: .95em; width: 2px; background: currentColor; opacity: 0; animation: caret-step var(--typing-step, 35ms) linear backwards; animation-delay: calc(var(--character) * var(--typing-step, 35ms)); }
 @keyframes character-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes caret-step { 0%, 100% { opacity: 0; } 1%, 99% { opacity: 1; } }
 .retro-stage { height: 340px; border: 1px solid var(--color-taupe); border-radius: 16px; overflow: hidden; background: var(--color-soft-gray); }
@@ -100,3 +100,9 @@ section[tabindex="-1"]:focus-visible h2, main[tabindex="-1"]:focus-visible h1 { 
 .about-paragraph { display: grid; }
 .about-paragraph > p { grid-area: 1 / 1; }
 .about-measure { visibility: hidden; pointer-events: none; }
+
+.footer .social-links { gap: 1rem; align-self: flex-end; margin-bottom: .25rem; }
+.footer .social-links a { font-size: .875rem; min-height: 44px; gap: .4rem; }
+.footer .social-links .social-logo { width: 16px; height: 16px; }
+.footer .social-links a > svg:not(.social-logo) { width: 14px; height: 14px; }
+@media (max-width: 767px) { .footer .social-links { align-self: flex-start; margin-top: .25rem; margin-bottom: 0; } }

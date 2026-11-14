@@ -12,7 +12,7 @@ test("About types, holds for five seconds, fades and advances", async ({ page })
   await page.clock.pauseAt(new Date(Date.now() + 1000));
   await loop.getByRole("button", { name: "Next About paragraph" }).click();
   await loop.getByRole("button", { name: "Previous About paragraph" }).click();
-  await page.clock.runFor([...aboutParagraphs[0]].length * 35 + 20);
+  await page.clock.runFor(1520);
   await expect(loop).toHaveAttribute("data-phase", "holding");
   await page.clock.runFor(4900);
   await expect(loop).toHaveAttribute("data-phase", "holding");

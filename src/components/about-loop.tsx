@@ -27,7 +27,7 @@ export function AboutLoop() {
   }, []);
   useEffect(() => {
     const key = `${index}-${phase}`;
-    if (clock.current.key !== key) clock.current = { key, remaining: phase === "typing" ? [...text].length * 35 + 2 : phase === "holding" ? 5000 : 450 };
+    if (clock.current.key !== key) clock.current = { key, remaining: phase === "typing" ? 1502 : phase === "holding" ? 5000 : 450 };
     if (!running) return;
     const start = performance.now();
     const timer = setTimeout(() => {
