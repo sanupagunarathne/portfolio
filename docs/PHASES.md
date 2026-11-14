@@ -14,3 +14,19 @@ Each phase is a separate reviewable branch. Sanupa owns every merge into main an
 Use fix/description for standalone fixes and bug/description for investigations as needed. Changes necessary to finish a phase remain on its feature branch. Use focused conventional commits; do not create branches merely to satisfy a naming pattern.
 
 At each handoff include branch + commit, scope, executed checks, limitations, and the next phase. Open questions should identify the exact missing decision. Missing photos/email/résumé are already authorized placeholders and do not block these phases.
+
+## Phase 2 branch dependency
+
+The user explicitly requested Phase 2 before remote main included Phase 1. Phase 2 is transparently based on `f3a79ad` from `feat/phase-1-foundation`, rather than the initial main commit. Merge Phase 1 first; then review Phase 2 relative to Phase 1 (or main after that merge). The assistant has not merged or pulled main. This exception does not authorize later phases automatically.
+
+## Phase 3 branch dependency
+
+Phase 3 was requested explicitly while main still contained the initial README. `feat/phase-3-interactions` transparently depends on Phase 2 commit `8c408c3`. Review against Phase 2 until the earlier branches have been merged by Sanupa. Glass styling refinements to the shared header, windows and panels are included in this phase. Do not automatically begin Phase 4.
+
+## Phase 4 branch dependency
+
+The user requested Phase 4 when remote main included Phase 1 but not Phases 2/3. `feat/phase-4-3d` transparently depends on Phase 3 commit `6473ce6`. Merge earlier phases first. This phase adds the primary expertise sculpture; the optional second Playground scene is omitted to keep the page lightweight. Do not automatically begin Phase 5.
+
+## Phase 5 branch dependency
+
+Phase 5 was explicitly requested before main incorporated Phases 2–4. `feat/phase-5-case-studies` transparently depends on Phase 4 commit `9252149`. Merge earlier phases first; Phase 6 is a separate checkpoint and is not started automatically.

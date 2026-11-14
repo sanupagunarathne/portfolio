@@ -1,52 +1,46 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { ArrowUpRight, Copy, Download } from "lucide-react";
+import { useRef, useState, type FormEvent } from "react";
 
-export function ContactForm({ email }: { email: string | null }) {
+export function ContactForm({ deliveryEnabled }: { deliveryEnabled: boolean }) {
+  const form = useRef<HTMLFormElement>(null);
+  const [busy, setBusy] = useState(false);
   const [draft, setDraft] = useState("");
-  const [notice, setNotice] = useState("");
-  const [length, setLength] = useState(0);
+  const [status, setStatus] = useState("");
 
-  function prepare(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") ?? "").trim();
-    const reply = String(data.get("email") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
-    if (!name || !message) { setNotice("Please enter your name and a message, beyond just spaces."); return; }
-    setDraft(`To: Sanupa Gunarathne\nFrom: ${name} <${reply}>\nSubject: ${data.get("topic")}\n\n${message}`);
-    setNotice("Your draft is ready below. No message has been sent.");
+    const payload = Object.fromEntries(data.entries());
+    if (String(payload.name).trim().length < 2 || String(payload.message).trim().length < 10) {
+      setStatus("Please include your name and a message of at least 10 characters."); return;
+    }
+    const message = `From: ${payload.name}\nReply to: ${payload.email}\nTopic: ${payload.topic}\n\n${payload.message}`;
+    setDraft(message); setStatus("");
+    if (!deliveryEnabled) { setStatus("Your message is prepared, not sent. Copy it below, or connect with me on LinkedIn."); return; }
+    setBusy(true);
+    try {
+      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal: AbortSignal.timeout(15_000) });
+      if (!response.ok) throw new Error("Delivery failed");
+      setStatus("Your message was accepted for delivery. Thank you for getting in touch.");
+      setDraft(""); form.current?.reset();
+    } catch { setStatus("Your message could not be sent. Your text is still here; please try again or copy it below."); }
+    finally { setBusy(false); }
   }
 
-  async function copy() {
-    try { await navigator.clipboard.writeText(draft); setNotice("Message copied. No message has been sent."); }
-    catch { setNotice("Copy is unavailable in this browser. Select the draft text to copy it, or download it."); }
-  }
-
-  function download() {
-    const url = URL.createObjectURL(new Blob([draft], { type: "text/plain;charset=utf-8" }));
-    const link = document.createElement("a");
-    link.href = url; link.download = "message-for-sanupa.txt"; link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    setNotice("Draft downloaded. No message has been sent.");
-  }
-
-  return <div className="contact-form-wrap">
-    <form className="contact-form" onSubmit={prepare} onChange={() => { setDraft(""); setNotice(""); }}>
-      <h3>Start a conversation</h3>
-      <p id="delivery-note">{email ? "Prepare your message, then open it in your email app." : "Direct delivery is not connected yet. You can prepare, copy or download your message here."}</p>
-      <div className="form-row">
-        <label>Your name <span aria-hidden="true">*</span><input name="name" autoComplete="name" required maxLength={100} placeholder="Your name" /></label>
-        <label>Email address <span aria-hidden="true">*</span><input name="email" type="email" autoComplete="email" required maxLength={254} placeholder="you@example.com" /></label>
-      </div>
-      <label>What&apos;s on your mind?<select name="topic" defaultValue="Project enquiry"><option>Project enquiry</option><option>Collaboration</option><option>Just saying hello</option><option>Other</option></select></label>
-      <label htmlFor="contact-message">Your message <span aria-hidden="true">*</span></label>
-      <textarea id="contact-message" name="message" required minLength={10} maxLength={3000} rows={5} placeholder="A little about your idea, timeline, or what you’d like to talk about…" aria-describedby="message-help" onChange={(event) => setLength(event.target.value.length)} />
-      <p id="message-help" className="field-help">10–3,000 characters · {length.toLocaleString()} / 3,000</p>
-      <div className="form-bottom"><span>All fields marked * are required.<br />Your draft stays in this page until you copy or export it.</span><button className="button primary" type="submit" aria-describedby="delivery-note">Prepare message <ArrowUpRight size={18} aria-hidden="true" /></button></div>
-    </form>
-    <p className="form-status" role="status">{notice}</p>
-    {draft && <div className="message-preview"><h4>Review your message</h4><pre tabIndex={0}>{draft}</pre><div className="draft-actions"><button type="button" className="button secondary" onClick={copy}><Copy size={16} aria-hidden="true" />Copy message</button><button type="button" className="button secondary" onClick={download}><Download size={16} aria-hidden="true" />Download draft</button>{email && <a className="button primary" href={`mailto:${email}?subject=${encodeURIComponent("Portfolio enquiry")}&body=${encodeURIComponent(draft)}`}>Open email app</a>}</div></div>}
-  </div>;
+  return <form ref={form} className="contact-form mac-window" onSubmit={submit}>
+    <div className="window-bar"><span className="window-dots" aria-hidden="true"><i /><i /><i /></span>new-message.ts</div>
+    <div className="window-body">
+      <h3>Tell me what you have in mind.</h3>
+      <p className="content-note">{deliveryEnabled ? "Send a project idea, a question, or just say hello." : "Direct delivery is not connected yet. Prepare and copy a message here, or reach me on LinkedIn."}</p>
+      <div className="contact-fields"><div><label htmlFor="contact-name">Your name <span>(required)</span></label><input id="contact-name" name="name" autoComplete="name" required minLength={2} maxLength={100} /></div><div><label htmlFor="contact-email">Your email <span>(required)</span></label><input id="contact-email" name="email" type="email" autoComplete="email" required maxLength={254} /></div></div>
+      <label htmlFor="contact-topic">What is this about?</label><select id="contact-topic" name="topic" defaultValue="Project idea"><option>Project idea</option><option>Collaboration</option><option>Question</option><option>Just saying hello</option></select>
+      <label htmlFor="contact-message">Your message <span>(required)</span></label><textarea id="contact-message" name="message" rows={5} required minLength={10} maxLength={5000} placeholder="A little context, an idea, or a question…" />
+      <div className="contact-honeypot" aria-hidden="true"><label htmlFor="contact-website">Leave blank</label><input id="contact-website" name="website" tabIndex={-1} autoComplete="off" /></div>
+      <p className="content-note">Your details are used only to respond to this message. Nothing is saved in your browser.</p>
+      <button className="button primary" type="submit" disabled={busy}>{busy ? "Sending…" : deliveryEnabled ? "Send message ↗" : "Prepare message ↗"}</button>
+      <p className="form-status" role="status" aria-live="polite">{status}</p>
+      {draft && <div className="message-draft"><label htmlFor="message-draft">Your prepared message</label><textarea id="message-draft" value={draft} readOnly rows={7} /><button className="text-link" type="button" onClick={async () => { try { await navigator.clipboard.writeText(draft); setStatus("Message copied. It has not been sent."); } catch { setStatus("Copy is unavailable in this browser. Select the prepared message and copy it manually."); } }}>Copy message</button></div>}
+    </div>
+  </form>;
 }
