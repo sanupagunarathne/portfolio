@@ -31,3 +31,5 @@ Run the documented checks and the production Playwright suite. After an authoriz
 ## Latest contact and external viewer
 
 Public recipient was confirmed as sanupar07@gmail.com. See EMAIL-SETUP.md for secure Resend configuration and free email-app/hosted-form alternatives. The email-app draft handoff works without a provider key; website sending still needs configured credentials/sender. Expertise now loads an attributed Sketchfab iframe only when requested. Allow https://sketchfab.com in frame-src if introducing a Content Security Policy; verify real model rendering in the deployed browser. No self-hosted model download or license verification is claimed. Dark is the new default, with saved explicit light preferences respected.
+
+Latest model update: the Sketchfab embed was removed after the user clarified it was reference only. Expertise now renders an original local procedural computer with automatic rotation; no external model file, frame-src exception, viewer API or download is required. Standard app assets and local Three.js chunks are sufficient. Reduced motion and unavailable graphics use a static local SVG.

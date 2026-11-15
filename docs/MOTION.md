@@ -39,3 +39,9 @@ Lint, standalone types, production build and whitespace checks passed. The final
 ## Caret/computer update
 
 Latest direction uses continuous character typing with one advancing caret, not independent word entrances. Word wrappers only reserve layout and preserve wrapping; character/caret timing advances globally across the phrase. Reduced motion keeps all text visible and hides the caret. Dark is now the default. Runtime Expertise replaces the local abstract sculpture with the attributed, user-supplied Sketchfab Retro computer by Urpo; the previous local renderer is not mounted. External viewing is explicitly loaded/closed, with credit and a direct link. Live provider rendering was blocked from independent inspection here; tests mock the iframe response instead of claiming real WebGL draw/performance coverage for Sketchfab.
+
+## Local retro scene and rotating About text
+
+The user clarified that the Sketchfab link was reference only. Runtime now uses a code-built CRT computer, keyboard and mouse inside the original lazy local R3F lifecycle. Rotation is automatic when visible/foreground; pause, drag/keyboard rotation, reset, static view, reduced motion and unavailable-WebGL fallback remain. No model is downloaded and no iframe/third-party viewer is mounted.
+
+About contains 12 fact-grounded paragraphs in src/data/about.ts. One types with the existing caret, holds for five seconds once typing finishes, then fades for 450ms before the next begins. The loop wraps. Explicit pause and previous/next controls remain; offscreen/background pauses preserve remaining time and reduced motion uses static manual selection. Hidden noninteractive measurement paragraphs reserve the largest height but are excluded from accessibility. The changing paragraph is not a continuously announcing live region.
