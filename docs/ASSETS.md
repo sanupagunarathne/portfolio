@@ -26,3 +26,7 @@ Set overview images in `src/data/projects.ts` (`screenshot`). Each study in `src
 ## Supplied hero portrait — crimson refinement
 
 The user supplied a full-length outdoor photograph and requested a halftone interpretation. Its edited, cropped monochrome/crimson treatment is bundled as `/images/portraits/sanupa-halftone.webp` and selected in `personal.heroPortrait`. The treatment was made from that supplied photograph; it is not a substitute portrait or stock person. The untouched upload is not bundled in this checkout. Change the editable path to replace the treatment later. About and project/gallery media remain placeholders until supplied.
+
+## Background-free portrait (latest)
+
+`personal.heroPortrait` now selects `/images/portraits/sanupa-cutout.webp`, an alpha-enabled, optimized background-removal edit of the existing halftone portrait. It is about 158 KiB and has verified transparency. The previous halftone asset is retained. No stock/replacement person was introduced; the available source was the already edited portrait, not an untouched original photograph. Hero AI logo SVGs are local under `/images/ai/`; credits and the bundled MIT license are recorded in ATTRIBUTIONS.md.

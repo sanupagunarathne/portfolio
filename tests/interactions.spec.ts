@@ -45,9 +45,9 @@ test("reduced motion keeps content available and glass has an opaque fallback", 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Enter my workspace" })).toHaveAttribute("href", "/work");
-  await expect(page.locator(".portal-orbit > i")).toHaveCSS("animation-name", "none");
-  await expect(page.locator(".site-header")).toHaveCSS("backdrop-filter", "blur(16px)");
+  await expect(page.getByRole("button", { name: "Enter my workspace" })).toBeVisible();
+  await expect(page.locator(".cinematic-work")).not.toHaveAttribute("data-enhanced", "true");
+  await expect(page.locator(".site-header")).toHaveCSS("backdrop-filter", "blur(20px)");
   // Simulate a browser without backdrop-filter support by removing the @supports rule.
   await page.evaluate(() => {
     for (const sheet of document.styleSheets) {

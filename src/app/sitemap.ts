@@ -5,5 +5,5 @@ import { getSiteOrigin } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const origin = getSiteOrigin();
   if (!origin) return [];
-  return ["/", "/work", ...projects.map(project => `/projects/${project.slug}`)].map(path => ({ url: new URL(path, origin).href }));
+  return ["/", ...projects.map(project => `/projects/${project.slug}`)].map(path => ({ url: new URL(path, origin).href }));
 }
