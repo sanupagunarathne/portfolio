@@ -22,7 +22,11 @@ test("About types, holds for five seconds, fades and advances", async ({ page })
   await page.clock.runFor(450);
   await expect(loop.locator(".about-loop-controls span")).toHaveText("2 / 12");
   await loop.getByRole("button", { name: "Pause About loop" }).click();
-  await page.clock.runFor(30_000);
+  await expect(loop).toHaveAttribute("data-running", "false");
+  // Jump the long idle period, then run callbacks normally. Nearby independent
+  // WebGL/animation loops need not render 30 seconds of simulated frames here.
+  await page.clock.fastForward(25_000);
+  await page.clock.runFor(5_000);
   await expect(loop.locator(".about-loop-controls span")).toHaveText("2 / 12");
 });
 

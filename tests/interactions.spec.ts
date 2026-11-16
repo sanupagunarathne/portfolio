@@ -12,7 +12,7 @@ test("technology filters and keyboard selection expose honest details", async ({
   const details = page.getByRole("region", { name: "Technology details" });
   await expect(details.getByRole("heading", { name: "Java", exact: true })).toBeVisible();
   await expect(details.getByText("To be confirmed", { exact: true })).toBeVisible();
-  await expect(details.getByRole("link", { name: "Paddock Labs" })).toHaveAttribute("href", "#paddock-labs-title");
+  await expect(details.getByRole("link", { name: "Paddock Labs" })).toHaveAttribute("href", "/projects/paddock-labs");
   if (isMobile) {
     await expect(details).toBeInViewport();
     await page.getByRole("button", { name: "Back to technologies" }).click();
@@ -25,14 +25,8 @@ test("technology filters and keyboard selection expose honest details", async ({
   await expect(page.locator(".technology-group")).toHaveCount(6);
 });
 
-test("journey and project notes expand and collapse without navigating", async ({ page }) => {
+test("journey expands and collapses without navigating", async ({ page }) => {
   await page.goto("/");
-  const project = page.getByRole("button", { name: "Explore Paddock Labs notes" });
-  await project.click();
-  await expect(project).toHaveAttribute("aria-expanded", "true");
-  await expect(page.locator("#paddock-labs-notes")).toBeVisible();
-  await project.click();
-  await expect(page.locator("#paddock-labs-notes")).toBeHidden();
   const school = page.getByRole("button", { name: /Maliyadeva College/ });
   await school.click();
   await expect(school).toHaveAttribute("aria-expanded", "true");
@@ -51,9 +45,8 @@ test("reduced motion keeps content available and glass has an opaque fallback", 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await page.getByRole("button", { name: "Explore EatWhat notes" }).click();
-  await expect(page.locator("#eatwhat-notes")).toBeVisible();
-  await expect(page.locator(".project-cursor").first()).toBeHidden();
+  await expect(page.getByRole("link", { name: "Enter my workspace" })).toHaveAttribute("href", "/work");
+  await expect(page.locator(".portal-orbit > i")).toHaveCSS("animation-name", "none");
   await expect(page.locator(".site-header")).toHaveCSS("backdrop-filter", "blur(16px)");
   // Simulate a browser without backdrop-filter support by removing the @supports rule.
   await page.evaluate(() => {

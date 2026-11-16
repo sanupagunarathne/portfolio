@@ -26,9 +26,11 @@ for (const [index, project] of projects.entries()) {
   });
 }
 
-test("homepage previews reach case studies and shared navigation returns home", async ({ page, isMobile }) => {
+test("workspace doorway reaches case studies and shared navigation returns home", async ({ page, isMobile }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "View EatWhat project", exact: true }).click();
+  await page.getByRole("link", { name: "Enter my workspace" }).click();
+  await page.getByRole("button", { name: "Project index", exact: true }).click();
+  await page.getByRole("link", { name: "Read EatWhat case study" }).click();
   await expect(page).toHaveURL(/\/projects\/eatwhat$/);
   if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
   const navigation = isMobile ? page.locator("#mobile-navigation") : page.getByRole("navigation", { name: "Main navigation" });
@@ -53,6 +55,6 @@ test("case study content is readable without JavaScript", async ({ browser }) =>
     await page.goto("/projects/paddock-labs");
     await expect(page.getByRole("heading", { name: "Paddock Labs", exact: true })).toBeVisible();
     await expect(page.locator("#problem")).toContainText("karting telemetry");
-    await expect(page.getByRole("link", { name: "All projects", exact: true })).toHaveAttribute("href", "/#work");
+    await expect(page.getByRole("link", { name: "All projects", exact: true })).toHaveAttribute("href", "/work?project=paddock-labs");
   } finally { await context.close(); }
 });

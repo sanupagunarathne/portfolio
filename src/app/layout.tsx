@@ -5,8 +5,11 @@ import "@fontsource-variable/doto";
 import "./globals.css";
 import "./motion.css";
 import "./polish.css";
+import "./refinement.css";
+import "./universe.css";
 import { ViewportMotion } from "@/components/viewport-motion";
 import { Footer } from "@/components/footer";
+import { InterfaceSoundProvider } from "@/components/interface-sounds";
 import { Navigation } from "@/components/navigation";
 import { personal } from "@/data/personal";
 
@@ -31,13 +34,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem("portfolio-theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}` }} /></head>
-      <body>
+      <body><InterfaceSoundProvider>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <Navigation />
         <ViewportMotion />
         {children}
         <Footer />
-      </body>
+      </InterfaceSoundProvider></body>
     </html>
   );
 }

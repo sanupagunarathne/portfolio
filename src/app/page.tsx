@@ -4,13 +4,12 @@ import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
 import { personal } from "@/data/personal";
 
 import Image from "next/image";
-import { projects } from "@/data/projects";
+import { WorkPortal } from "@/components/work-portal";
 
 
 import { interests } from "@/data/interests";
 import { PhraseHeading, SectionHeading } from "@/components/section-heading";
 import { MediaFrame } from "@/components/media-frame";
-import { ProjectCard } from "@/components/project-card";
 import { MacWindow } from "@/components/mac-window";
 import { Playground } from "@/components/playground";
 import { Expertise } from "@/components/expertise";
@@ -49,7 +48,7 @@ export default function Home() {
           </div>
           <div className="portrait-composition">
             <div className="portrait-placeholder" role={personal.heroPortrait ? undefined : "img"} aria-label={personal.heroPortrait ? undefined : "Placeholder reserved for Sanupa's portrait; photograph not yet provided"}>
-              {personal.heroPortrait ? <Image src={personal.heroPortrait} alt="Sanupa Gunarathne" fill sizes="(max-width: 767px) 90vw, 45vw" priority className="hero-photo" /> : <>
+              {personal.heroPortrait ? <><Image src={personal.heroPortrait} alt="Halftone portrait of Sanupa Gunarathne" fill sizes="(max-width: 767px) 90vw, 45vw" priority className="hero-photo" /><span className="hero-photo-label" aria-hidden="true">SANUPA / IN MY ELEMENT</span></> : <>
               <span className="portrait-index">FIG. 01 — THE PERSON BEHIND THE PIXELS</span>
               <span className="portrait-monogram" aria-hidden="true">sg.</span>
               <div className="portrait-caption"><span>Your photograph belongs here.</span><span className="mono">Portrait to be added</span></div>
@@ -61,7 +60,7 @@ export default function Home() {
 
         <section id="work" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="work-title">
           <SectionHeading number="01" label="SELECTED WORK" title="A collection of things I've brought to life." id="work-title" />
-          <div className="projects-layout">{projects.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} />)}</div>
+          <WorkPortal />
         </section>
         <section id="about" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="about-title">
           <SectionHeading number="02" label="ABOUT" title="More than just lines of code." id="about-title" />
