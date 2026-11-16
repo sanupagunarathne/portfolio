@@ -1,0 +1,92 @@
+"use client";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { Component, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
+import { projects } from "@/data/projects";
+import { cameraZ, projectZ, projectProgress, smooth, clamp01, JourneyState } from "@/lib/journey";
+const Scene = dynamic(() => import("./journey-scene"), {ssr:false});
+class SceneBoundary extends Component<{ children: ReactNode; onError: () => void }, { failed: boolean }> {
+  state = {failed:false};
+  static getDerivedStateFromError() { return {failed:true}; }
+  componentDidCatch() { this.props.onError(); }
+  render() { return this.state.failed ? null : this.props.children; }
+}
+export function CinematicWork() {
+  const host = useRef<HTMLElement>(null);
+  const requestedHandled = useRef(false);
+  const state = useRef(new JourneyState());
+  const [capable, setCapable] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [simplified, setSimplified] = useState(false);
+  const fail = useCallback(() => setCapable(false), []);
+  useEffect(() => {
+    const media = matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => {
+      let supported = false;
+      if (!media.matches) { try { const gl = document.createElement("canvas").getContext("webgl2"); supported = !!gl; gl?.getExtension("WEBGL_lose_context")?.loseContext(); } catch {} }
+      setCapable(supported); setSimplified(media.matches);
+    };
+    update(); media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  const go = useCallback((progress: number) => {
+    const element = host.current;
+    if (!element) return;
+    const top = element.getBoundingClientRect().top + scrollY;
+    window.scrollTo({top: top + progress * (element.offsetHeight - innerHeight), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"});
+  }, []);
+  useEffect(() => {
+    const element = host.current;
+    if (!element) return;
+    const hero = document.querySelector<HTMLElement>(".hero");
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = element.getBoundingClientRect();
+      const progress = clamp01(-rect.top / Math.max(1, element.offsetHeight - innerHeight));
+      const arrival = smooth(0, 1, (innerHeight - rect.top) / innerHeight);
+      const visible = rect.top < innerHeight && rect.bottom > 0;
+      state.current.progress = progress;
+      state.current.visible = visible && !document.hidden;
+      state.current.running = visible && !document.hidden && !paused && !simplified;
+      state.current.invalidate();
+      element.dataset.progress = progress.toFixed(4);
+      element.dataset.cameraZ = cameraZ(progress).toFixed(2);
+      element.dataset.running = String(state.current.running);
+      element.style.setProperty("--arrival", String(arrival));
+      element.style.setProperty("--exit", String(smooth(.88, 1, progress)));
+      element.style.setProperty("--entrance", String(1 - smooth(.035, .18, progress)));
+      if (hero) { hero.style.setProperty("--hero-departure", String(simplified ? 0 : arrival)); }
+      document.querySelector(".site-header")?.classList.toggle("over-space", capable && !simplified && rect.top <= 100 && progress < .95 && visible);
+      const entrance = element.querySelector<HTMLElement>(".journey-entrance");
+      const controls = element.querySelector<HTMLElement>(".journey-controls");
+      if (controls) controls.inert = capable && !simplified && progress > .98;
+      if (entrance) entrance.inert = capable && !simplified && progress > .18;
+      element.querySelectorAll<HTMLElement>(".journey-project").forEach((node, index) => {
+        const distance = cameraZ(progress) - projectZ(index);
+        const alpha = smooth(1, 4, distance) * (1 - smooth(12, 18, distance));
+        node.style.setProperty("--project-opacity", String(alpha));
+        node.inert = capable && !simplified && alpha < .01;
+      });
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const observer = new ResizeObserver(schedule); observer.observe(element);
+    window.addEventListener("scroll", schedule, {passive:true}); window.addEventListener("resize", schedule); document.addEventListener("visibilitychange", schedule);
+    schedule();
+    const requested = new URLSearchParams(location.search).get("project");
+    const index = projects.findIndex(p => p.slug === requested);
+    if (index >= 0 && capable && !simplified && !requestedHandled.current) { const timer = setTimeout(() => { requestedHandled.current = true; go(projectProgress(index)); }, 100); return () => {clearTimeout(timer); cleanup();}; }
+    return cleanup;
+    function cleanup() { cancelAnimationFrame(frame); observer.disconnect(); window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); document.removeEventListener("visibilitychange", schedule); document.querySelector(".site-header")?.classList.remove("over-space"); hero?.style.removeProperty("--hero-departure"); }
+  }, [capable, paused, simplified, go]);
+  return <section ref={host} id="work" tabIndex={-1} className="cinematic-work" data-enhanced={capable && !simplified ? "true" : undefined} aria-labelledby="work-title">
+    <div className="journey-viewport">
+      {capable && !simplified && <div className="journey-renderer"><SceneBoundary onError={fail}><Scene state={state} onLost={fail} /></SceneBoundary></div>}
+      <header className="journey-entrance"><p className="eyebrow">01 / SELECTED WORK</p><h2 id="work-title">A few ideas.<br />Their own universe.</h2><p>A collection of things I&apos;m building. Follow your curiosity.</p><button className="button primary" onClick={() => go(.3)}>Enter my workspace <ArrowDown size={16} aria-hidden="true" /></button></header>
+      <div className="journey-projects">{projects.map((project,index) => <article key={project.slug} className="journey-project" aria-labelledby={`${project.slug}-title`}><span className={`static-world world-${index}`} aria-hidden="true" /><p className="eyebrow">0{index+1} / SELECTED WORK</p><h3 id={`${project.slug}-title`}>{project.title}</h3><p className="journey-stack">{project.technologies.slice(0,3).join(" · ")}</p><Link className="text-link" href={`/projects/${project.slug}`}>Explore {project.title} <ArrowUpRight size={16} aria-hidden="true" /></Link></article>)}</div>
+      <div className="journey-controls"><button type="button" className="journey-pause" aria-pressed={paused} onClick={() => setPaused(!paused)} aria-label={paused ? "Resume universe animation" : "Pause universe animation"}>{paused ? <Play size={16} /> : <Pause size={16} />}</button><nav aria-label="Project destinations">{projects.map((p,index) => <button key={p.slug} aria-label={`Travel to ${p.title}`} onClick={() => go(projectProgress(index))}>0{index+1}</button>)}</nav><a href="#about" className="text-link">Continue to About <ArrowDown size={14} aria-hidden="true" /></a></div>
+      <div className="journey-exit" aria-hidden="true"><span>Beyond the work.</span><span>A little more about me. ↓</span></div>
+    </div>
+  </section>;
+}

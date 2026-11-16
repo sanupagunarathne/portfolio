@@ -145,3 +145,7 @@ The homepage Work doorway opens `/work`, a viewport-sized star field with projec
 The scene uses local Canvas 2D stars/satellites/fragments and HTML project links, with capped DPR and a 30fps ambient budget. Pause stops ambient movement; reduced motion makes travel immediate. Rendering suspends in hidden tabs. Semantic project links remain available without JavaScript/Canvas. Project details and unknown-route behavior are retained.
 
 Primary actions use #A60321. Doto remains the display face; Geist and small mono labels tighten the supporting typography. The hero uses a halftone edit of the supplied portrait. The speaker control enables gentle synthesized hover/click tones and remembers mute; browsers require user activation before playback. No audio files or external scene resources are downloaded.
+
+## Continuous cinematic homepage (latest)
+
+Work now lives on the homepage: scroll from the Hero into a full-viewport portal, Enter to move through the same 3D scene, explore the four distinct project objects, and continue into About. Scrolling reverses the whole journey. Native scrolling is preserved; there is no wheel interception or body lock. `/work` redirects to this experience for older links. The Hero has a transparent portrait and ten independent AI-logo orbits, and the floating glass navbar adapts over space. No new runtime dependencies. See [cinematic architecture and fallbacks](docs/CINEMATIC.md).

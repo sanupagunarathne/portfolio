@@ -53,8 +53,8 @@ test("homepage content and typography experiment work", async ({ page }) => {
   for (const id of ["hero", "work", "about", "expertise", "journey", "playground", "beyond", "contact"]) {
     await expect(page.locator(`#${id}`)).toBeAttached();
   }
-  await expect(page.getByRole("link", { name: "Enter my workspace" })).toHaveAttribute("href", "/work");
-  await expect(page.locator("#work .project-entry, #work canvas")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Enter my workspace" })).toBeVisible();
+  await expect(page.locator("#work .project-entry")).toHaveCount(0);
   await expect(page.locator(".journey-list > li")).toHaveCount(3);
   await expect(page.locator(".interests-gallery figure")).toHaveCount(4);
   await page.getByLabel("A thought, in dots.").fill("build with care");

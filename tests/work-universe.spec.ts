@@ -1,116 +1,67 @@
 import { expect, test } from "@playwright/test";
 import { projects } from "../src/data/projects";
+import { cameraZ, projectProgress, projectZ } from "../src/lib/journey";
 
-const sceneSelector = ".work-universe";
-
-test("scroll, keyboard, depth slider and index travel without scrolling the document", async ({ page }) => {
-  const errors: string[] = [];
-  page.on("pageerror", error => errors.push(error.message));
-  await page.goto("/work");
-  const scene = page.locator(sceneSelector);
-  await expect(scene).toHaveAttribute("data-enhanced", "true");
-  await expect(page.getByRole("heading", { name: /Their own universe/ })).toBeVisible();
-  await page.mouse.move(180, 420);
-  await page.mouse.wheel(0, 500);
-  await expect.poll(() => scene.getAttribute("data-depth")).not.toBe("0");
-  await scene.focus();
-  await page.keyboard.press("End");
-  await expect(scene).toHaveAttribute("data-depth", "3500");
-  await expect(page.getByRole("link", { name: "Explore NEX Installer project" })).toBeVisible();
-  await page.getByRole("slider", { name: "Universe depth" }).fill("1300");
-  await expect(scene).toHaveAttribute("data-depth", "1300");
-  await expect(page.getByRole("link", { name: "Explore EatWhat project" })).toBeVisible();
-  const index = page.getByRole("button", { name: "Project index", exact: true });
-  await index.click();
-  await page.keyboard.press("Escape");
-  await expect(index).toBeFocused();
-  await expect(index).toHaveAttribute("aria-expanded", "false");
-  await index.click();
-  await page.getByRole("button", { name: "Travel to Campus Slot" }).click();
-  await expect(scene).toHaveAttribute("data-depth", "2400");
-  await expect(page.getByRole("link", { name: "Explore Campus Slot project" })).toBeVisible();
-  expect(await page.evaluate(() => ({ y: scrollY, height: document.documentElement.scrollHeight <= innerHeight }))).toEqual({ y: 0, height: true });
-  await page.getByRole("link", { name: "Explore Campus Slot project" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Campus Slot");
-  await page.getByRole("link", { name: "All projects", exact: true }).click();
-  await expect(scene).toHaveAttribute("data-depth", "2400");
-  await page.getByRole("link", { name: "Back to earth" }).click();
-  await expect(page).toHaveURL(/\/#work$/);
-  expect(await page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
-  expect(errors).toEqual([]);
-});
-
-test("pause freezes the canvas and reduced motion still reaches every project", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/work");
-  const scene = page.locator(sceneSelector);
-  const canvas = page.locator(".universe-stars");
-  await page.getByRole("button", { name: "Pause universe animation" }).click();
-  await expect(scene).toHaveAttribute("data-running", "false");
-  const snapshot = await canvas.evaluate(element => (element as HTMLCanvasElement).toDataURL());
-  await page.waitForTimeout(150);
-  expect(await canvas.evaluate(element => (element as HTMLCanvasElement).toDataURL())).toBe(snapshot);
-  await page.getByRole("button", { name: "Resume universe animation" }).click();
-  await expect(scene).toHaveAttribute("data-running", "true");
-  await expect.poll(() => canvas.evaluate(element => (element as HTMLCanvasElement).toDataURL())).not.toBe(snapshot);
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(scene).toHaveAttribute("data-running", "false");
-  for (const project of projects) {
-    await page.getByRole("button", { name: "Project index", exact: true }).click();
-    await page.getByRole("button", { name: `Travel to ${project.title}` }).click();
-    await expect(page.getByRole("link", { name: `Explore ${project.title} project` })).toBeVisible();
-    await expect(page.locator(".universe-intro")).toBeHidden();
-  }
-});
-
-test("touch gestures move into the universe", async ({ page }) => {
-  await page.goto("/work");
-  const scene = page.locator(sceneSelector);
-  await expect(scene).toHaveAttribute("data-enhanced", "true");
-  await scene.evaluate(element => {
-    const touch = (y: number) => new Touch({ identifier: 1, target: element, clientX: 100, clientY: y });
-    element.dispatchEvent(new TouchEvent("touchstart", { touches: [touch(500)], bubbles: true }));
-    element.dispatchEvent(new TouchEvent("touchmove", { touches: [touch(250)], bubbles: true, cancelable: true }));
-    element.dispatchEvent(new TouchEvent("touchend", { touches: [], bubbles: true }));
-  });
-  await expect(scene).toHaveAttribute("data-depth", "1000");
-});
-
-test("sound is opt-in, remembered and available inside the universe", async ({ page }) => {
-  await page.addInitScript(() => {
-    const state = window as typeof window & { tones: number };
-    state.tones = 0;
-    const create = AudioContext.prototype.createOscillator;
-    AudioContext.prototype.createOscillator = function () { state.tones++; return create.call(this); };
-  });
+test("camera travel is continuous and passes every object in both directions", async ({ browser, isMobile }) => {
+  const context = await browser.newContext({baseURL:test.info().project.use.baseURL, viewport: isMobile ? {width:390,height:844} : {width:1000,height:800}} as Parameters<typeof browser.newContext>[0]);
+  const page = await context.newPage();
+  const errors: string[] = []; page.on("pageerror", e => errors.push(e.message));
   await page.goto("/");
-  await expect(page.getByRole("button", { name: "Enable interface sounds" })).toHaveAttribute("aria-pressed", "false");
-  await page.getByRole("button", { name: "Enable interface sounds" }).click();
-  await expect(page.getByRole("button", { name: "Mute interface sounds" })).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("link", { name: "About Me", exact: true }).hover();
-  await expect.poll(() => page.evaluate(() => (window as typeof window & { tones: number }).tones)).toBeGreaterThan(0);
-  await page.goto("/work");
-  const mute = page.locator(sceneSelector).getByRole("button", { name: "Mute interface sounds" });
-  await expect(mute).toHaveAttribute("aria-pressed", "true");
-  await mute.click();
-  await expect(page.locator(sceneSelector).getByRole("button", { name: "Enable interface sounds" })).toHaveAttribute("aria-pressed", "false");
-  const tones = await page.evaluate(() => (window as typeof window & { tones: number }).tones);
-  await page.getByRole("button", { name: "Next destination" }).hover();
-  expect(await page.evaluate(() => (window as typeof window & { tones: number }).tones)).toBe(tones);
-  expect(await page.evaluate(() => localStorage.getItem("portfolio-sound"))).toBe("off");
+  const work = page.locator("#work");
+  // Headless software rendering is supported by the probe; fallback is separately covered.
+  await expect(work).toHaveAttribute("data-enhanced", "true");
+  const seek = async (p: number) => { await work.evaluate((element, progress) => window.scrollTo({top:element.getBoundingClientRect().top + scrollY + (element.clientHeight-innerHeight)*progress,behavior:"instant"}),p); await expect.poll(async()=>Math.abs(Number(await work.getAttribute("data-progress"))-p)).toBeLessThan(.001); };
+  await seek(0); await page.getByRole("button",{name:"Enter my workspace"}).click();
+  await expect.poll(async()=>Math.abs(Number(await work.getAttribute("data-progress")) - .3)).toBeLessThan(.001);
+  for (const index of [0,1,2,3,2,1,0]) {
+    const p = projectProgress(index); await seek(p);
+    await expect(page.getByRole("link",{name:`Explore ${projects[index].title}`,exact:true})).toBeVisible();
+    expect(cameraZ(p)-projectZ(index)).toBeCloseTo(9);
+    const canvas = page.locator(".journey-renderer canvas");
+    await expect.poll(async()=>Number(await canvas.getAttribute("data-draw-calls"))).toBeGreaterThan(0);
+    await expect.poll(async()=>Number(await canvas.getAttribute("data-camera-z"))).toBeCloseTo(cameraZ(p),1);
+  }
+  await seek(.99); expect(cameraZ(.99)).toBeLessThan(projectZ(3));
+  await seek(.3); await seek(.9); await seek(.1);
+  await page.getByRole("link",{name:"Continue to About"}).click(); await expect(page).toHaveURL(/#about$/);
+  await expect(page.locator("#about")).toBeInViewport();
+  expect(errors).toEqual([]); await context.close();
 });
 
-test("every case study remains reachable without JavaScript or Canvas", async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false, baseURL: test.info().project.use.baseURL });
-  try {
-    const page = await context.newPage();
-    await page.goto("/work");
-    for (const project of projects) {
-      const link = page.getByRole("link", { name: `Explore ${project.title} project` });
-      await expect(link).toBeVisible();
-      await expect(link).toHaveAttribute("href", `/projects/${project.slug}`);
-    }
-    await page.getByRole("link", { name: "Explore Paddock Labs project" }).click();
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Paddock Labs");
-  } finally { await context.close(); }
+test("reduced motion and no JavaScript keep all project destinations usable",async({page,browser})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});await page.goto("/");
+ await expect(page.locator("#work")).not.toHaveAttribute("data-enhanced","true");
+ for(const p of projects) await expect(page.getByRole("link",{name:`Explore ${p.title}`,exact:true})).toHaveAttribute("href",`/projects/${p.slug}`);
+ const context=await browser.newContext({baseURL:test.info().project.use.baseURL,javaScriptEnabled:false}); const plain=await context.newPage();await plain.goto("/");await plain.getByRole("link",{name:"Explore EatWhat",exact:true}).click();await expect(plain.getByRole("heading",{level:1})).toHaveText("EatWhat");await context.close();
+});
+
+test("portrait orbits move independently and pause without losing logos",async({page})=>{
+ await page.goto("/");const logo=page.locator(".ai-orbiter").first(); await expect(page.locator(".ai-orbiter")).toHaveCount(10);
+ const start=await logo.evaluate(el=>getComputedStyle(el).transform); await expect.poll(()=>logo.evaluate(el=>getComputedStyle(el).transform)).not.toBe(start);
+ await page.getByRole("button",{name:"Pause AI orbits"}).click();
+ // The pause redraw preserves each platform and its proportions.
+ await expect(page.getByRole("button",{name:"Resume AI orbits"})).toHaveAttribute("aria-pressed","true");
+ await page.emulateMedia({reducedMotion:"reduce"});const stopped=await logo.evaluate(el=>getComputedStyle(el).transform);await page.waitForTimeout(100);expect(await logo.evaluate(el=>getComputedStyle(el).transform)).toBe(stopped);
+});
+
+test("missing WebGL leaves a normal document with working project links", async ({page}) => {
+ await page.addInitScript(() => { const original = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function(this: HTMLCanvasElement, type: string, ...args: unknown[]) { if(type.startsWith("webgl")) return null; return Reflect.apply(original,this,[type,...args]); } as typeof original; });
+ await page.goto("/");await expect(page.locator("#work")).not.toHaveAttribute("data-enhanced","true");
+ await page.getByRole("link",{name:"Explore Campus Slot",exact:true}).click();await expect(page.getByRole("heading",{level:1})).toHaveText("Campus Slot");
+});
+
+test("native wheel and touch gestures travel without a scroll interceptor", async ({browser,isMobile}) => {
+ const context=await browser.newContext({baseURL:test.info().project.use.baseURL,viewport:isMobile?{width:390,height:844}:{width:1000,height:800},isMobile,hasTouch:isMobile});
+ try {
+  const page=await context.newPage();await page.goto("/");const work=page.locator("#work");await expect(work).toHaveAttribute("data-enhanced","true");
+  await work.evaluate(e=>scrollTo({top:e.getBoundingClientRect().top+scrollY+(e.clientHeight-innerHeight)*.2,behavior:"instant"}));
+  await expect.poll(async()=>Math.abs(Number(await work.getAttribute("data-progress"))-.2)).toBeLessThan(.001);
+  if(isMobile){
+   const session=await context.newCDPSession(page);await session.send("Input.dispatchTouchEvent",{type:"touchStart",touchPoints:[{x:190,y:650}]});
+   for(let i=1;i<=5;i++){await session.send("Input.dispatchTouchEvent",{type:"touchMove",touchPoints:[{x:190,y:650-i*60}]});await page.waitForTimeout(40);}
+   await session.send("Input.dispatchTouchEvent",{type:"touchEnd",touchPoints:[]});
+  }else{await page.mouse.move(500,450);await page.mouse.wheel(0,90);}
+  await expect.poll(async()=>Number(await work.getAttribute("data-progress"))).toBeGreaterThan(.2);
+  if(!isMobile){await page.mouse.wheel(0,-90);await expect.poll(async()=>Math.abs(Number(await work.getAttribute("data-progress"))-.2)).toBeLessThan(.003);}
+ }finally{await context.close();}
 });

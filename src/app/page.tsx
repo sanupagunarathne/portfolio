@@ -4,7 +4,8 @@ import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
 import { personal } from "@/data/personal";
 
 import Image from "next/image";
-import { WorkPortal } from "@/components/work-portal";
+import { CinematicWork } from "@/components/cinematic-work";
+import { PortraitOrbit } from "@/components/portrait-orbit";
 
 
 import { interests } from "@/data/interests";
@@ -46,7 +47,7 @@ export default function Home() {
             </div>
             <p className="location"><MapPin size={14} aria-hidden="true" /> Based in {personal.location}</p>
           </div>
-          <div className="portrait-composition">
+          <div className="portrait-composition"><PortraitOrbit />
             <div className="portrait-placeholder" role={personal.heroPortrait ? undefined : "img"} aria-label={personal.heroPortrait ? undefined : "Placeholder reserved for Sanupa's portrait; photograph not yet provided"}>
               {personal.heroPortrait ? <><Image src={personal.heroPortrait} alt="Halftone portrait of Sanupa Gunarathne" fill sizes="(max-width: 767px) 90vw, 45vw" priority className="hero-photo" /><span className="hero-photo-label" aria-hidden="true">SANUPA / IN MY ELEMENT</span></> : <>
               <span className="portrait-index">FIG. 01 — THE PERSON BEHIND THE PIXELS</span>
@@ -58,10 +59,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="work" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="work-title">
-          <SectionHeading number="01" label="SELECTED WORK" title="A collection of things I've brought to life." id="work-title" />
-          <WorkPortal />
-        </section>
+        <CinematicWork />
         <section id="about" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="about-title">
           <SectionHeading number="02" label="ABOUT" title="More than just lines of code." id="about-title" />
           <div className="about-layout">
