@@ -12,7 +12,7 @@ async function load(entry: string, env: Record<string, string>) {
 test("public origin gates production sitemap, robots and preview indexing", async () => {
   const configured = { SITE_URL: "https://portfolio.example", VERCEL_ENV: "production" };
   const map = (await load("src/app/sitemap.ts", configured)).default() as { url: string }[];
-  expect(map.map(entry => entry.url)).toEqual(["https://portfolio.example/", ...["paddock-labs", "eatwhat", "campus-slot", "nex-installer"].map(slug => `https://portfolio.example/projects/${slug}`)]);
+  expect(map.map(entry => entry.url)).toEqual(["https://portfolio.example/", "https://portfolio.example/work", ...["paddock-labs", "eatwhat", "campus-slot", "nex-installer"].map(slug => `https://portfolio.example/projects/${slug}`)]);
   expect((await load("src/app/robots.ts", configured)).default()).toMatchObject({ sitemap: "https://portfolio.example/sitemap.xml", rules: { allow: "/", disallow: "/api/" } });
   for (const env of [{}, { ...configured, VERCEL_ENV: "preview" }]) {
     expect((await load("src/app/sitemap.ts", env)).default()).toHaveLength(0);

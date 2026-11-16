@@ -11,7 +11,8 @@ test("full identity, uppercase headline and all navigation destinations", async 
   await nav.getByRole("link", { name: "Journey", exact: true }).click();
   if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
   await expect(nav.getByRole("link", { name: "Journey", exact: true })).toHaveAttribute("aria-current", "location");
-  await expect(nav.getByRole("link", { name: "Journey", exact: true })).toHaveCSS("border-radius", "12px");
+  await expect(page.locator(".nav-note")).toHaveCount(0);
+  expect((await page.locator(".nav-bar").boundingBox())!.height).toBeLessThanOrEqual(80);
 });
 
 test("contact prepares a validated message without pretending to send", async ({ page }) => {

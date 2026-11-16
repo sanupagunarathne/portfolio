@@ -22,3 +22,7 @@ Hero/about portraits: `personal.heroPortrait` / `personal.aboutPortrait`. Projec
 ## Case-study screenshots (Phase 5)
 
 Set overview images in `src/data/projects.ts` (`screenshot`). Each study in `src/data/case-studies.ts` has two gallery entries; set their `image`, `alt` and `caption` fields individually. Use `/images/projects/<slug>-01.webp` and `/images/projects/<slug>-02.webp`, where the exact slugs are `paddock-labs`, `eatwhat`, `campus-slot`, and `nex-installer`. These render real screenshots in the native viewer once supplied. Placeholder captions and descriptions must be replaced with accurate image descriptions.
+
+## Supplied hero portrait — crimson refinement
+
+The user supplied a full-length outdoor photograph and requested a halftone interpretation. Its edited, cropped monochrome/crimson treatment is bundled as `/images/portraits/sanupa-halftone.webp` and selected in `personal.heroPortrait`. The treatment was made from that supplied photograph; it is not a substitute portrait or stock person. The untouched upload is not bundled in this checkout. Change the editable path to replace the treatment later. About and project/gallery media remain placeholders until supplied.

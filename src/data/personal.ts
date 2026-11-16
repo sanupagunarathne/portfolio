@@ -13,6 +13,6 @@ export const personal = {
   interestsDescription: "Curiosity connects a lot of what I enjoy: writing software, experimenting with creative web experiences, photography and graphic design. Away from the screen, motorcycling and tennis give me a different kind of focus.",
   email: "sanupar07@gmail.com" as string | null,
   resume: null as string | null,
-  heroPortrait: null as string | null,
+  heroPortrait: "/images/portraits/sanupa-halftone.webp" as string | null,
   aboutPortrait: null as string | null,
 };

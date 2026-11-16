@@ -7,7 +7,7 @@ test("foundation renders honestly and fits the viewport", async ({ page }) => {
   await expect(page).toHaveTitle(/Sanupa Gunarathne/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("FEEL DIFFERENT");
   await expect(page.getByRole("heading", { level: 2 })).toHaveCount(7);
-  await expect(page.getByRole("img", { name: /Placeholder reserved/ })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Halftone portrait of Sanupa Gunarathne" })).toBeVisible();
   const footer = page.getByRole("contentinfo");
   await expect(footer.getByRole("navigation", { name: "Social links" })).toBeVisible();
   await expect(footer.getByRole("link", { name: /GitHub/ })).toHaveAttribute("href", "https://github.com/sanupagunarathne");
@@ -53,8 +53,8 @@ test("homepage content and typography experiment work", async ({ page }) => {
   for (const id of ["hero", "work", "about", "expertise", "journey", "playground", "beyond", "contact"]) {
     await expect(page.locator(`#${id}`)).toBeAttached();
   }
-  await expect(page.getByRole("heading", { name: "Paddock Labs", exact: true })).toBeVisible();
-  await expect(page.locator(".project-entry")).toHaveCount(4);
+  await expect(page.getByRole("link", { name: "Enter my workspace" })).toHaveAttribute("href", "/work");
+  await expect(page.locator("#work .project-entry, #work canvas")).toHaveCount(0);
   await expect(page.locator(".journey-list > li")).toHaveCount(3);
   await expect(page.locator(".interests-gallery figure")).toHaveCount(4);
   await page.getByLabel("A thought, in dots.").fill("build with care");

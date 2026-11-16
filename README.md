@@ -137,3 +137,11 @@ The Sketchfab embed has been replaced by an original code-built CRT desktop, key
 `src/data/about.ts` holds 12 editable paragraphs using supplied identity, education and interests. About types a paragraph with the caret, holds it for five seconds after typing, fades for 450ms and advances, wrapping after the last paragraph. Pause/resume and previous/next controls are included. Offscreen/background pauses preserve the timer; reduced motion shows a static manually selectable paragraph. The text area reserves space for the longest paragraph. Contact and theme configuration are unchanged.
 
 Caret typing completes in about 1.5 seconds per phrase/paragraph. About still holds completed text for five seconds before fading. Footer social links use smaller labels/icons and tighter, responsive alignment while retaining touch-target size.
+
+## Crimson workspace universe
+
+The homepage Work doorway opens `/work`, a viewport-sized star field with project destinations. Scroll or swipe to move through depth; arrow/Page/Home/End keys, the depth slider and previous/next controls also work. The project-index button lets visitors travel directly or open a case study. Case-study return links restore the corresponding destination. Main-page scrolling is unchanged.
+
+The scene uses local Canvas 2D stars/satellites/fragments and HTML project links, with capped DPR and a 30fps ambient budget. Pause stops ambient movement; reduced motion makes travel immediate. Rendering suspends in hidden tabs. Semantic project links remain available without JavaScript/Canvas. Project details and unknown-route behavior are retained.
+
+Primary actions use #A60321. Doto remains the display face; Geist and small mono labels tighten the supporting typography. The hero uses a halftone edit of the supplied portrait. The speaker control enables gentle synthesized hover/click tones and remembers mute; browsers require user activation before playback. No audio files or external scene resources are downloaded.
