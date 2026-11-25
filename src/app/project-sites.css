@@ -51,3 +51,8 @@ body:has(.site-first-case) > .site-header { display:none; }
 .proposal-flow strong { font-size:.9375rem; }
 .site-first-case .proposal-flow p { font-size:.8125rem; line-height:1.7; margin-bottom:0; }
 @media(max-width:767px) { .site-first-case .proposal-flow ol { grid-template-columns:1fr; gap:1.5rem; } }
+/* Preserve the full authentic desktop capture instead of cutting off its text on phones. */
+.project-site-image:has(.project-site-capture) { min-height:0; flex:0 0 auto; }
+.project-site-capture { display:block; width:100%; height:auto; object-fit:contain; }
+.project-site-opening:has(.project-site-capture) { min-height:0; }
+.project-repository { margin-block:.5rem 1rem; font-size:.875rem; }

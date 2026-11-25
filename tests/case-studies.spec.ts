@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { projects } from "../src/data/projects";
+import { caseStudies } from "../src/data/case-studies";
 
 for (const [index, project] of projects.entries()) {
   test(`${project.title} has a complete honest case study and next-project link`, async ({ page }) => {
@@ -9,13 +10,13 @@ for (const [index, project] of projects.entries()) {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(project.title);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", project.summary);
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", `${project.title} — Sanupa Gunarathne`);
-    for (const title of ["Overview", "The problem", "My role", ...(project.slug === "paddock-labs" ? ["Proposed features", "Proposed technology stack"] : ["Main features", "Technology stack"]), "Development approach", "Challenges", "Results & progress", ...(project.slug === "paddock-labs" ? [] : ["Image gallery"])]) {
+    for (const title of ["Overview", "The problem", "My role", ...(project.slug === "paddock-labs" ? ["Proposed features", "Proposed technology stack"] : project.slug === "eatwhat" ? ["Documented features", "Documented technology stack"] : ["Main features", "Technology stack"]), "Development approach", "Challenges", "Results & progress", ...(caseStudies[project.slug].gallery.length ? ["Image gallery"] : [])]) {
       await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
     }
-    await expect(page.locator(".case-gallery figure")).toHaveCount(project.slug === "paddock-labs" ? 0 : 2);
+    await expect(page.locator(".case-gallery figure")).toHaveCount(caseStudies[project.slug].gallery.length);
     await expect(page.locator(".case-gallery .gallery-opener")).toHaveCount(0);
     await expect(page.locator("#role")).toContainText("To be documented");
-    await expect(page.locator("#progress")).toContainText(project.slug === "paddock-labs" ? "not measured results" : "No completion, deployment or measured outcomes are claimed");
+    await expect(page.locator("#progress")).toContainText(project.slug === "paddock-labs" ? "not measured results" : project.slug === "eatwhat" ? "catalogue remains illustrative" : "No completion, deployment or measured outcomes are claimed");
     await expect(page.getByRole("link", { name: "Live demo", exact: false })).toHaveCount(0);
     const next = projects[(index + 1) % projects.length];
     const nextLink = page.getByRole("navigation", { name: "Next project", exact: true }).getByRole("link", { name: new RegExp(next.title) });
@@ -70,7 +71,31 @@ test("website-first opening keeps a safe Visit link and proposal provenance", as
  await expect(page.locator('#features')).toContainText('Approval-dependent');
  await expect(page.locator('#progress')).toContainText('not measured results');
  await expect(page.locator('#role')).toContainText('not yet been supplied');
- await page.goto('/projects/eatwhat');
+ await page.goto('/projects/campus-slot');
  await expect(page.locator('.project-site-visit')).toContainText('Website URL to be supplied');
  await expect(page.locator('.project-site-visit a')).toHaveCount(0);
 });
+
+for (const slug of ['paddock-labs', 'eatwhat']) {
+ test(`${slug} uses the supplied full hero image with Visit and sourced details`, async ({page}) => {
+  const project=projects.find(p=>p.slug===slug)!;
+  await page.goto(`/projects/${slug}`);
+  const capture=page.getByRole('img',{name:`${project.title} actual website hero`,exact:true});
+  await expect(capture).toBeVisible();
+  await expect.poll(()=>capture.evaluate(el=>(el as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+  const ratio=await capture.evaluate(el=>{const b=el.getBoundingClientRect();return b.width/b.height;});
+  expect(ratio).toBeCloseTo(project.screenshotSize!.width/project.screenshotSize!.height,2);
+  await expect(page.locator('.project-site-pending')).toHaveCount(0);
+  await expect(page.locator('.project-site-visit a').first()).toHaveAttribute('href',project.demo!);
+  await expect(page.locator('.project-site-url')).toHaveText(new RegExp(project.demo!.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+  if(slug==='eatwhat') {
+   await expect(page.locator('#features')).toContainText('Private, immutable');
+   await expect(page.locator('#features')).toContainText('unanimous');
+   await expect(page.locator('#approach')).toContainText('SELECT FOR UPDATE');
+   await expect(page.locator('#challenges')).toContainText('no restaurant API or geolocation');
+   await expect(page.locator('.proposal-flow')).toContainText('Find common ground');
+   await expect(page.getByRole('heading',{name:'Proposed features',exact:true})).toHaveCount(0);
+   await expect(page.getByRole('link',{name:/View source on GitHub/})).toHaveAttribute('href',project.github!);
+  }
+ });
+}
