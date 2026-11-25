@@ -152,4 +152,6 @@ Work now lives on the homepage: scroll from the Hero into a full-viewport portal
 
 ## Website-first project pages
 
-Project detail routes now open with the actual site hero, then a centered Visit action and URL, then the case study. Set the authentic image path in `src/data/projects.ts` (`screenshot`) and the supplied site URL in `demo`. Other projects remain explicitly pending until their images/URLs are provided. The Paddock Labs proposal content is documented in [proposal source notes](docs/PADDOCK-PROPOSAL.md); its exact hero image is awaiting a downloadable PNG/JPG attachment.
+Project detail routes now open with the actual site hero, then a centered Visit action and URL, then the case study. Set the authentic image path in `src/data/projects.ts` (`screenshot`) and the supplied site URL in `demo`. Other projects remain explicitly pending until their images/URLs are provided. The Paddock Labs proposal content is documented in [proposal source notes](docs/PADDOCK-PROPOSAL.md); its actual hero screenshot is now connected.
+
+Both Paddock Labs and EatWhat now use their supplied website screenshots and Visit URLs. EatWhat's case study is summarized from the supplied README; see [source notes](docs/EATWHAT-SOURCE.md). Captures preserve their full image proportions on phones. Proposal content and README-described implementation use separate labels and diagrams.
