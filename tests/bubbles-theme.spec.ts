@@ -33,6 +33,7 @@ test("dark theme persists, is accessible and can return to light", async ({ page
   await page.goto("/projects/nex-installer");
   const nested = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(nested.violations).toEqual([]);
+  await page.goto("/");
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });

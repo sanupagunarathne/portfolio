@@ -149,3 +149,7 @@ Primary actions use #A60321. Doto remains the display face; Geist and small mono
 ## Continuous cinematic homepage (latest)
 
 Work now lives on the homepage: scroll from the Hero into a full-viewport portal, Enter to move through the same 3D scene, explore the four distinct project objects, and continue into About. Scrolling reverses the whole journey. Native scrolling is preserved; there is no wheel interception or body lock. `/work` redirects to this experience for older links. The Hero has a transparent portrait and ten independent AI-logo orbits, and the floating glass navbar adapts over space. No new runtime dependencies. See [cinematic architecture and fallbacks](docs/CINEMATIC.md).
+
+## Website-first project pages
+
+Project detail routes now open with the actual site hero, then a centered Visit action and URL, then the case study. Set the authentic image path in `src/data/projects.ts` (`screenshot`) and the supplied site URL in `demo`. Other projects remain explicitly pending until their images/URLs are provided. The Paddock Labs proposal content is documented in [proposal source notes](docs/PADDOCK-PROPOSAL.md); its exact hero image is awaiting a downloadable PNG/JPG attachment.

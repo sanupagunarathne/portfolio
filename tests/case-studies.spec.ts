@@ -9,13 +9,13 @@ for (const [index, project] of projects.entries()) {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(project.title);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", project.summary);
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", `${project.title} — Sanupa Gunarathne`);
-    for (const title of ["Overview", "The problem", "My role", "Main features", "Technology stack", "Development approach", "Challenges", "Results & progress", "Image gallery"]) {
+    for (const title of ["Overview", "The problem", "My role", ...(project.slug === "paddock-labs" ? ["Proposed features", "Proposed technology stack"] : ["Main features", "Technology stack"]), "Development approach", "Challenges", "Results & progress", ...(project.slug === "paddock-labs" ? [] : ["Image gallery"])]) {
       await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
     }
-    await expect(page.locator(".case-gallery figure")).toHaveCount(2);
+    await expect(page.locator(".case-gallery figure")).toHaveCount(project.slug === "paddock-labs" ? 0 : 2);
     await expect(page.locator(".case-gallery .gallery-opener")).toHaveCount(0);
     await expect(page.locator("#role")).toContainText("To be documented");
-    await expect(page.locator("#progress")).toContainText("No completion, deployment or measured outcomes are claimed");
+    await expect(page.locator("#progress")).toContainText(project.slug === "paddock-labs" ? "not measured results" : "No completion, deployment or measured outcomes are claimed");
     await expect(page.getByRole("link", { name: "Live demo", exact: false })).toHaveCount(0);
     const next = projects[(index + 1) % projects.length];
     const nextLink = page.getByRole("navigation", { name: "Next project", exact: true }).getByRole("link", { name: new RegExp(next.title) });
@@ -31,11 +31,12 @@ test("workspace doorway reaches case studies and shared navigation returns home"
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.getByRole("link", { name: "Explore EatWhat", exact: true }).click();
   await expect(page).toHaveURL(/\/projects\/eatwhat$/);
+  await page.getByRole("link", { name: "All projects", exact: true }).click();
   if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
   const navigation = isMobile ? page.locator("#mobile-navigation") : page.getByRole("navigation", { name: "Main navigation" });
-  await expect(navigation.getByRole("link", { name: "About", exact: true })).toHaveAttribute("href", "/#about");
+  await expect(navigation.getByRole("link", { name: "About", exact: true })).toHaveAttribute("href", "#about");
   await navigation.getByRole("link", { name: "About", exact: true }).click();
-  await expect(page).toHaveURL(/\/#about$/);
+  await expect(page).toHaveURL(/#about$/);
   await expect(page.getByRole("heading", { name: "More than just lines of code." })).toBeVisible();
 });
 
@@ -53,7 +54,23 @@ test("case study content is readable without JavaScript", async ({ browser }) =>
     const page = await context.newPage();
     await page.goto("/projects/paddock-labs");
     await expect(page.getByRole("heading", { name: "Paddock Labs", exact: true })).toBeVisible();
-    await expect(page.locator("#problem")).toContainText("karting telemetry");
+    await expect(page.locator("#problem")).toContainText("Lap times and averages");
     await expect(page.getByRole("link", { name: "All projects", exact: true })).toHaveAttribute("href", "/?project=paddock-labs#work");
   } finally { await context.close(); }
+});
+
+test("website-first opening keeps a safe Visit link and proposal provenance", async ({page}) => {
+ await page.goto('/projects/paddock-labs');
+ await expect(page.locator('.project-site-opening')).toBeInViewport();
+ await expect(page.locator('.site-header')).toBeHidden();
+ await expect(page.getByRole('link',{name:'Visit Paddock Labs (opens in a new tab)',exact:true})).toHaveAttribute('href','https://www.paddocklab.lk');
+ await expect(page.locator('.project-site-url')).toHaveText(/https:\/\/www.paddocklab.lk/);
+ await expect(page.locator('.project-site-visit a').first()).toHaveAttribute('rel','noopener noreferrer');
+ await expect(page.locator('.proposal-source')).toContainText('22 October 2026');
+ await expect(page.locator('#features')).toContainText('Approval-dependent');
+ await expect(page.locator('#progress')).toContainText('not measured results');
+ await expect(page.locator('#role')).toContainText('not yet been supplied');
+ await page.goto('/projects/eatwhat');
+ await expect(page.locator('.project-site-visit')).toContainText('Website URL to be supplied');
+ await expect(page.locator('.project-site-visit a')).toHaveCount(0);
 });

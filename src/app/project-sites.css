@@ -1,0 +1,20 @@
+/* Project openings show the actual website capture, before portfolio commentary. */
+.site-first-case { width:100%; max-width:none; }
+body:has(.site-first-case) > .site-header { display:none; }
+.project-site-opening { position:relative; width:100%; min-height:100svh; display:flex; flex-direction:column; background:var(--color-ivory); }
+.project-site-image { position:relative; width:100%; min-height:75svh; flex:1; overflow:hidden; }
+.project-site-capture { object-fit:cover; object-position:top center; }
+.project-site-pending { display:flex; min-height:75svh; padding:2rem; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:var(--color-soft-gray); }
+.project-site-pending .eyebrow { justify-content:center; }
+.project-site-visit { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:.9rem; padding:1.5rem; min-height:160px; text-align:center; }
+.project-site-visit .button { min-width:150px; justify-content:center; }
+.project-site-url { font-family:var(--font-mono); font-size:.875rem; overflow-wrap:anywhere; text-decoration:underline; text-underline-offset:5px; }
+.site-first-case > :is(.project-information-heading,.case-layout,.next-project) { width:min(calc(100% - var(--page-gutter) * 2),1100px); margin-inline:auto; }
+.project-information-heading { padding-top:3rem; }
+.project-information-heading > .eyebrow { margin-top:2rem; }
+.proposal-source { max-width:85ch; font-size:.875rem; line-height:1.8; border-left:2px solid var(--color-accent); padding-left:1rem; }
+.site-first-case .case-layout { grid-template-columns:180px minmax(0,1fr); }
+.site-first-case .case-contents { top:24px; max-height:calc(100svh - 48px); }
+.site-first-case .next-project { margin-top:3rem; }
+@media(max-width:900px) { .site-first-case .case-layout { grid-template-columns:minmax(0,1fr); } }
+@media(max-width:767px) { .project-site-image,.project-site-pending { min-height:65svh; } .project-site-url {font-size:.8125rem;} }
