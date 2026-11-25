@@ -1,16 +1,16 @@
 import { expect, test } from "@playwright/test";
 
-test("full identity, uppercase headline and all navigation destinations", async ({ page, isMobile }) => {
+test("minimal identity and all dedicated navigation destinations", async ({ page, isMobile }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("BUILDING DIGITAL EXPERIENCES THAT FEEL DIFFERENT.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sanupa Gunarathne");
   await expect(page.getByRole("link", { name: "Sanupa Gunarathne home" })).toBeVisible();
-  await expect(page.getByRole("contentinfo").getByRole("link", { name: "Sanupa Gunarathne — back to top" })).toBeVisible();
+  await expect(page.getByRole("contentinfo").getByRole("link", { name: "Sanupa Gunarathne home" })).toBeHidden();
   if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
   const nav = isMobile ? page.locator("#mobile-navigation") : page.getByRole("navigation", { name: "Main navigation" });
   for (const label of ["Home", "Work", "About", "Expertise", "Journey", "Playground", "Beyond", "Contact"]) await expect(nav.getByRole("link", { name: label, exact: true })).toBeVisible();
   await nav.getByRole("link", { name: "Journey", exact: true }).click();
   if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
-  await expect(nav.getByRole("link", { name: "Journey", exact: true })).toHaveAttribute("aria-current", "location");
+  await expect(nav.getByRole("link", { name: "Journey", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(page.locator(".nav-note")).toHaveCount(0);
   expect((await page.locator(".nav-bar").boundingBox())!.height).toBeLessThanOrEqual(80);
 });
@@ -18,7 +18,7 @@ test("full identity, uppercase headline and all navigation destinations", async 
 test("contact prepares a validated message without pretending to send", async ({ page }) => {
   let deliveries = 0;
   page.on("request", request => { if (request.url().endsWith("/api/contact")) deliveries++; });
-  await page.goto("/");
+  await page.goto("/contact");
   await page.getByRole("button", { name: "Prepare message" }).click();
   await expect(page.locator("#contact-name")).toBeFocused();
   await page.getByLabel("Your name", { exact: false }).fill("A visitor");
@@ -44,7 +44,7 @@ test("contact API rejects invalid input and reports missing delivery configurati
 
 test("technology constellation supports libraries and reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/expertise");
   await page.getByRole("group", { name: "Technology category" }).getByRole("button", { name: "Libraries", exact: true }).click();
   const three = page.locator(".technology-group").getByRole("button", { name: "Three.js", exact: true });
   await expect(three).toBeVisible();

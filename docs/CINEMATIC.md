@@ -1,3 +1,5 @@
+> Structure update: the later minimal-Home request moves this experience to `/work` and the portrait/orbits to `/about`. The old homepage coupling and `/work` redirect described below are historical. See [current route map](PAGE-STRUCTURE.md); camera/rendering details remain relevant within Work.
+
 # Continuous portfolio journey
 
 The homepage now owns Work. `/work` is a compatibility redirect to `/#work`, forwarding an optional project slug. Case-study return links go directly to `/?project=<slug>#work`. No route change occurs when pressing Enter on the homepage.

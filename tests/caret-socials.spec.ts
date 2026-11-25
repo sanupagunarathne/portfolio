@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 
 test("typing has one advancing caret and social links include logos", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/");
-  const count = await page.locator("#hero-title").evaluate(heading => {
+  await page.goto("/about");
+  const count = await page.locator("#about-title").evaluate(heading => {
     // Restart the whole selector, including its pseudo-element animations.
     heading.removeAttribute("data-typed");
     void (heading as HTMLElement).offsetHeight;
@@ -15,11 +15,11 @@ test("typing has one advancing caret and social links include logos", async ({ p
   expect(count).toBe(1);
   for (const name of ["GitHub", "LinkedIn", "Instagram"]) await expect(page.getByRole("contentinfo").getByRole("link", { name: new RegExp(name) }).locator(".social-logo")).toBeAttached();
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(page.locator("#hero-title .type-character").first()).toHaveCSS("animation-name", "none");
+  await expect(page.locator("#about-title .type-character").first()).toHaveCSS("animation-name", "none");
 });
 
 test("confirmed contact email provides an API-free draft handoff", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/contact");
   await expect(page.getByRole("link", { name: "sanupar07@gmail.com", exact: true })).toHaveAttribute("href", "mailto:sanupar07@gmail.com");
   await page.locator("#contact-name").fill("A visitor");
   await page.locator("#contact-email").fill("visitor@example.com");

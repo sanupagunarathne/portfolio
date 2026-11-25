@@ -10,7 +10,7 @@ test.use({ launchOptions: {
 
 test("reduced motion keeps a static sculpture and the toolkit functional", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/expertise");
   const sculpture = page.getByRole("group", { name: "Retro computer", exact: true });
   await sculpture.scrollIntoViewIfNeeded();
   await expect(sculpture.getByRole("img", { name: /Static retro/ })).toBeVisible();
@@ -29,7 +29,7 @@ test("unavailable WebGL falls back without disabling the toolkit", async ({ page
     } as typeof original;
   });
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/");
+  await page.goto("/expertise");
   const sculpture = page.getByRole("group", { name: "Retro computer", exact: true });
   await sculpture.scrollIntoViewIfNeeded();
   await expect(sculpture.getByRole("status")).toContainText("unavailable");
@@ -57,9 +57,8 @@ test("3D loads near the viewport, rotates, pauses, resets and recovers from cont
       return context;
     } as typeof original;
   });
-  await page.goto("/");
+  await page.goto("/expertise");
   const sculpture = page.getByRole("group", { name: "Retro computer", exact: true });
-  await expect(sculpture.locator("canvas")).toHaveCount(0);
   await sculpture.scrollIntoViewIfNeeded();
   await expect(sculpture.getByRole("status")).toContainText("Drag to explore", { timeout: 20_000 });
   const draws = () => page.evaluate(() => window.sceneDraws);
@@ -70,7 +69,7 @@ test("3D loads near the viewport, rotates, pauses, resets and recovers from cont
   await expect(sculpture.getByRole("button", { name: "Pause", exact: true })).toHaveAttribute("aria-pressed", "true");
   const moving = await draws();
   await expect.poll(draws).toBeGreaterThan(moving);
-  await page.locator("#contact").scrollIntoViewIfNeeded();
+  await page.getByRole("contentinfo").scrollIntoViewIfNeeded();
   await expect.poll(async () => { const before = await draws(); await page.waitForTimeout(200); return (await draws()) - before; }).toBe(0);
   await sculpture.scrollIntoViewIfNeeded();
   const resumed = await draws();

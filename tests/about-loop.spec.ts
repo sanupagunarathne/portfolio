@@ -4,7 +4,7 @@ import { aboutParagraphs } from "../src/data/about";
 test("About types, holds for five seconds, fades and advances", async ({ page }) => {
   await page.clock.install();
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/");
+  await page.goto("/about");
   const loop = page.getByRole("region", { name: "About Sanupa paragraphs" });
   await loop.scrollIntoViewIfNeeded();
   await expect(loop).toHaveAttribute("data-running", "true");
@@ -32,7 +32,7 @@ test("About types, holds for five seconds, fades and advances", async ({ page })
 
 test("reduced motion stays still and manual navigation wraps", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/about");
   const loop = page.getByRole("region", { name: "About Sanupa paragraphs" });
   await loop.scrollIntoViewIfNeeded();
   await expect(loop).toHaveAttribute("data-running", "false");

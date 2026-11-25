@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const paths = ["/", "/projects/paddock-labs", "/projects/eatwhat", "/projects/campus-slot", "/projects/nex-installer"];
+const paths = ["/", "/work", "/about", "/expertise", "/journey", "/playground", "/beyond", "/contact", "/projects/paddock-labs", "/projects/eatwhat", "/projects/campus-slot", "/projects/nex-installer"];
 
 for (const path of paths) {
   test(`WCAG accessibility audit: ${path}`, async ({ page }) => {
@@ -13,7 +13,7 @@ for (const path of paths) {
 }
 
 test("responsive routes, local links, anchors and media remain intact", async ({ page }) => {
-  test.setTimeout(90_000);
+  test.setTimeout(120_000);
   await page.emulateMedia({ reducedMotion: "reduce" });
   for (const path of paths) {
     await page.goto(path);
@@ -25,7 +25,8 @@ test("responsive routes, local links, anchors and media remain intact", async ({
     for (const width of [320, 390, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${path} at ${width}px`).toBe(true);
-      await expect(page.getByRole("link", { name: path === "/" ? "Sanupa Gunarathne home" : "All projects", exact: true })).toBeVisible();
+      if(path.startsWith("/projects/")) await expect(page.getByRole("link",{name:"cd .. — Back to Work",exact:true})).toBeVisible();
+      else await expect(page.getByRole("navigation",{name:"Main navigation"}).getByRole("link",{name:"Sanupa Gunarathne home",exact:true})).toBeVisible();
     }
   }
 });
@@ -40,7 +41,7 @@ test("unconfigured origin avoids fabricated canonical URLs and indexing", async 
 
 test("floating icons can be paused independently of system preferences", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/");
+  await page.goto("/expertise");
   await page.getByRole("button", { name: "Pause floating icons" }).click();
   await expect(page.getByRole("button", { name: "Resume floating icons" })).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator(".technology-cosmos img").first()).toHaveCSS("animation-name", "none");
@@ -48,9 +49,9 @@ test("floating icons can be paused independently of system preferences", async (
 
 test("expanded technology and hovered actions retain accessible semantics and contrast", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/expertise");
   await page.locator(".technology-group").getByRole("button", { name: "Java", exact: true }).click();
-  await page.getByRole("link", { name: "Explore My Work" }).hover();
+  await page.getByRole("button", { name: "All", exact:true }).hover();
   const audit = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(audit.violations).toEqual([]);
 });
