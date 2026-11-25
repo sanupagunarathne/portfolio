@@ -19,34 +19,21 @@ test("About typing, section reveals and reduced motion survive page navigation",
   expect(await page.locator(".journey-list").evaluate(element => element.getAnimations().filter(animation => animation.playState === "running").length)).toBe(0);
 });
 
-test("navigation is centered with equal padding and a moving active marker", async ({ page, isMobile }) => {
+test("compact dock stays centered and whole pages fade on navigation", async ({ page }) => {
   await page.goto("/");
-  if (isMobile) {
-    await page.getByRole("button", { name: "Open menu" }).click();
-    const links = page.locator("#mobile-navigation a");
-    const delays = await links.evaluateAll(elements => elements.map(element => parseFloat(getComputedStyle(element).animationDelay)));
-    expect(delays[7]).toBeGreaterThan(delays[0]);
-    return;
+  for (const width of [320, 768, 1440]) {
+    await page.setViewportSize({width, height:900});
+    const box = (await page.locator(".compact-dock").boundingBox())!;
+    expect(box.width).toBeLessThanOrEqual(352);
+    expect(Math.abs(box.x + box.width / 2 - width / 2)).toBeLessThan(1);
   }
-  for (const width of [768, 1024, 1440]) {
-    await page.setViewportSize({ width, height: 900 });
-    const geometry = await page.locator(".desktop-links").evaluate(element => {
-      const bounds = element.getBoundingClientRect();
-      return { center: bounds.x + bounds.width / 2, padding: [...element.querySelectorAll("a")].map(link => [getComputedStyle(link).paddingLeft, getComputedStyle(link).paddingRight]) };
-    });
-    expect(Math.abs(geometry.center - width / 2)).toBeLessThan(1);
-    expect(new Set(geometry.padding.flat()).size).toBe(1);
-  }
-  const marker = page.locator(".nav-indicator");
-  await expect(marker).toHaveCSS("opacity", "1");
-  const start = (await marker.boundingBox())!.x;
-  await page.locator(".desktop-links").getByRole("link", { name: "Journey", exact: true }).click();
-  await expect.poll(async () => (await marker.boundingBox())!.x).toBeGreaterThan(start + 100);
-  await expect.poll(async () => {
-    const a = await page.locator('.desktop-links a[aria-current="page"]').boundingBox();
-    const b = await marker.boundingBox();
-    return Math.abs(a!.x - b!.x);
-  }).toBeLessThan(1);
+  await expect(page.locator(".page-fade")).toHaveCSS("animation-name", "page-arrive");
+  await page.getByRole("button", {name:"Open menu"}).click();
+  await page.locator("#dock-navigation").getByRole("link", {name:"Journey",exact:true}).click();
+  await expect(page.locator(".dock-current")).toHaveText("Journey");
+  await expect(page.locator(".page-fade")).toHaveCSS("animation-name", "page-arrive");
+  await page.emulateMedia({reducedMotion:"reduce"});
+  await expect(page.locator(".page-fade")).toHaveCSS("animation-name", "none");
 });
 
 test("bubble icons move freely and pause at their current position", async ({ page }) => {

@@ -24,16 +24,19 @@ test("bubble field bounds, accessible selection and reduced-motion fallback", as
 test("dark theme persists, is accessible and can return to light", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/expertise");
+  await page.getByRole("button", { name: "Open menu" }).click();
   await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   const audit = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(audit.violations).toEqual([]);
   await page.reload();
+  await page.getByRole("button", { name: "Open menu" }).click();
   await expect(page.getByRole("button", { name: "Switch to light theme" })).toHaveAttribute("aria-pressed", "true");
   await page.goto("/projects/nex-installer");
   const nested = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(nested.violations).toEqual([]);
   await page.goto("/expertise");
+  await page.getByRole("button", { name: "Open menu" }).click();
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });

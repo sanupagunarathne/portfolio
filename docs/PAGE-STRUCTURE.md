@@ -21,3 +21,11 @@ The Work camera remains driven by native scrolling inside its own page. Its entr
 Old `/#about`/`/#work`/other known section hashes are client-redirected to the new routes, preserving query strings. Without JavaScript, the header supplies plain route links, and all new route content/case studies remain server-rendered. The old hash redirect itself requires JavaScript; the new URLs do not. Metadata and the configured-origin sitemap include every route. Unknown paths still return 404.
 
 The reference image informed the minimal composition only; no other person's identity or claims were copied. Existing personal content, crimson accent, theme preference and accessibility/motion controls remain.
+
+## Compact menu refinement
+
+The shared navigation is now a bottom-centered pill (352px maximum), with an expandable two-column route menu, current-page link and theme/sound controls inside the panel. Escape restores toggle focus, outside clicks dismiss it, and choosing a route closes it. The menu remains nonmodal; other page content stays usable. No-JavaScript links remain available. Project openings still hide portfolio navigation.
+
+`PageFade` keys the page-content wrapper to the pathname for a 650ms opacity entrance on initial load and route changes, including between project slugs. It does not transform the wrapper or intercept scrolling. Reduced motion disables this animation and the menu entrance. The Home note retains the supplied wording with lighter Geist typography. Subtle layered glass surfaces follow both themes and fall back to opaque surfaces for reduced transparency.
+
+The collapsed dock deliberately contains only Menu and the current destination. Open Menu for all eight routes and preferences on both desktop and phone. Fixed bottom placement reserves footer clearance and safe-area spacing; the Home composition has no top header footprint.

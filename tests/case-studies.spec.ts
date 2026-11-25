@@ -27,14 +27,14 @@ for (const [index, project] of projects.entries()) {
   });
 }
 
-test("workspace doorway reaches case studies and shared navigation returns home", async ({ page, isMobile }) => {
+test("workspace doorway reaches case studies and shared navigation returns home", async ({ page }) => {
   await page.goto("/work");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.getByRole("link", { name: "Explore EatWhat", exact: true }).click();
   await expect(page).toHaveURL(/\/projects\/eatwhat$/);
   await page.getByRole("link", { name: "cd .. — Back to Work", exact: true }).click();
-  if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
-  const navigation = isMobile ? page.locator("#mobile-navigation") : page.getByRole("navigation", { name: "Main navigation" });
+  await page.getByRole("button", { name: "Open menu" }).click();
+  const navigation = page.locator("#dock-navigation");
   await expect(navigation.getByRole("link", { name: "About", exact: true })).toHaveAttribute("href", "/about");
   await navigation.getByRole("link", { name: "About", exact: true }).click();
   await expect(page).toHaveURL(/\/about$/);

@@ -8,10 +8,10 @@ test("Home stays minimal with fading dots and no portrait or other sections",asy
  await expect(page.locator("main img, main canvas, .brand-bot, main .portfolio-section")).toHaveCount(0);
  expect(errors).toEqual([]);
 });
-test("route navigation supports mobile menu keyboard escape and active page",async({page,isMobile})=>{
+test("route navigation supports mobile menu keyboard escape and active page",async({page})=>{
  await page.goto("/");await page.keyboard.press("Tab");await expect(page.getByRole("link",{name:"Skip to content"})).toBeFocused();await page.keyboard.press("Enter");await expect(page.getByRole("main")).toBeFocused();
- if(isMobile){await page.getByRole("button",{name:"Open menu"}).click();await page.keyboard.press("Escape");await expect(page.getByRole("button",{name:"Open menu"})).toBeFocused();await page.getByRole("button",{name:"Open menu"}).click();}
- const nav=isMobile?page.locator("#mobile-navigation"):page.locator(".desktop-links");await nav.getByRole("link",{name:"About",exact:true}).click();await expect(page).toHaveURL(/\/about$/);
+ {await page.getByRole("button",{name:"Open menu"}).click();await page.keyboard.press("Escape");await expect(page.getByRole("button",{name:"Open menu"})).toBeFocused();await page.getByRole("button",{name:"Open menu"}).click();}
+ const nav=page.locator("#dock-navigation");await nav.getByRole("link",{name:"About",exact:true}).click();await expect(page).toHaveURL(/\/about$/);
  await expect(page.getByRole("img",{name:"Halftone portrait of Sanupa Gunarathne"})).toBeVisible();await expect(page.locator(".ai-orbiter")).toHaveCount(10);
  await page.getByRole("link",{name:"cd .. — Back to Home",exact:true}).click();await expect(page).toHaveURL(/\/$/);
 });
@@ -23,4 +23,12 @@ test("old section URLs resolve to dedicated routes",async({page})=>{await page.g
 test("phone navigation remains usable without JavaScript",async({browser})=>{
  const context=await browser.newContext({baseURL:test.info().project.use.baseURL,javaScriptEnabled:false,viewport:{width:390,height:844}});
  try{const page=await context.newPage();await page.goto('/');await page.getByRole('navigation',{name:'Pages without JavaScript'}).getByRole('link',{name:'About',exact:true}).click();await expect(page).toHaveURL(/\/about$/);await expect(page.getByRole('img',{name:'Halftone portrait of Sanupa Gunarathne'})).toBeVisible();await page.getByRole('link',{name:'cd .. — Back to Home',exact:true}).click();await expect(page).toHaveURL(/\/$/);}finally{await context.close();}
+});
+
+test("menu dismisses outside and exposes an accessible active destination",async({page})=>{
+ await page.goto('/');
+ await page.getByRole('button',{name:'Open menu'}).click();
+ await expect(page.locator('#dock-navigation').getByRole('link',{name:'Home',exact:true})).toHaveAttribute('aria-current','page');
+ await page.getByRole('heading',{level:1}).click();
+ await expect(page.locator('#dock-navigation')).toBeHidden();
 });

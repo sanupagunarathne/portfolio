@@ -1,17 +1,47 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Menu, X } from "lucide-react";
-import { Brand } from "./brand";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { InterfaceSoundToggle } from "./interface-sounds";
-const links=[ ["/","Home"],["/work","Work"],["/about","About"],["/expertise","Expertise"],["/journey","Journey"],["/playground","Playground"],["/beyond","Beyond"],["/contact","Contact"] ];
-export function Navigation(){
- const pathname=usePathname();const [open,setOpen]=useState(false);const toggle=useRef<HTMLButtonElement>(null);const desktop=useRef<HTMLDivElement>(null);const marker=useRef<HTMLSpanElement>(null);
- useEffect(()=>{const escape=(e:KeyboardEvent)=>{if(e.key==="Escape"&&open){setOpen(false);toggle.current?.focus();}};const media=matchMedia("(min-width:768px)");const close=()=>{if(media.matches)setOpen(false);};window.addEventListener("keydown",escape);media.addEventListener("change",close);return()=>{window.removeEventListener("keydown",escape);media.removeEventListener("change",close);};},[open]);
- useEffect(()=>{const container=desktop.current;const indicator=marker.current;if(!container||!indicator)return;const update=()=>{const active=container.querySelector<HTMLElement>('a[aria-current="page"]');if(!active){indicator.style.opacity="0";return;}indicator.style.width=`${active.offsetWidth}px`;indicator.style.height=`${active.offsetHeight}px`;indicator.style.transform=`translate(${active.offsetLeft}px,${active.offsetTop}px)`;indicator.style.opacity="1";};const observer=new ResizeObserver(update);observer.observe(container);update();document.fonts.ready.then(update);return()=>observer.disconnect();},[pathname]);
- useEffect(()=>{const header=desktop.current?.closest("header");if(!header)return;const observer=new ResizeObserver(()=>document.documentElement.style.setProperty("--header-height",`${header.getBoundingClientRect().height}px`));observer.observe(header);return()=>observer.disconnect();},[]);
- const active=(href:string)=>pathname===href||(href==="/work"&&pathname.startsWith("/projects/"));
- return <header className="site-header"><nav className="page-width nav-bar" aria-label="Main navigation"><Link className="wordmark" href="/" aria-label="Sanupa Gunarathne home" onClick={()=>setOpen(false)}><Brand /></Link><div ref={desktop} className="desktop-links"><span ref={marker} className="nav-indicator" aria-hidden="true" />{links.map(([href,label])=><Link key={href} href={href} aria-current={active(href)?"page":undefined} onClick={()=>setOpen(false)}>{label}</Link>)}</div><div className="nav-preferences"><InterfaceSoundToggle /><ThemeToggle /></div><button ref={toggle} className="menu-toggle" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open?"Close menu":"Open menu"} onClick={()=>setOpen(!open)}>{open?<X size={22} aria-hidden="true"/>:<Menu size={22} aria-hidden="true"/>}</button></nav><noscript><nav className="no-script-navigation" aria-label="Pages without JavaScript">{links.map(([href,label])=><Link href={href} key={href}>{label}</Link>)}</nav></noscript><div id="mobile-navigation" className="mobile-links page-width" hidden={!open}>{links.map(([href,label],i)=><Link key={href} href={href} style={{"--link-index":i} as CSSProperties} aria-current={active(href)?"page":undefined} onClick={()=>setOpen(false)}>{label}</Link>)}</div></header>;
+
+const links = [["/", "Home"], ["/work", "Work"], ["/about", "About"], ["/expertise", "Expertise"], ["/journey", "Journey"], ["/playground", "Playground"], ["/beyond", "Beyond"], ["/contact", "Contact"]];
+
+export function Navigation() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const header = useRef<HTMLElement>(null);
+  const active = (href: string) => pathname === href || (href === "/work" && pathname.startsWith("/projects/"));
+  const current = links.find(([href]) => active(href)) ?? links[0];
+
+  useEffect(() => {
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && open) { setOpen(false); toggle.current?.focus(); }
+    };
+    const outside = (event: PointerEvent) => {
+      if (header.current && !header.current.contains(event.target as Node)) setOpen(false);
+    };
+    window.addEventListener("keydown", escape);
+    window.addEventListener("pointerdown", outside);
+    document.documentElement.style.setProperty("--header-height", "0px");
+    return () => { window.removeEventListener("keydown", escape); window.removeEventListener("pointerdown", outside); };
+  }, [open]);
+
+  return <header ref={header} className="site-header compact-dock">
+    <nav aria-label="Main navigation" className="dock-bar">
+      <button ref={toggle} className="dock-toggle" aria-expanded={open} aria-controls="dock-navigation" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>
+        <span>Menu</span>{open ? <X size={21} aria-hidden="true" /> : <Menu size={21} aria-hidden="true" />}
+      </button>
+      <Link href={current[0]} className="dock-current" aria-current="page" onClick={() => setOpen(false)}>{current[1]}</Link>
+    </nav>
+    <div id="dock-navigation" className="dock-panel" hidden={!open}>
+      <p className="dock-caption">~/ explore</p>
+      <nav aria-label="Portfolio pages">{links.map(([href, label]) => <Link key={href} href={href} aria-current={active(href) ? "page" : undefined} onClick={() => setOpen(false)}><span>{label}</span><ArrowUpRight size={14} aria-hidden="true" /></Link>)}</nav>
+      <div className="dock-preferences"><span>Make yourself at home.</span><InterfaceSoundToggle /><ThemeToggle /></div>
+    </div>
+    <noscript><nav className="no-script-navigation" aria-label="Pages without JavaScript">{links.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}</nav></noscript>
+  </header>;
 }

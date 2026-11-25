@@ -12,6 +12,7 @@ import "./page-structure.css";
 import { ViewportMotion } from "@/components/viewport-motion";
 import { Footer } from "@/components/footer";
 import { InterfaceSoundProvider } from "@/components/interface-sounds";
+import { PageFade } from "@/components/page-fade";
 import { Navigation } from "@/components/navigation";
 import { personal } from "@/data/personal";
 
@@ -40,7 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="skip-link" href="#main-content">Skip to content</a>
         <Navigation />
         <ViewportMotion />
-        {children}
+        <PageFade>{children}</PageFade>
         <Footer />
       </InterfaceSoundProvider></body>
     </html>
