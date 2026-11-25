@@ -25,7 +25,7 @@ test("responsive routes, local links, anchors and media remain intact", async ({
     for (const width of [320, 390, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${path} at ${width}px`).toBe(true);
-      await expect(page.getByRole("link", { name: "Sanupa Gunarathne home" })).toBeVisible();
+      await expect(page.getByRole("link", { name: path === "/" ? "Sanupa Gunarathne home" : "All projects", exact: true })).toBeVisible();
     }
   }
 });
