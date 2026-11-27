@@ -144,3 +144,7 @@ Supersedes the About origami bird and repeated visible route-title strips. Home 
 ## Supplied flock and top gap — latest direction
 
 Home bird is now adapted from the user's Compute Birds example: three-triangle geometry, phased flaps and boid/pointer behavior in a bounded Three.js/WebGL simulation, with 16/24 agents for portability. Do not claim the original WebGPU/8192-agent compute backend is used. Keep static/reduced-motion/WebGL failure fallbacks and visibility/resource cleanup. Remove leftover section/route top spacer. User requested Expertise concepts, not an unsolicited rebuild; await their chosen direction.
+
+## Multilingual name and concept review — latest direction
+
+Larger Home flock surrounds the name. Keep English for seven seconds, then reuse typing/hold/fade rhythm across seven scripts; preserve English accessible identity and intact shaping for non-Latin text. Transliterations are editable owner-review drafts; fonts are local subset Noto with licenses. About crown must stay unscaled and unclipped. `/concepts` and standalone concept-board.html are review previews: eight Expertise directions and thirty proposed Playground experiments, clearly marked as schematic concepts rather than finished features. Do not replace actual Expertise/Playground until the user chooses a direction.
