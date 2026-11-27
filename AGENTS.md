@@ -140,3 +140,7 @@ Supersedes terminal back styling, current-page dock shortcut, About paragraph lo
 ## Compact type and blue Home bird — latest refinement
 
 Supersedes the About origami bird and repeated visible route-title strips. Home has a small blue SVG bird with visit/perch/departure motion and optional synthesized hover/departure chirps governed by the existing sound preference; reduced motion stays still. About keeps a larger right-hand actual portrait, signature beside the contact link and concise factual copy with framework documentation links. Footer is one compact copyright/social-logo row. Keep smaller type, normalized spacing, the 16×20 cursor, centered Work entry and no numbered Work buttons. Current main remains 2f8427f; this authorized follow-up stays on the existing planetary branch.
+
+## Supplied flock and top gap — latest direction
+
+Home bird is now adapted from the user's Compute Birds example: three-triangle geometry, phased flaps and boid/pointer behavior in a bounded Three.js/WebGL simulation, with 16/24 agents for portability. Do not claim the original WebGPU/8192-agent compute backend is used. Keep static/reduced-motion/WebGL failure fallbacks and visibility/resource cleanup. Remove leftover section/route top spacer. User requested Expertise concepts, not an unsolicited rebuild; await their chosen direction.
