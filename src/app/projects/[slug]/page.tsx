@@ -65,6 +65,6 @@ export default async function ProjectPage({ params }: Props) {
         {study.gallery.length > 0 && <section id="gallery" aria-labelledby="gallery-title"><h2 id="gallery-title">Image gallery</h2><p>Space for the real project, in detail.</p><MediaGallery items={study.gallery} kind="screenshot" className="case-gallery" /></section>}
       </div>
     </div>
-    <nav className="next-project" aria-label="Next project"><p className="eyebrow">KEEP EXPLORING</p><Link href={`/projects/${next.slug}`}><span><span className="content-note">Next project</span><span>{next.title}</span></span><ArrowUpRight aria-hidden="true" size={32} /></Link><Link className="text-link" href={`/work?project=${project.slug}`}>cd .. / Work</Link></nav>
+    <nav className="next-project" aria-label="Next project"><p className="eyebrow">KEEP EXPLORING</p><Link href={`/projects/${next.slug}`}><span><span className="content-note">Next project</span><span>{next.title}</span></span><ArrowUpRight aria-hidden="true" size={32} /></Link><Link className="text-link" href={`/work?project=${project.slug}`}>All projects</Link></nav>
   </main>;
 }

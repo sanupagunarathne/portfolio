@@ -1,44 +1,14 @@
-import { expect, test } from "@playwright/test";
-import { aboutParagraphs } from "../src/data/about";
-
-test("About types, holds for five seconds, fades and advances", async ({ page }) => {
-  await page.clock.install();
-  await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/about");
-  const loop = page.getByRole("region", { name: "About Sanupa paragraphs" });
-  await loop.scrollIntoViewIfNeeded();
-  await expect(loop).toHaveAttribute("data-running", "true");
-  expect(aboutParagraphs).toHaveLength(12);
-  await page.clock.pauseAt(new Date(Date.now() + 1000));
-  await loop.getByRole("button", { name: "Next About paragraph" }).click();
-  await loop.getByRole("button", { name: "Previous About paragraph" }).click();
-  await page.clock.runFor(1520);
-  await expect(loop).toHaveAttribute("data-phase", "holding");
-  await page.clock.runFor(4900);
-  await expect(loop).toHaveAttribute("data-phase", "holding");
-  await page.clock.runFor(100);
-  await expect(loop).toHaveAttribute("data-phase", "out");
-  await expect(loop.locator(".about-paragraph")).toHaveCSS("animation-name", "about-fade-out");
-  await page.clock.runFor(450);
-  await expect(loop.locator(".about-loop-controls span")).toHaveText("2 / 12");
-  await loop.getByRole("button", { name: "Pause About loop" }).click();
-  await expect(loop).toHaveAttribute("data-running", "false");
-  // Jump the long idle period, then run callbacks normally. Nearby independent
-  // WebGL/animation loops need not render 30 seconds of simulated frames here.
-  await page.clock.fastForward(25_000);
-  await page.clock.runFor(5_000);
-  await expect(loop.locator(".about-loop-controls span")).toHaveText("2 / 12");
+import {test,expect} from '@playwright/test';
+test('editorial About has right-hand portrait, redesigned signature and no old controls',async({page,isMobile})=>{
+ await page.goto('/about');
+ await expect(page.locator('.about-editorial-copy')).toContainText('Software Engineering undergraduate');
+ await expect(page.getByRole('img',{name:/redesigned personal signature/})).toBeVisible();
+ await expect(page.getByRole('button',{name:/Pause AI|Pause universe/})).toHaveCount(0);
+ await expect(page.getByText('A little curiosity. A lot of possibility.')).toHaveCount(0);
+ if(!isMobile){const copy=(await page.locator('.about-editorial-copy').boundingBox())!;const photo=(await page.locator('.portrait-composition').boundingBox())!;expect(photo.x).toBeGreaterThan(copy.x+copy.width);}
+ await expect(page.locator('.dock-current')).toHaveAttribute('href','/');await page.locator('.dock-current').click();await expect(page).toHaveURL(/\/$/);
+ await expect(page.locator('.home-intro p')).toHaveCSS('font-family',/Doto/);
 });
+test('reduced motion keeps About static and signature readable',async({page})=>{await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/about');await expect(page.locator('.about-bird canvas')).toHaveCount(0);await expect(page.getByRole('img',{name:/redesigned personal signature/})).toBeVisible();});
 
-test("reduced motion stays still and manual navigation wraps", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/about");
-  const loop = page.getByRole("region", { name: "About Sanupa paragraphs" });
-  await loop.scrollIntoViewIfNeeded();
-  await expect(loop).toHaveAttribute("data-running", "false");
-  await loop.getByRole("button", { name: "Previous About paragraph" }).click();
-  await expect(loop.locator(".about-loop-controls span")).toHaveText("12 / 12");
-  await loop.getByRole("button", { name: "Next About paragraph" }).click();
-  await expect(loop.locator(".about-loop-controls span")).toHaveText("1 / 12");
-  await expect(loop.locator(".type-character").first()).toHaveCSS("animation-name", "none");
-});
+test('the local bird renders and releases its scene for reduced motion',async({page})=>{await page.goto('/about');await page.locator('.about-bird').scrollIntoViewIfNeeded();await expect.poll(async()=>Number(await page.locator('.about-bird canvas').getAttribute('data-draw-calls'))).toBeGreaterThan(0);await page.emulateMedia({reducedMotion:'reduce'});await expect(page.locator('.about-bird canvas')).toHaveCount(0);await expect(page.locator('.static-bird')).toBeVisible();});

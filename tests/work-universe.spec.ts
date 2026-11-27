@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { projects } from "../src/data/projects";
-import { cameraZ, projectProgress, projectZ } from "../src/lib/journey";
+import { cameraZ, projectProgress, projectZ, planetX } from "../src/lib/journey";
 
 test("camera travel is continuous and passes every object in both directions", async ({ browser, isMobile }) => {
   const context = await browser.newContext({baseURL:test.info().project.use.baseURL, viewport: isMobile ? {width:390,height:844} : {width:1000,height:800}} as Parameters<typeof browser.newContext>[0]);
@@ -12,7 +12,7 @@ test("camera travel is continuous and passes every object in both directions", a
   await expect(work).toHaveAttribute("data-enhanced", "true");
   const seek = async (p: number) => { await work.evaluate((element, progress) => window.scrollTo({top:element.getBoundingClientRect().top + scrollY + (element.clientHeight-innerHeight)*progress,behavior:"instant"}),p); await expect.poll(async()=>Math.abs(Number(await work.getAttribute("data-progress"))-p)).toBeLessThan(.001); };
   await seek(0); await page.getByRole("button",{name:"Enter my workspace"}).click();
-  await expect.poll(async()=>Math.abs(Number(await work.getAttribute("data-progress")) - .3)).toBeLessThan(.001);
+  await expect.poll(async()=>Math.abs(Number(await work.getAttribute("data-progress")) - projectProgress(0))).toBeLessThan(.001);
   for (const index of [0,1,2,3,2,1,0]) {
     const p = projectProgress(index); await seek(p);
     await expect(page.getByRole("link",{name:`Explore ${projects[index].title}`,exact:true})).toBeVisible();
@@ -24,7 +24,7 @@ test("camera travel is continuous and passes every object in both directions", a
   await seek(.99); expect(cameraZ(.99)).toBeLessThan(projectZ(3));
   await expect(page.locator(".journey-exit").getByRole("link")).toHaveAttribute("href","/about");
   await seek(.3); await seek(.9); await seek(.1);
-  await page.getByRole("link",{name:"cd ../about",exact:true}).click(); await expect(page).toHaveURL(/\/about$/);
+  await page.getByRole("link",{name:"About",exact:true}).click(); await expect(page).toHaveURL(/\/about$/);
   await expect(page.locator("#about")).toBeInViewport();
   expect(errors).toEqual([]); await context.close();
 });
@@ -36,12 +36,9 @@ test("reduced motion and no JavaScript keep all project destinations usable",asy
  const context=await browser.newContext({baseURL:test.info().project.use.baseURL,javaScriptEnabled:false}); const plain=await context.newPage();await plain.goto("/work");await plain.getByRole("link",{name:"Explore EatWhat",exact:true}).click();await expect(plain.getByRole("heading",{level:1})).toHaveText("EatWhat");await context.close();
 });
 
-test("portrait orbits move independently and pause without losing logos",async({page})=>{
- await page.goto("/about");const logo=page.locator(".ai-orbiter").first(); await expect(page.locator(".ai-orbiter")).toHaveCount(10);
+test("portrait orbits move continuously and honor reduced motion",async({page})=>{
+ await page.goto("/about");await page.locator(".portrait-composition").scrollIntoViewIfNeeded();const logo=page.locator(".ai-orbiter").first(); await expect(page.locator(".ai-orbiter")).toHaveCount(10);
  const start=await logo.evaluate(el=>getComputedStyle(el).transform); await expect.poll(()=>logo.evaluate(el=>getComputedStyle(el).transform)).not.toBe(start);
- await page.getByRole("button",{name:"Pause AI orbits"}).click();
- // The pause redraw preserves each platform and its proportions.
- await expect(page.getByRole("button",{name:"Resume AI orbits"})).toHaveAttribute("aria-pressed","true");
  await page.emulateMedia({reducedMotion:"reduce"});const stopped=await logo.evaluate(el=>getComputedStyle(el).transform);await page.waitForTimeout(100);expect(await logo.evaluate(el=>getComputedStyle(el).transform)).toBe(stopped);
 });
 
@@ -65,4 +62,17 @@ test("native wheel and touch gestures travel without a scroll interceptor", asyn
   await expect.poll(async()=>Number(await work.getAttribute("data-progress"))).toBeGreaterThan(.2);
   if(!isMobile){await page.mouse.wheel(0,-90);await expect.poll(async()=>Math.abs(Number(await work.getAttribute("data-progress"))-.2)).toBeLessThan(.003);}
  }finally{await context.close();}
+});
+
+test('a planet zooms into its project before the page fades in',async({page})=>{
+ await page.goto('/work');const work=page.locator('#work');await expect(work).toHaveAttribute('data-enhanced','true');
+ await page.getByRole('button',{name:'Enter my workspace'}).click();
+ await expect.poll(async()=>Math.abs(Number(await work.getAttribute('data-progress'))-projectProgress(0))).toBeLessThan(.001);
+ const canvas=page.locator('.journey-renderer canvas');
+ const box=(await canvas.boundingBox())!;
+ const offset=planetX(0,box.width<600)*box.height/(2*9*Math.tan(55*Math.PI/360));
+ await canvas.click({position:{x:box.width/2+offset,y:box.height/2-100}});
+ await expect(work).toHaveAttribute('data-launching','true');
+ await expect(page).toHaveURL(/\/projects\/paddock-labs$/);
+ await expect(page.locator('.page-fade')).toHaveCSS('animation-name','page-arrive');
 });

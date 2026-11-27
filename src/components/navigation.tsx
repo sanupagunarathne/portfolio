@@ -15,7 +15,6 @@ export function Navigation() {
   const toggle = useRef<HTMLButtonElement>(null);
   const header = useRef<HTMLElement>(null);
   const active = (href: string) => pathname === href || (href === "/work" && pathname.startsWith("/projects/"));
-  const current = links.find(([href]) => active(href)) ?? links[0];
 
   useEffect(() => {
     const escape = (event: KeyboardEvent) => {
@@ -35,7 +34,7 @@ export function Navigation() {
       <button ref={toggle} className="dock-toggle" aria-expanded={open} aria-controls="dock-navigation" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>
         <span>Menu</span>{open ? <X size={21} aria-hidden="true" /> : <Menu size={21} aria-hidden="true" />}
       </button>
-      <Link href={current[0]} className="dock-current" aria-current="page" onClick={() => setOpen(false)}>{current[1]}</Link>
+      <Link href="/" className="dock-current" aria-current={pathname === "/" ? "page" : undefined} onClick={() => setOpen(false)}>Home</Link>
     </nav>
     <div id="dock-navigation" className="dock-panel" hidden={!open}>
       <p className="dock-caption">~/ explore</p>

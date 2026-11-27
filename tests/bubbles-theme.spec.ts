@@ -43,10 +43,10 @@ test("dark theme persists, is accessible and can return to light", async ({ page
 
 test("case-study sidebar clears header and phrases type on entry", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/about");
-  await page.locator("#about-title").scrollIntoViewIfNeeded();
-  await expect(page.locator("#about-title")).toHaveAttribute("data-typed", "true");
-  await expect(page.locator("#about-title .type-character").first()).toHaveCSS("animation-name", "character-in");
+  await page.goto("/journey");
+  await page.locator("#journey-title").scrollIntoViewIfNeeded();
+  await expect(page.locator("#journey-title")).toHaveAttribute("data-typed", "true");
+  await expect(page.locator("#journey-title .type-character").first()).toHaveCSS("animation-name", "character-in");
   await page.goto("/projects/nex-installer#stack");
   if (!isMobile) {
     await page.locator("#stack").scrollIntoViewIfNeeded();

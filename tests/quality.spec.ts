@@ -25,7 +25,7 @@ test("responsive routes, local links, anchors and media remain intact", async ({
     for (const width of [320, 390, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${path} at ${width}px`).toBe(true);
-      if(path.startsWith("/projects/")) await expect(page.getByRole("link",{name:"cd .. — Back to Work",exact:true})).toBeVisible();
+      if(path.startsWith("/projects/")) await expect(page.getByRole("link",{name:"Back to Work",exact:true})).toBeVisible();
       else await expect(page.getByRole("button",{name:"Open menu",exact:true})).toBeVisible();
     }
   }

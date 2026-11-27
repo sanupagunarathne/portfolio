@@ -1,18 +1,17 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 const platforms = [ ["OpenAI", "openai"], ["Claude", "claude"], ["Gemini", "gemini"], ["GitHub Copilot", "copilot"], ["Perplexity", "perplexity"], ["DeepSeek", "deepseek"], ["Grok", "grok"], ["Meta AI", "meta"], ["Mistral AI", "mistral"], ["Hugging Face", "huggingface"] ];
 export function PortraitOrbit() {
   const host = useRef<HTMLDivElement>(null);
   const elapsed = useRef(0);
-  const [paused, setPaused] = useState(false);
   useEffect(() => {
     const element = host.current; if (!element) return;
     const media = matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0, last = 0, time = elapsed.current, visible = false;
     const draw = (now: number) => {
       frame = 0; const dt = last ? Math.min(now-last,50) : 0; last = now;
-      if (!paused && !media.matches && !element.matches(":focus-within")) time += dt / 1000;
+      if (!media.matches && !element.matches(":focus-within")) time += dt / 1000;
       elapsed.current = time;
       element.dataset.ready = "true";
       const w = element.clientWidth, h = element.clientHeight;
@@ -26,7 +25,7 @@ export function PortraitOrbit() {
         logo.style.transform = `translate(-50%,-50%) translate(${x}px,${y}px) scale(${scale})`;
         logo.style.zIndex = z > 0 ? "4" : "0";
       });
-      if (visible && !document.hidden && !paused && !media.matches) frame = requestAnimationFrame(draw);
+      if (visible && !document.hidden && !media.matches) frame = requestAnimationFrame(draw);
     };
     const wake = () => { cancelAnimationFrame(frame); frame = 0; last = 0; if (!document.hidden) frame = requestAnimationFrame(draw); };
     const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) wake(); else {cancelAnimationFrame(frame); frame=0;} }); observer.observe(element);
@@ -34,6 +33,6 @@ export function PortraitOrbit() {
     const resize = new ResizeObserver(wake); resize.observe(element);
     media.addEventListener("change",wake); document.addEventListener("visibilitychange",visibility);
     wake(); return () => {cancelAnimationFrame(frame);observer.disconnect();resize.disconnect();media.removeEventListener("change",wake);document.removeEventListener("visibilitychange",visibility);};
-  }, [paused]);
-  return <div ref={host} className="portrait-orbits" role="group" aria-label="Orbiting AI platforms"><span className="ai-orbit-path" aria-hidden="true" />{platforms.map(([name, file]) => <span className="ai-orbiter" key={name} tabIndex={0}><Image src={`/images/ai/${file}.svg`} width={26} height={26} alt={name} /><span className="ai-tooltip">{name}</span></span>)}<button type="button" className="orbit-pause" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? "Resume AI orbits" : "Pause AI orbits"}</button></div>;
+  }, []);
+  return <div ref={host} className="portrait-orbits" role="group" aria-label="Orbiting AI platforms"><span className="ai-orbit-path" aria-hidden="true" />{platforms.map(([name, file]) => <span className="ai-orbiter" key={name} tabIndex={0}><Image src={`/images/ai/${file}.svg`} width={26} height={26} alt={name} /><span className="ai-tooltip">{name}</span></span>)}</div>;
 }

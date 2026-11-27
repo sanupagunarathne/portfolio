@@ -1,24 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-test("About typing, section reveals and reduced motion survive page navigation", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/about");
-  const words = page.locator("#about-title .type-character");
-  expect(await words.count()).toBeGreaterThan(4);
-  const delays = await words.evaluateAll(elements => elements.map(element => parseFloat(getComputedStyle(element).animationDelay)));
-  expect(delays.every((delay, index) => index === 0 || delay > delays[index - 1])).toBe(true);
-  await expect(page.locator(".portrait-composition")).toHaveCSS("animation-name", "portrait-in");
-  await page.goto("/journey");
-  await page.locator(".journey-list").scrollIntoViewIfNeeded();
-  await expect(page.locator(".journey-list")).toHaveAttribute("data-revealed", "true");
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/about");
-  await expect(words.first()).toHaveCSS("animation-name", "none");
-  await expect(page.locator(".portrait-composition")).toHaveCSS("animation-name", "none");
-  await page.goto("/journey");
-  expect(await page.locator(".journey-list").evaluate(element => element.getAnimations().filter(animation => animation.playState === "running").length)).toBe(0);
-});
-
 test("compact dock stays centered and whole pages fade on navigation", async ({ page }) => {
   await page.goto("/");
   for (const width of [320, 768, 1440]) {
@@ -30,7 +11,7 @@ test("compact dock stays centered and whole pages fade on navigation", async ({ 
   await expect(page.locator(".page-fade")).toHaveCSS("animation-name", "page-arrive");
   await page.getByRole("button", {name:"Open menu"}).click();
   await page.locator("#dock-navigation").getByRole("link", {name:"Journey",exact:true}).click();
-  await expect(page.locator(".dock-current")).toHaveText("Journey");
+  await expect(page.locator(".dock-current")).toHaveText("Home");
   await expect(page.locator(".page-fade")).toHaveCSS("animation-name", "page-arrive");
   await page.emulateMedia({reducedMotion:"reduce"});
   await expect(page.locator(".page-fade")).toHaveCSS("animation-name", "none");

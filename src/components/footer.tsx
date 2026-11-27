@@ -13,6 +13,6 @@ export function Footer() { return (
             {socials.map((social) => <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer"><SocialIcon name={social.name} />{social.name}<ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>)}
           </nav>
         </div>
-        <div className="footer-bottom"><span className="mono">© {new Date().getFullYear()} {personal.name}</span><Link className="back-to-top" href="/">cd ~ / home</Link></div>
+        <div className="footer-bottom"><span className="mono">© {new Date().getFullYear()} {personal.name}</span><Link className="back-to-top" href="/">Home</Link></div>
       </footer>
 ); }

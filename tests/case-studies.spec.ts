@@ -32,20 +32,20 @@ test("workspace doorway reaches case studies and shared navigation returns home"
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.getByRole("link", { name: "Explore EatWhat", exact: true }).click();
   await expect(page).toHaveURL(/\/projects\/eatwhat$/);
-  await page.getByRole("link", { name: "cd .. — Back to Work", exact: true }).click();
+  await page.getByRole("link", { name: "Back to Work", exact: true }).click();
   await page.getByRole("button", { name: "Open menu" }).click();
   const navigation = page.locator("#dock-navigation");
   await expect(navigation.getByRole("link", { name: "About", exact: true })).toHaveAttribute("href", "/about");
   await navigation.getByRole("link", { name: "About", exact: true }).click();
   await expect(page).toHaveURL(/\/about$/);
-  await expect(page.getByRole("heading", { name: "More than just lines of code." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sanupa Gunarathne", exact:true })).toBeVisible();
 });
 
 test("unknown projects return a real 404 and a recovery link", async ({ page }) => {
   const response = await page.goto("/projects/not-a-project");
   expect(response?.status()).toBe(404);
   await expect(page.getByRole("heading", { name: "Page not found." })).toBeVisible();
-  await page.getByRole("link", { name: "cd .. / Work" }).click();
+  await page.getByRole("link", { name: "Back to Work" }).click();
   await expect(page).toHaveURL(/\/work$/);
 });
 
@@ -56,7 +56,7 @@ test("case study content is readable without JavaScript", async ({ browser }) =>
     await page.goto("/projects/paddock-labs");
     await expect(page.getByRole("heading", { name: "Paddock Labs", exact: true })).toBeVisible();
     await expect(page.locator("#problem")).toContainText("Lap times and averages");
-    await expect(page.getByRole("link", { name: "cd .. — Back to Work", exact: true })).toHaveAttribute("href", "/work?project=paddock-labs");
+    await expect(page.getByRole("link", { name: "Back to Work", exact: true })).toHaveAttribute("href", "/work?project=paddock-labs");
   } finally { await context.close(); }
 });
 

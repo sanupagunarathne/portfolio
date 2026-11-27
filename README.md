@@ -161,3 +161,5 @@ Both Paddock Labs and EatWhat now use their supplied website screenshots and Vis
 Home now contains only the name and a short introduction over fading dots. Every section has its own navbar route; About holds the portrait and AI orbits, and Work keeps the project universe. Terminal-style `cd ..` links go up to Home or Work, and the face brand mark is removed. Existing project pages and interactive features are preserved. See [route map and compatibility notes](docs/PAGE-STRUCTURE.md).
 
 Navigation now uses a compact bottom-centered Menu/current-page pill. Open Menu for the eight page routes, theme and sound preferences. Page content fades on navigation unless reduced motion is enabled; see `docs/PAGE-STRUCTURE.md` for the current structure.
+
+Latest visual revision: Home uses Doto for its introduction; the dock shortcut always returns Home. About pairs an editorial introduction with the supplied portrait, a redesigned signature and a local origami-bird loop. Work uses spaced planetary destinations and a camera approach before opening projects. Plain return labels replace terminal-command labels. Reduced motion and static project links remain supported.

@@ -29,3 +29,13 @@ The shared navigation is now a bottom-centered pill (352px maximum), with an exp
 `PageFade` keys the page-content wrapper to the pathname for a 650ms opacity entrance on initial load and route changes, including between project slugs. It does not transform the wrapper or intercept scrolling. Reduced motion disables this animation and the menu entrance. The Home note retains the supplied wording with lighter Geist typography. Subtle layered glass surfaces follow both themes and fall back to opaque surfaces for reduced transparency.
 
 The collapsed dock deliberately contains only Menu and the current destination. Open Menu for all eight routes and preferences on both desktop and phone. Fixed bottom placement reserves footer clearance and safe-area spacing; the Home composition has no top header footprint.
+
+## Editorial About and planetary Work
+
+The latest request replaces the rotating About paragraph/profile window with a static editorial introduction, portrait on the right, redesigned signature and local origami-bird scene. The image in `public/images/portraits/sanupa-signature.png` was generated as an original interpretation of the supplied signature: white lines and a crimson orbit, not a scanned authentication signature. The bird follows an arrival/perch/departure loop, responds to pointer position, and unmounts offscreen, in background tabs and for reduced motion; a rendering error leaves the text/portrait intact. AI logos continue orbiting without a visible pause control. Home's note uses the existing Doto font.
+
+The dock shortcut always points Home. Section headers no longer show terminal back controls; case studies retain a plainly labeled Back to Work link. The earlier `cd ..`/`cd ~` conventions are superseded.
+
+Work now has alternating planetary positions with 26 depth units between projects, locally generated Jupiter/Saturn/Neptune/Mars-inspired surface maps, Saturn's rings, Mars crater/shadow details and small light glints. These are stylized local models, not astronomical scans. Entry rings and selected-work counters are removed; meteor debris, star bursts and the satellite remain. Planet selection eases the camera toward the selected sphere for 850ms before navigating to the actual project page. Modified clicks and reduced-motion/no-WebGL/no-JavaScript links retain ordinary navigation. Controls remain above the fixed dock. There is no manual universe pause button; reduced motion and visibility suspension remain.
+
+Fine-pointer devices use a local black arrow cursor with a white outline; touch and text inputs retain appropriate native behavior.

@@ -3,35 +3,20 @@ import { ArrowUpRight } from "lucide-react";
 import { personal } from "@/data/personal";
 import { interests } from "@/data/interests";
 import { PhraseHeading, SectionHeading } from "@/components/section-heading";
-import { MacWindow } from "@/components/mac-window";
 import { Playground } from "@/components/playground";
 import { Expertise } from "@/components/expertise";
 import { Journey } from "@/components/journey";
 import { InterestGallery } from "@/components/interest-gallery";
-import { AboutLoop } from "@/components/about-loop";
+import { AboutBird } from "@/components/about-bird";
 import { RetroComputer } from "@/components/retro-computer";
 import { SocialIcon } from "@/components/social-icon";
 import { ContactForm } from "@/components/contact-form";
 import { PortraitOrbit } from "@/components/portrait-orbit";
 
-export function AboutContent() { return (
-        <section id="about" className="portfolio-section page-width" tabIndex={-1} aria-labelledby="about-title">
-          <SectionHeading number="02" label="ABOUT" title="More than just lines of code." id="about-title" />
-          <div className="about-layout">
-          <div className="portrait-composition"><PortraitOrbit />
-            <div className="portrait-placeholder" role={personal.heroPortrait ? undefined : "img"} aria-label={personal.heroPortrait ? undefined : "Placeholder reserved for Sanupa's portrait; photograph not yet provided"}>
-              {personal.heroPortrait ? <><Image src={personal.heroPortrait} alt="Halftone portrait of Sanupa Gunarathne" fill sizes="(max-width: 767px) 90vw, 45vw" priority className="hero-photo" /><span className="hero-photo-label" aria-hidden="true">SANUPA / IN MY ELEMENT</span></> : <>
-              <span className="portrait-index">FIG. 01 — THE PERSON BEHIND THE PIXELS</span>
-              <span className="portrait-monogram" aria-hidden="true">sg.</span>
-              <div className="portrait-caption"><span>Your photograph belongs here.</span><span className="mono">Portrait to be added</span></div>
-              </>}
-            </div>
-            <span className="portrait-margin-note">A little curiosity. A lot of possibility.</span>
-          </div>
-            <div className="about-copy"><p className="lead">I like the space where a practical idea meets a thoughtful experience.</p><AboutLoop /><MacWindow title="about-me.ts"><dl className="profile-list"><div><dt>name</dt><dd>{personal.name}</dd></div><div><dt>basedIn</dt><dd>{personal.location}</dd></div><div><dt>studying</dt><dd>{personal.degree}</dd></div><div><dt>at</dt><dd>{personal.university}</dd></div></dl></MacWindow></div>
-          </div>
-        </section>
-); }
+export function AboutContent() { return <section id="about" className="about-editorial page-width" aria-labelledby="about-name">
+ <div className="about-editorial-copy"><p className="eyebrow">SOFTWARE ENGINEERING / SRI LANKA</p><h2 id="about-name" aria-label={personal.name}>Sanupa<br/>Gunarathne<span>.</span></h2><p className="about-lead">Engineering ideas.<br/>Making room for curiosity.</p><p>I’m a Software Engineering undergraduate at the University of Westminster, studying at IIT Sri Lanka. I enjoy connecting practical software with thoughtful design.</p><p>Beyond the code, you’ll find me exploring photography, graphic design, motorcycling and tennis. This is a small collection of what I’m building, learning and trying next.</p><a className="text-link" href="/contact">Let’s talk <ArrowUpRight size={16} aria-hidden="true"/></a><Image className="personal-signature" src="/images/portraits/sanupa-signature.png" alt="Sanupa — redesigned personal signature with a crimson orbit" width={420} height={210}/><AboutBird/></div>
+ <div className="portrait-composition"><PortraitOrbit/><div className="portrait-placeholder"><Image src={personal.heroPortrait!} alt="Halftone portrait of Sanupa Gunarathne" fill sizes="(max-width:767px) 90vw, 40vw" priority className="hero-photo"/></div></div>
+ </section>; }
 
 export function ExpertiseContent() { return (
         <section id="expertise" className="portfolio-section expertise-section" tabIndex={-1} aria-labelledby="expertise-title">

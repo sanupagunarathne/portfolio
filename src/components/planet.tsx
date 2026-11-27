@@ -1,0 +1,9 @@
+"use client";
+import { useEffect, useMemo } from "react";
+import { CanvasTexture, SRGBColorSpace } from "three";
+const palettes=[['#b98c64','#ead1a5','#86604c'],['#d7bd88','#efe1bb','#a58b64'],['#315baa','#6596d9','#203f83'],['#a94e32','#cf8252','#71392a']];
+/** Locally generated maps: atmospheric bands, storms and crater shadows. */
+export function Planet({index}:{index:number}) {
+ const texture=useMemo(()=>{const canvas=document.createElement('canvas');canvas.width=512;canvas.height=256;const ctx=canvas.getContext('2d')!;const colors=palettes[index];ctx.fillStyle=colors[0];ctx.fillRect(0,0,512,256);for(let y=0;y<256;y++){const n=Math.sin(y*.31)+Math.sin(y*.09)*.7;ctx.fillStyle=n>.5?colors[1]:colors[2];ctx.globalAlpha=index===3?.13:.3;ctx.fillRect(0,y,512,1);}for(let i=0;i<100;i++){const x=(Math.sin(i*127.1)*43758.5)%1*512;const y=(Math.cos(i*53.7)*19823.2)%1*256;ctx.globalAlpha=.22;ctx.fillStyle=colors[2];ctx.beginPath();ctx.ellipse(Math.abs(x),Math.abs(y),index===3?3+i%9:12+i%24,index===3?3+i%7:2+i%4,0,0,Math.PI*2);ctx.fill();}if(index===0){ctx.globalAlpha=.7;ctx.fillStyle='#a25943';ctx.beginPath();ctx.ellipse(330,155,38,12,0,0,Math.PI*2);ctx.fill();}const map=new CanvasTexture(canvas);map.colorSpace=SRGBColorSpace;return map;},[index]);useEffect(()=>()=>texture.dispose(),[texture]);
+ return <><mesh><sphereGeometry args={[index===0?1.8:1.55,48,32]}/><meshStandardMaterial map={texture} roughness={.95}/></mesh>{index===1&&<mesh rotation={[-1.1,.2,.1]}><ringGeometry args={[1.9,2.8,96]}/><meshStandardMaterial color="#c2aa7b" transparent opacity={.7} side={2}/></mesh>}{index===3&&[0,1,2].map(i=><group key={i} rotation={[i*.55,i*.9,0]}><mesh position={[0,0,1.54]}><circleGeometry args={[.12+i*.03,16]}/><meshStandardMaterial color="#28160f"/></mesh><mesh position={[.03,.03,1.56]}><sphereGeometry args={[.025,8,8]}/><meshBasicMaterial color="#f5c298"/></mesh></group>)}</>;
+}

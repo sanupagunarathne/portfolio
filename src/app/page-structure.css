@@ -53,3 +53,49 @@ body:has(.minimal-home) { padding-bottom:0; }
 @media(prefers-reduced-transparency:reduce) { .site-header.compact-dock,.dock-panel {background:var(--color-ivory);backdrop-filter:none;} }
 /* Keep universe travel controls above the persistent navigation dock. */
 .cinematic-work[data-enhanced] .journey-controls { bottom:calc(110px + env(safe-area-inset-bottom)); }
+
+/* Editorial About and a more spacious planetary collection. */
+.home-intro p { font-family:var(--font-doto); font-weight:650; letter-spacing:0; }
+.about-editorial { display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(3rem,8vw,8rem); align-items:center; padding-block:3rem 6rem; }
+.about-editorial-copy { position:relative; }
+.about-editorial h2 { font-size:clamp(2.8rem,5vw,5rem); font-weight:550; letter-spacing:-.055em; line-height:1.05; margin:1rem 0 2rem; }
+.about-editorial h2 > span { color:var(--color-accent); }
+.about-editorial p:not(.eyebrow) { line-height:1.8; margin-block:1.25rem; max-width:52ch; }
+.about-editorial .about-lead { font-size:1.4rem; line-height:1.45; }
+.about-editorial .portrait-composition { min-height:520px; width:100%; }
+.personal-signature { width:260px; height:auto; margin-top:2rem; }
+[data-theme="light"] .personal-signature { filter:brightness(.3); }
+.about-bird { width:220px; height:150px; position:relative; margin-top:-90px; margin-left:auto; }
+.bird-perch { position:absolute; bottom:28%; left:35%; width:32%; height:1px; background:var(--color-taupe); z-index:-1; }
+.terminal-back { border:0; padding-left:0; }
+.cinematic-work[data-enhanced] { height:1000svh; }
+.cinematic-work[data-enhanced] .journey-project { width:min(42vw,460px); left:auto; right:7%; bottom:35%; transform:none; text-align:left; }
+.cinematic-work[data-enhanced] .journey-project:nth-child(even) { right:auto; left:7%; }
+.cinematic-work[data-launching] .journey-projects,.cinematic-work[data-launching] .journey-controls { pointer-events:none; animation:planet-depart .85s ease both; }
+@keyframes planet-depart { to {opacity:0;} }
+@media(max-width:767px) { .about-editorial {grid-template-columns:1fr;gap:2rem;padding-top:1rem;} .about-editorial .portrait-composition{min-height:440px; width:90%;} .cinematic-work[data-enhanced] .journey-project { width:80%;left:10%;right:auto;bottom:28%;text-align:center;} .cinematic-work[data-enhanced] .journey-project:nth-child(even) {left:10%;} }
+@media(pointer:fine) {
+ body, a, button, [role="button"] { cursor:url('/images/cursor.svg') 3 2, auto; }
+ input, textarea { cursor:text; }
+}
+@media(prefers-reduced-motion:reduce) { .cinematic-work[data-launching] .journey-projects,.cinematic-work[data-launching] .journey-controls {animation:none;} }
+.about-editorial { padding-top:clamp(3rem,8vh,6rem); }
+.about-bird { position:absolute; top:-4rem; right:0; width:160px; height:120px; margin:0; }
+.static-bird { width:70px; height:60px; margin:25px 45px; color:var(--color-ink); }
+.about-editorial h2 { font-size:clamp(2rem,5vw,5rem); }
+.about-editorial > * { min-width:0; }
+.about-editorial .ai-orbit-path { inset:28% 4%; }
+/* Planet surfaces receive pointer events; HTML labels stay above the scene. */
+.journey-renderer { z-index:0; }
+.journey-entrance,.journey-projects,.journey-controls,.journey-exit { z-index:1; }
+.journey-entrance[inert],.journey-project[inert] { pointer-events:none; }
+.journey-renderer,.journey-renderer * { pointer-events:auto !important; }
+.cinematic-work[data-enhanced] .journey-project .text-link::before { content:none; }
+.cinematic-work[data-enhanced] .journey-entrance[inert],.cinematic-work[data-enhanced] .journey-project[inert] { pointer-events:none; }
+/* Still planetary counterparts for reduced motion and unavailable WebGL. */
+.static-world { position:relative; border:0; border-radius:50%; clip-path:none; box-shadow:inset -20px -10px 30px #0005; }
+.world-0 { background:repeating-linear-gradient(175deg,#c39c70 0 12px,#e2c59a 13px 20px,#ac805c 21px 26px); }
+.world-1 { border:0; background:repeating-linear-gradient(175deg,#d6c192 0 14px,#bfa273 15px 21px); }
+.world-1::after { content:""; position:absolute; inset:25% -25%; border:12px solid #bda87b; border-radius:50%; transform:rotate(-20deg); }
+.world-2 { border-radius:50%; clip-path:none; background:linear-gradient(160deg,#7aa2de,#315db1 55%,#172d5a); }
+.world-3 { border:0; border-radius:50%; transform:none; background:radial-gradient(circle at 32% 38%,#5c2b1a 0 6%,transparent 7%),radial-gradient(circle at 64% 65%,#723723 0 12%,transparent 13%),linear-gradient(145deg,#d28a59,#9f452c); }
