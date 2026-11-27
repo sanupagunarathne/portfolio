@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("technology filters and keyboard selection expose honest details", async ({ page, isMobile }) => {
-  await page.goto("/");
+  await page.goto("/expertise");
   const filters = page.getByRole("group", { name: "Technology category" });
   await filters.getByRole("button", { name: "Languages", exact: true }).click();
   await expect(page.locator(".technology-group")).toHaveCount(1);
@@ -26,7 +26,7 @@ test("technology filters and keyboard selection expose honest details", async ({
 });
 
 test("journey expands and collapses without navigating", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/journey");
   const school = page.getByRole("button", { name: /Maliyadeva College/ });
   await school.click();
   await expect(school).toHaveAttribute("aria-expanded", "true");
@@ -43,7 +43,7 @@ test("journey expands and collapses without navigating", async ({ page }) => {
 
 test("reduced motion keeps content available and glass has an opaque fallback", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/work");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("button", { name: "Enter my workspace" })).toBeVisible();
   await expect(page.locator(".cinematic-work")).not.toHaveAttribute("data-enhanced", "true");

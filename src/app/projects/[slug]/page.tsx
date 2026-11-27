@@ -1,8 +1,9 @@
+import { BackLink } from "@/components/back-link";
 import { getSiteOrigin } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/projects";
 import { caseStudies } from "@/data/case-studies";
 import { ProjectSiteHero } from "@/components/project-site-hero";
@@ -49,7 +50,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return <main id="main-content" tabIndex={-1} className="case-page page-width site-first-case">
     <ProjectSiteHero project={project} />
-    <div className="project-information-heading"><Link href={`/?project=${project.slug}#work`} className="text-link"><ArrowLeft aria-hidden="true" size={16} />All projects</Link><p className="eyebrow">PROJECT INFORMATION / {project.title}</p><p className="case-lead">{project.summary}</p><p className="case-status"><span className="status-dot" aria-hidden="true" />{project.status}</p>{project.github && <a className="text-link project-repository" href={project.github} target="_blank" rel="noopener noreferrer">View source on GitHub <ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>}{study.source && <p className="proposal-source">{study.source}</p>}</div>
+    <div className="project-information-heading"><BackLink href={`/work?project=${project.slug}`} destination="Work" /><p className="eyebrow">PROJECT INFORMATION / {project.title}</p><p className="case-lead">{project.summary}</p><p className="case-status"><span className="status-dot" aria-hidden="true" />{project.status}</p>{project.github && <a className="text-link project-repository" href={project.github} target="_blank" rel="noopener noreferrer">View source on GitHub <ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>}{study.source && <p className="proposal-source">{study.source}</p>}</div>
     <div className="case-layout">
       <nav className="case-contents" aria-label="Case study contents"><p className="eyebrow">IN THIS STUDY</p><ol>{contents.filter(([id]) => id !== "gallery" || study.gallery.length > 0).map(([id, title]) => <li key={id}><a href={`#${id}`}>{title}</a></li>)}</ol></nav>
       <div className="case-story">
@@ -64,6 +65,6 @@ export default async function ProjectPage({ params }: Props) {
         {study.gallery.length > 0 && <section id="gallery" aria-labelledby="gallery-title"><h2 id="gallery-title">Image gallery</h2><p>Space for the real project, in detail.</p><MediaGallery items={study.gallery} kind="screenshot" className="case-gallery" /></section>}
       </div>
     </div>
-    <nav className="next-project" aria-label="Next project"><p className="eyebrow">KEEP EXPLORING</p><Link href={`/projects/${next.slug}`}><span><span className="content-note">Next project</span><span>{next.title}</span></span><ArrowUpRight aria-hidden="true" size={32} /></Link><Link className="text-link" href={`/?project=${project.slug}#work`}>Back to selected work</Link></nav>
+    <nav className="next-project" aria-label="Next project"><p className="eyebrow">KEEP EXPLORING</p><Link href={`/projects/${next.slug}`}><span><span className="content-note">Next project</span><span>{next.title}</span></span><ArrowUpRight aria-hidden="true" size={32} /></Link><Link className="text-link" href={`/work?project=${project.slug}`}>cd .. / Work</Link></nav>
   </main>;
 }

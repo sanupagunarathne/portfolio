@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 test("bubble field bounds, accessible selection and reduced-motion fallback", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/");
+  await page.goto("/expertise");
   const field = page.locator(".technology-cosmos");
   await field.scrollIntoViewIfNeeded();
   await expect(field).toHaveAttribute("data-bubble-ready", "true");
@@ -23,24 +23,27 @@ test("bubble field bounds, accessible selection and reduced-motion fallback", as
 
 test("dark theme persists, is accessible and can return to light", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/expertise");
+  await page.getByRole("button", { name: "Open menu" }).click();
   await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   const audit = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(audit.violations).toEqual([]);
   await page.reload();
+  await page.getByRole("button", { name: "Open menu" }).click();
   await expect(page.getByRole("button", { name: "Switch to light theme" })).toHaveAttribute("aria-pressed", "true");
   await page.goto("/projects/nex-installer");
   const nested = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(nested.violations).toEqual([]);
-  await page.goto("/");
+  await page.goto("/expertise");
+  await page.getByRole("button", { name: "Open menu" }).click();
   await page.getByRole("button", { name: "Switch to light theme" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });
 
 test("case-study sidebar clears header and phrases type on entry", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/");
+  await page.goto("/about");
   await page.locator("#about-title").scrollIntoViewIfNeeded();
   await expect(page.locator("#about-title")).toHaveAttribute("data-typed", "true");
   await expect(page.locator("#about-title .type-character").first()).toHaveCSS("animation-name", "character-in");

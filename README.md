@@ -155,3 +155,9 @@ Work now lives on the homepage: scroll from the Hero into a full-viewport portal
 Project detail routes now open with the actual site hero, then a centered Visit action and URL, then the case study. Set the authentic image path in `src/data/projects.ts` (`screenshot`) and the supplied site URL in `demo`. Other projects remain explicitly pending until their images/URLs are provided. The Paddock Labs proposal content is documented in [proposal source notes](docs/PADDOCK-PROPOSAL.md); its actual hero screenshot is now connected.
 
 Both Paddock Labs and EatWhat now use their supplied website screenshots and Visit URLs. EatWhat's case study is summarized from the supplied README; see [source notes](docs/EATWHAT-SOURCE.md). Captures preserve their full image proportions on phones. Proposal content and README-described implementation use separate labels and diagrams.
+
+## Minimal Home and dedicated pages (latest)
+
+Home now contains only the name and a short introduction over fading dots. Every section has its own navbar route; About holds the portrait and AI orbits, and Work keeps the project universe. Terminal-style `cd ..` links go up to Home or Work, and the face brand mark is removed. Existing project pages and interactive features are preserved. See [route map and compatibility notes](docs/PAGE-STRUCTURE.md).
+
+Navigation now uses a compact bottom-centered Menu/current-page pill. Open Menu for the eight page routes, theme and sound preferences. Page content fades on navigation unless reduced motion is enabled; see `docs/PAGE-STRUCTURE.md` for the current structure.

@@ -2,136 +2,46 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
-import { Brand } from "./brand";
 import { InterfaceSoundToggle } from "./interface-sounds";
-import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
 
-const links = [
-  { href: "#hero", label: "Home" }, { href: "#work", label: "Work" },
-  { href: "#about", label: "About" }, { href: "#expertise", label: "Expertise" },
-  { href: "#journey", label: "Journey" }, { href: "#playground", label: "Playground" },
-  { href: "#beyond", label: "Beyond" }, { href: "#contact", label: "Contact" },
-];
+const links = [["/", "Home"], ["/work", "Work"], ["/about", "About"], ["/expertise", "Expertise"], ["/journey", "Journey"], ["/playground", "Playground"], ["/beyond", "Beyond"], ["/contact", "Contact"]];
 
 export function Navigation() {
   const pathname = usePathname();
-  const home = pathname === "/";
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
-  const anchorTarget = useRef<string | null>(null);
-  const desktop = useRef<HTMLDivElement>(null);
-  const indicator = useRef<HTMLSpanElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
+  const header = useRef<HTMLElement>(null);
+  const active = (href: string) => pathname === href || (href === "/work" && pathname.startsWith("/projects/"));
+  const current = links.find(([href]) => active(href)) ?? links[0];
 
   useEffect(() => {
-    const media = window.matchMedia("(min-width: 768px)");
-    const closeOnDesktop = () => { if (media.matches) setOpen(false); };
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && open) {
-        setOpen(false);
-        toggle.current?.focus();
-      }
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && open) { setOpen(false); toggle.current?.focus(); }
     };
-    media.addEventListener("change", closeOnDesktop);
-    document.addEventListener("keydown", closeOnEscape);
-    return () => {
-      media.removeEventListener("change", closeOnDesktop);
-      document.removeEventListener("keydown", closeOnEscape);
+    const outside = (event: PointerEvent) => {
+      if (header.current && !header.current.contains(event.target as Node)) setOpen(false);
     };
+    window.addEventListener("keydown", escape);
+    window.addEventListener("pointerdown", outside);
+    document.documentElement.style.setProperty("--header-height", "0px");
+    return () => { window.removeEventListener("keydown", escape); window.removeEventListener("pointerdown", outside); };
   }, [open]);
 
-  useEffect(() => {
-    const update = () => {
-      if (open || anchorTarget.current) return;
-      const sections = links.map(link => document.getElementById(link.href.slice(1))).filter((section): section is HTMLElement => Boolean(section));
-      const offset = document.querySelector(".site-header")?.getBoundingClientRect().height ?? 140;
-      const passed = sections.filter(section => section.getBoundingClientRect().top <= offset + 80);
-      setActive(passed.at(-1)?.id ?? sections[0]?.id ?? null);
-    };
-    let frame = 0;
-    const scroll = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update); };
-    const unlock = () => { anchorTarget.current = null; scroll(); };
-    const key = (event: KeyboardEvent) => { if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) unlock(); };
-    const outsideClick = (event: MouseEvent) => { if (event.target instanceof Element && !event.target.closest(".site-header")) unlock(); };
-    window.addEventListener("click", outsideClick);
-    window.addEventListener("wheel", unlock, { passive: true });
-    window.addEventListener("touchmove", unlock, { passive: true });
-    window.addEventListener("keydown", key);
-    window.addEventListener("popstate", unlock);
-    scroll(); window.addEventListener("scroll", scroll, { passive: true }); window.addEventListener("resize", scroll);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", scroll); window.removeEventListener("resize", scroll); window.removeEventListener("wheel", unlock); window.removeEventListener("touchmove", unlock); window.removeEventListener("keydown", key); window.removeEventListener("popstate", unlock); window.removeEventListener("click", outsideClick); };
-  }, [pathname, open]);
-
-  useEffect(() => {
-    const container = desktop.current;
-    const marker = indicator.current;
-    if (!container || !marker) return;
-    const update = () => {
-      const link = container.querySelector<HTMLElement>('a[aria-current="location"]');
-      if (!link) { marker.style.opacity = "0"; return; }
-      marker.style.width = `${link.offsetWidth}px`;
-      marker.style.height = `${link.offsetHeight}px`;
-      marker.style.transform = `translate(${link.offsetLeft}px, ${link.offsetTop}px)`;
-      marker.style.opacity = "1";
-    };
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(container);
-    document.fonts.ready.then(update);
-    return () => observer.disconnect();
-  }, [active, pathname]);
-
-  useEffect(() => {
-    const header = desktop.current?.closest("header");
-    if (!header) return;
-    const observer = new ResizeObserver(() => document.documentElement.style.setProperty("--header-height", `${header.getBoundingClientRect().height}px`));
-    observer.observe(header);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <header className="site-header">
-      <nav className="page-width nav-bar" aria-label="Main navigation">
-        <Link className="wordmark" href="/" aria-label="Sanupa Gunarathne home" onClick={() => { anchorTarget.current = null; setActive("hero"); setOpen(false); }}>
-          <Brand />
-        </Link>
-        <div ref={desktop} className="desktop-links">
-          <span ref={indicator} className="nav-indicator" aria-hidden="true" />
-          {links.map((link) => <a key={link.href} onClick={() => { anchorTarget.current = null; }} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined}>{link.label}</a>)}
-        </div>
-        <div className="nav-preferences"><InterfaceSoundToggle /><ThemeToggle /></div>
-        <button
-          ref={toggle}
-          className="menu-toggle"
-          aria-expanded={open}
-          aria-controls="mobile-navigation"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <X aria-hidden="true" size={22} /> : <Menu aria-hidden="true" size={22} />}
-        </button>
-      </nav>
-      <div id="mobile-navigation" className="mobile-links page-width" hidden={!open}>
-        {links.map((link, index) => (
-          <a key={link.href} style={{ "--link-index": index } as CSSProperties} href={home ? link.href : `/${link.href}`} aria-current={home && active === link.href.slice(1) ? "location" : undefined} onClick={event => {
-            setOpen(false);
-            if (home) {
-              event.preventDefault();
-              anchorTarget.current = link.href.slice(1);
-              setActive(link.href.slice(1));
-              history.pushState(null, "", link.href);
-              requestAnimationFrame(() => {
-                const section = document.querySelector<HTMLElement>(link.href);
-                section?.scrollIntoView({ block: "start", behavior: "instant" });
-                section?.focus({ preventScroll: true });
-                setActive(link.href.slice(1));
-              });
-            }
-          }}>{link.label}</a>
-        ))}
-      </div>
-    </header>
-  );
+  return <header ref={header} className="site-header compact-dock">
+    <nav aria-label="Main navigation" className="dock-bar">
+      <button ref={toggle} className="dock-toggle" aria-expanded={open} aria-controls="dock-navigation" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>
+        <span>Menu</span>{open ? <X size={21} aria-hidden="true" /> : <Menu size={21} aria-hidden="true" />}
+      </button>
+      <Link href={current[0]} className="dock-current" aria-current="page" onClick={() => setOpen(false)}>{current[1]}</Link>
+    </nav>
+    <div id="dock-navigation" className="dock-panel" hidden={!open}>
+      <p className="dock-caption">~/ explore</p>
+      <nav aria-label="Portfolio pages">{links.map(([href, label]) => <Link key={href} href={href} aria-current={active(href) ? "page" : undefined} onClick={() => setOpen(false)}><span>{label}</span><ArrowUpRight size={14} aria-hidden="true" /></Link>)}</nav>
+      <div className="dock-preferences"><span>Make yourself at home.</span><InterfaceSoundToggle /><ThemeToggle /></div>
+    </div>
+    <noscript><nav className="no-script-navigation" aria-label="Pages without JavaScript">{links.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}</nav></noscript>
+  </header>;
 }

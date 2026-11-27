@@ -32,7 +32,7 @@ test("configured form preserves failed messages and resets only after acceptance
 });
 
 test("prepared drafts are invalidated when the visitor edits the message", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/contact");
   await page.locator("#contact-name").fill("A visitor");
   await page.locator("#contact-email").fill("visitor@example.com");
   await page.locator("#contact-message").fill("An initial message about a creative project.");

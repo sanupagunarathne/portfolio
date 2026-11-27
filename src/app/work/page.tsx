@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
-export default async function WorkPage({searchParams}: {searchParams: Promise<{project?: string}>}) {
- const {project} = await searchParams;
- redirect(project ? `/?project=${encodeURIComponent(project)}#work` : "/#work");
-}
+import { CinematicWork } from "@/components/cinematic-work";
+import { SectionPage } from "@/components/section-page";
+import { sectionMetadata } from "@/lib/section-metadata";
+export const metadata=sectionMetadata("Work","/work");
+export default function WorkPage(){return <SectionPage title="Work"><CinematicWork /></SectionPage>;}

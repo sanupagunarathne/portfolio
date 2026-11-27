@@ -1,69 +1,34 @@
-import { expect, test } from "@playwright/test";
+import {expect,test} from "@playwright/test";
+const routes=["work","about","expertise","journey","playground","beyond","contact"];
+test("Home stays minimal with fading dots and no portrait or other sections",async({page})=>{
+ const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));await page.goto("/");
+ await expect(page.getByRole("heading",{level:1})).toHaveText("Sanupa Gunarathne");
+ await expect(page.locator(".home-intro p")).toContainText("Software Engineering undergraduate");
+ expect(await page.locator(".minimal-home").evaluate(e=>getComputedStyle(e,"::before").maskImage)).toContain("radial-gradient");
+ await expect(page.locator("main img, main canvas, .brand-bot, main .portfolio-section")).toHaveCount(0);
+ expect(errors).toEqual([]);
+});
+test("route navigation supports mobile menu keyboard escape and active page",async({page})=>{
+ await page.goto("/");await page.keyboard.press("Tab");await expect(page.getByRole("link",{name:"Skip to content"})).toBeFocused();await page.keyboard.press("Enter");await expect(page.getByRole("main")).toBeFocused();
+ {await page.getByRole("button",{name:"Open menu"}).click();await page.keyboard.press("Escape");await expect(page.getByRole("button",{name:"Open menu"})).toBeFocused();await page.getByRole("button",{name:"Open menu"}).click();}
+ const nav=page.locator("#dock-navigation");await nav.getByRole("link",{name:"About",exact:true}).click();await expect(page).toHaveURL(/\/about$/);
+ await expect(page.getByRole("img",{name:"Halftone portrait of Sanupa Gunarathne"})).toBeVisible();await expect(page.locator(".ai-orbiter")).toHaveCount(10);
+ await page.getByRole("link",{name:"cd .. — Back to Home",exact:true}).click();await expect(page).toHaveURL(/\/$/);
+});
+test("all section pages have deterministic terminal back links and readable content",async({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});for(const route of routes){await page.goto(`/${route}`);await expect(page.getByRole("heading",{level:1})).toHaveText(route[0].toUpperCase()+route.slice(1));await expect(page.getByRole("link",{name:"cd .. — Back to Home",exact:true})).toHaveAttribute("href","/");expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);}
+});
+test("old section URLs resolve to dedicated routes",async({page})=>{await page.goto('/#about');await expect(page).toHaveURL(/\/about$/);await page.goto('/?project=eatwhat#work');await expect(page).toHaveURL(/\/work\?project=eatwhat$/);});
 
-test("foundation renders honestly and fits the viewport", async ({ page }) => {
-  const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/");
-  await expect(page).toHaveTitle(/Sanupa Gunarathne/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("FEEL DIFFERENT");
-  await expect(page.getByRole("heading", { level: 2 })).toHaveCount(7);
-  await expect(page.getByRole("img", { name: "Halftone portrait of Sanupa Gunarathne" })).toBeVisible();
-  const footer = page.getByRole("contentinfo");
-  await expect(footer.getByRole("navigation", { name: "Social links" })).toBeVisible();
-  await expect(footer.getByRole("link", { name: /GitHub/ })).toHaveAttribute("href", "https://github.com/sanupagunarathne");
-  await expect(page.getByRole("link", { name: "Explore My Work" })).toHaveAttribute("href", "#work");
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-  expect(errors).toEqual([]);
+test("phone navigation remains usable without JavaScript",async({browser})=>{
+ const context=await browser.newContext({baseURL:test.info().project.use.baseURL,javaScriptEnabled:false,viewport:{width:390,height:844}});
+ try{const page=await context.newPage();await page.goto('/');await page.getByRole('navigation',{name:'Pages without JavaScript'}).getByRole('link',{name:'About',exact:true}).click();await expect(page).toHaveURL(/\/about$/);await expect(page.getByRole('img',{name:'Halftone portrait of Sanupa Gunarathne'})).toBeVisible();await page.getByRole('link',{name:'cd .. — Back to Home',exact:true}).click();await expect(page).toHaveURL(/\/$/);}finally{await context.close();}
 });
 
-test("navigation works with keyboard and mobile disclosure", async ({ page, isMobile }) => {
-  await page.goto("/");
-  await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
-  await page.keyboard.press("Enter");
-  await expect(page.getByRole("main")).toBeFocused();
-  if (isMobile) {
-    const toggle = page.getByRole("button", { name: /menu$/ });
-    await toggle.click();
-    await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await page.keyboard.press("Escape");
-    await expect(toggle).toHaveAttribute("aria-expanded", "false");
-    await expect(toggle).toBeFocused();
-    await toggle.click();
-    await page.locator("#mobile-navigation").getByRole("link", { name: "About", exact: true }).click();
-    await expect(page).toHaveURL(/#about$/);
-    await expect(page.locator("#about")).toBeFocused();
-    await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  } else {
-    await expect(page.getByRole("button", { name: "Open menu" })).toBeHidden();
-    await page.getByRole("navigation").getByRole("link", { name: "Work", exact: true }).click();
-    await expect(page).toHaveURL(/#work$/);
-  }
-});
-
-test("reduced motion disables smooth scrolling", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
-  expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe("auto");
-});
-
-
-test("homepage content and typography experiment work", async ({ page }) => {
-  await page.goto("/");
-  for (const id of ["hero", "work", "about", "expertise", "journey", "playground", "beyond", "contact"]) {
-    await expect(page.locator(`#${id}`)).toBeAttached();
-  }
-  await expect(page.getByRole("button", { name: "Enter my workspace" })).toBeVisible();
-  await expect(page.locator("#work .project-entry")).toHaveCount(0);
-  await expect(page.locator(".journey-list > li")).toHaveCount(3);
-  await expect(page.locator(".interests-gallery figure")).toHaveCount(4);
-  await page.getByLabel("A thought, in dots.").fill("build with care");
-  await expect(page.locator(".type-preview")).toHaveText("build with care");
-  await page.getByRole("slider", { name: "Font weight" }).fill("900");
-  await expect(page.locator(".type-preview")).toHaveCSS("font-weight", "900");
-  await page.locator(".technology-cosmos").scrollIntoViewIfNeeded();
-  await page.locator(".technology-cosmos img").evaluateAll(images => images.forEach(image => { (image as HTMLImageElement).loading = "eager"; }));
-  await expect.poll(async () => page.locator("img").evaluateAll(images =>
-    (images as HTMLImageElement[]).filter(image => !image.complete || image.naturalWidth === 0).map(image => image.src)
-  )).toEqual([]);
+test("menu dismisses outside and exposes an accessible active destination",async({page})=>{
+ await page.goto('/');
+ await page.getByRole('button',{name:'Open menu'}).click();
+ await expect(page.locator('#dock-navigation').getByRole('link',{name:'Home',exact:true})).toHaveAttribute('aria-current','page');
+ await page.getByRole('heading',{level:1}).click();
+ await expect(page.locator('#dock-navigation')).toBeHidden();
 });

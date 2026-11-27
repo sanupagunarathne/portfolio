@@ -39,7 +39,6 @@ export function CinematicWork() {
   useEffect(() => {
     const element = host.current;
     if (!element) return;
-    const hero = document.querySelector<HTMLElement>(".hero");
     let frame = 0;
     const update = () => {
       frame = 0;
@@ -57,8 +56,9 @@ export function CinematicWork() {
       element.style.setProperty("--arrival", String(arrival));
       element.style.setProperty("--exit", String(smooth(.88, 1, progress)));
       element.style.setProperty("--entrance", String(1 - smooth(.035, .18, progress)));
-      if (hero) { hero.style.setProperty("--hero-departure", String(simplified ? 0 : arrival)); }
       document.querySelector(".site-header")?.classList.toggle("over-space", capable && !simplified && rect.top <= 100 && progress < .95 && visible);
+      const exit = element.querySelector<HTMLElement>(".journey-exit");
+      if (exit) exit.inert = !capable || simplified || progress < .92;
       const entrance = element.querySelector<HTMLElement>(".journey-entrance");
       const controls = element.querySelector<HTMLElement>(".journey-controls");
       if (controls) controls.inert = capable && !simplified && progress > .98;
@@ -78,15 +78,15 @@ export function CinematicWork() {
     const index = projects.findIndex(p => p.slug === requested);
     if (index >= 0 && capable && !simplified && !requestedHandled.current) { const timer = setTimeout(() => { requestedHandled.current = true; go(projectProgress(index)); }, 100); return () => {clearTimeout(timer); cleanup();}; }
     return cleanup;
-    function cleanup() { cancelAnimationFrame(frame); observer.disconnect(); window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); document.removeEventListener("visibilitychange", schedule); document.querySelector(".site-header")?.classList.remove("over-space"); hero?.style.removeProperty("--hero-departure"); }
+    function cleanup() { cancelAnimationFrame(frame); observer.disconnect(); window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); document.removeEventListener("visibilitychange", schedule); document.querySelector(".site-header")?.classList.remove("over-space"); }
   }, [capable, paused, simplified, go]);
   return <section ref={host} id="work" tabIndex={-1} className="cinematic-work" data-enhanced={capable && !simplified ? "true" : undefined} aria-labelledby="work-title">
     <div className="journey-viewport">
       {capable && !simplified && <div className="journey-renderer"><SceneBoundary onError={fail}><Scene state={state} onLost={fail} /></SceneBoundary></div>}
       <header className="journey-entrance"><p className="eyebrow">01 / SELECTED WORK</p><h2 id="work-title">A few ideas.<br />Their own universe.</h2><p>A collection of things I&apos;m building. Follow your curiosity.</p><button className="button primary" onClick={() => go(.3)}>Enter my workspace <ArrowDown size={16} aria-hidden="true" /></button></header>
       <div className="journey-projects">{projects.map((project,index) => <article key={project.slug} className="journey-project" aria-labelledby={`${project.slug}-title`}><span className={`static-world world-${index}`} aria-hidden="true" /><p className="eyebrow">0{index+1} / SELECTED WORK</p><h3 id={`${project.slug}-title`}>{project.title}</h3><p className="journey-stack">{project.technologies.slice(0,3).join(" · ")}</p><Link className="text-link" href={`/projects/${project.slug}`}>Explore {project.title} <ArrowUpRight size={16} aria-hidden="true" /></Link></article>)}</div>
-      <div className="journey-controls"><button type="button" className="journey-pause" aria-pressed={paused} onClick={() => setPaused(!paused)} aria-label={paused ? "Resume universe animation" : "Pause universe animation"}>{paused ? <Play size={16} /> : <Pause size={16} />}</button><nav aria-label="Project destinations">{projects.map((p,index) => <button key={p.slug} aria-label={`Travel to ${p.title}`} onClick={() => go(projectProgress(index))}>0{index+1}</button>)}</nav><a href="#about" className="text-link">Continue to About <ArrowDown size={14} aria-hidden="true" /></a></div>
-      <div className="journey-exit" aria-hidden="true"><span>Beyond the work.</span><span>A little more about me. ↓</span></div>
+      <div className="journey-controls"><button type="button" className="journey-pause" aria-pressed={paused} onClick={() => setPaused(!paused)} aria-label={paused ? "Resume universe animation" : "Pause universe animation"}>{paused ? <Play size={16} /> : <Pause size={16} />}</button><nav aria-label="Project destinations">{projects.map((p,index) => <button key={p.slug} aria-label={`Travel to ${p.title}`} onClick={() => go(projectProgress(index))}>0{index+1}</button>)}</nav><Link href="/about" className="text-link">cd ../about <ArrowDown size={14} aria-hidden="true" /></Link></div>
+      <div className="journey-exit"><span>Beyond the work.</span><Link className="text-link" href="/about">cd ../about →</Link></div>
     </div>
   </section>;
 }
