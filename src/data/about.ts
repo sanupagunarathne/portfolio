@@ -1,15 +1,26 @@
 // Personal reflections use only the supplied identity, education and interests.
 export const aboutParagraphs = [
-  "I'm Sanupa Gunarathne, a Software Engineering undergraduate based in Sri Lanka. This is my space to connect the practical side of engineering with the curiosity that draws me toward creative work.",
-  "I'm studying BSc (Hons) Software Engineering through the University of Westminster at IIT Sri Lanka. My studies are one part of an ongoing interest in how software can turn an idea into something useful.",
-  "I enjoy exploring the meeting point between technology and thoughtful design. I'm interested in experiences that make room for clarity, personality and a little discovery, without making things harder to use.",
-  "Creative web experiences are one of my interests. I like the possibility of combining typography, interaction and code so that a page feels considered, while its purpose stays easy to understand.",
-  "Photography gives me another way to explore creativity. It belongs beside software and design in this space, reflecting my interest in both the technical and visual sides of an idea.",
-  "Motorcycling is part of my life beyond the screen. It's one of the interests that belongs here alongside the technical work, because a personal portfolio should leave room for the person behind it.",
-  "Tennis is another interest I bring into this space. Alongside software, photography and motorcycling, it helps describe a broader picture of what catches my attention outside academic and technical work.",
-  "Graphic design is part of what draws me toward visual experimentation. I'm interested in how small choices in layout, type and spacing can change the way an idea comes across.",
-  "I enjoy experimenting with technology and creative ideas. The Playground in this portfolio gives that curiosity a small home: a place to try an interaction and see how it feels rather than leave it as a static picture.",
-  "My journey includes Maliyadeva College, foundation studies and my current software engineering degree. Those stages form the educational background behind the work and interests collected here.",
-  "I'm interested in building useful applications and exploring how clear design can make technology easier to use. This portfolio brings those interests together with room for projects, context and work that can grow over time.",
-  "Curiosity connects the different parts of this space: engineering, creative development, photography and design. I'm Sanupa, and this portfolio is an evolving introduction to those interests and the ideas behind them.",
+"I'm Sanupa Gunarathne, a Software Engineering undergraduate from Sri Lanka with a curiosity for technology, design, and everything in between. I enjoy turning ideas into real experiences, whether that's through writing code, exploring creative concepts, or simply trying something new.",
+
+"I'm currently pursuing my BSc (Hons) Software Engineering degree at IIT Sri Lanka, affiliated with the University of Westminster. For me, software engineering goes beyond learning programming languages. It's about understanding problems, thinking differently, and finding interesting ways to build solutions that actually matter.",
+
+"I've always been drawn to the space where technology meets creativity. I enjoy building things that don't just work well but also feel good to use. Whether it's a simple interface or a more interactive experience, I believe thoughtful design and solid engineering should go hand in hand.",
+
+"Web development is one of the areas I genuinely enjoy exploring. There's something exciting about taking an empty page and transforming it into an experience through code, typography, animation, and interaction. I like experimenting with new approaches while keeping things clean, intuitive, and purposeful.",
+
+"Photography is another creative outlet that means a lot to me. I enjoy capturing moments, experimenting with perspectives, and noticing details that might otherwise go unnoticed. It has shaped the way I look at composition, colour, and visual storytelling, which naturally influences my interest in design.",
+
+"Outside the world of code, motorcycling is something I really enjoy. It's a completely different experience from sitting behind a screen, and that's exactly what makes it special. Exploring roads, discovering places, and enjoying the journey are all part of what makes riding interesting to me.",
+
+"Tennis is another part of my life outside technology. I enjoy the combination of focus, movement, and strategy that comes with the game. It's something that keeps me engaged beyond academics and reminds me that there's always something new to improve, both on and off the court.",
+
+"Graphic design has always caught my attention because of how much personality can be communicated through simple visual decisions. I enjoy experimenting with layouts, typography, colour combinations, and visual styles to create work that feels distinctive without becoming unnecessarily complicated.",
+
+"I like experimenting with ideas that don't always fit into a traditional project. Sometimes it's an interesting animation, a small interactive feature, or a concept I simply want to try. That's what my Playground is for: a little corner of this portfolio where curiosity takes the lead and experimentation doesn't need a serious reason.",
+
+"My journey started at Maliyadeva College, continued through foundation studies, and eventually led me to Software Engineering at IIT Sri Lanka. Each stage has contributed to how I approach learning, problem-solving, and exploring new opportunities. I'm still figuring things out, and I think that's one of the most interesting parts of the journey.",
+
+"I'm particularly interested in creating applications that combine practical functionality with thoughtful user experiences. From exploring different technologies to working on collaborative projects, I enjoy the process of learning how things work and figuring out how to make them better. There's always another idea to explore and another skill worth learning.",
+
+"If there's one thing that connects everything I do, it's curiosity. Software engineering, photography, design, motorcycling, and all the little experiments in between are different ways of exploring what interests me. This portfolio is a collection of those interests, the things I've worked on, and the ideas I'm still developing. And like any good project, it's always a work in progress."
 ];
