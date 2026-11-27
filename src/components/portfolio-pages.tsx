@@ -7,14 +7,13 @@ import { Playground } from "@/components/playground";
 import { Expertise } from "@/components/expertise";
 import { Journey } from "@/components/journey";
 import { InterestGallery } from "@/components/interest-gallery";
-import { AboutBird } from "@/components/about-bird";
 import { RetroComputer } from "@/components/retro-computer";
 import { SocialIcon } from "@/components/social-icon";
 import { ContactForm } from "@/components/contact-form";
 import { PortraitOrbit } from "@/components/portrait-orbit";
 
 export function AboutContent() { return <section id="about" className="about-editorial page-width" aria-labelledby="about-name">
- <div className="about-editorial-copy"><p className="eyebrow">SOFTWARE ENGINEERING / SRI LANKA</p><h2 id="about-name" aria-label={personal.name}>Sanupa<br/>Gunarathne<span>.</span></h2><p className="about-lead">Engineering ideas.<br/>Making room for curiosity.</p><p>I’m a Software Engineering undergraduate at the University of Westminster, studying at IIT Sri Lanka. I enjoy connecting practical software with thoughtful design.</p><p>Beyond the code, you’ll find me exploring photography, graphic design, motorcycling and tennis. This is a small collection of what I’m building, learning and trying next.</p><a className="text-link" href="/contact">Let’s talk <ArrowUpRight size={16} aria-hidden="true"/></a><Image className="personal-signature" src="/images/portraits/sanupa-signature.png" alt="Sanupa — redesigned personal signature with a crimson orbit" width={420} height={210}/><AboutBird/></div>
+ <div className="about-editorial-copy"><p className="eyebrow">SOFTWARE ENGINEERING / SRI LANKA</p><h2 id="about-name" aria-label={personal.name}>Sanupa<br/>Gunarathne<span>.</span></h2><p>I’m a Software Engineering undergraduate at IIT Sri Lanka, studying with the University of Westminster. I build web interfaces and APIs, connecting clear design with practical software.</p><p>My projects explore <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React interfaces</a>, <a href="https://expressjs.com/" target="_blank" rel="noopener noreferrer">Express APIs</a>, and <a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer">PostgreSQL databases</a>. This portfolio brings those ideas together with <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">Next.js</a> and <a href="https://threejs.org/" target="_blank" rel="noopener noreferrer">Three.js</a>.</p><a className="text-link" href="/contact">Let’s talk <ArrowUpRight size={16} aria-hidden="true"/></a><Image className="personal-signature" src="/images/portraits/sanupa-signature.png" alt="Sanupa — redesigned personal signature with a crimson orbit" width={420} height={210}/></div>
  <div className="portrait-composition"><PortraitOrbit/><div className="portrait-placeholder"><Image src={personal.heroPortrait!} alt="Halftone portrait of Sanupa Gunarathne" fill sizes="(max-width:767px) 90vw, 40vw" priority className="hero-photo"/></div></div>
  </section>; }
 

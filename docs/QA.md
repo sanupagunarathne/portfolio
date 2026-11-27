@@ -84,3 +84,9 @@ Lint, standalone types, final production build and whitespace checks passed. The
 Inspected desktop About/Work, the redesigned signature and narrow About screenshots. Confirmed 320px scroll width at a 320px viewport. Planet surfaces are procedural interpretations; the signature is a newly generated design based on the user's supplied reference. Bird/model behavior is Chromium/software-renderer evidence, not a physical-GPU or Safari performance claim. No deployment, merge or live email was performed.
 
 Final delivery build passed; the localized zoom and reduced-motion/no-JavaScript regression returned **4 passed, zero failed/skipped**.
+
+## Spacing and blue Home bird
+
+Lint, standalone types and production builds passed. The initial affected desktop/mobile run returned 48 passes and two failures in a new footer test's strict selector, corrected by asserting against the social-links container. The rebuilt focused run returned **8 passed**, including the Work entry's measured horizontal alignment, smaller Doto text, linked About copy and larger portrait, removed title strips/travel buttons, compact social footer and bird audio opt-in (actual oscillator creation is asserted). All twelve route axe scans, responsive routes at five widths and Work camera/surface-click/zoom/native-scroll/fallback checks passed in the initial run. Home/About screenshots were inspected. The final portrait scale adjustment was rebuilt and checked with the responsive route regressions. Chirps are verified programmatically rather than through a physical speaker listening test. No deployment or merge was performed.
+
+Delivery layout check: final portrait scaling exposed an image overflow on a narrow viewport, fixed by containing the image within its frame. Final production build passed, followed by **2 passing desktop/mobile route regressions across all twelve routes and five widths**, zero failures/skips.

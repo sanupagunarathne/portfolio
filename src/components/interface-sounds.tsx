@@ -78,3 +78,5 @@ export function InterfaceSoundToggle() {
   const { enabled, toggle } = useContext(SoundContext);
   return <button className="sound-toggle" type="button" aria-label={enabled ? "Mute interface sounds" : "Enable interface sounds"} aria-pressed={enabled} title={enabled ? "Sound on" : "Sound off"} onClick={toggle}>{enabled ? <Volume2 size={16} aria-hidden="true" /> : <VolumeX size={16} aria-hidden="true" />}</button>;
 }
+
+export function useInterfaceSounds() { return useContext(SoundContext); }
